@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../global.css" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/login-signup.css" />
+    <link rel="stylesheet" href="../styles/login.css" />
+    <script src="../scripts/login-signup.js" defer></script>
     <title>Login</title>
   </head>
 
   <body>
     <main>
-      <!-- left section  -->
-      <section>
+      <section class="left-section">
         <form class="auth-form login" method="post">
+          <img src="../public/logo.svg" alt="logo" class="logo" />
           <p class="title">Login</p>
           <div class="inputs-container">
             <input
@@ -29,24 +31,42 @@
                 placeholder="Password"
               />
               <!-- eye images  -->
-              <img
-                class="eye-open eye"
-                src="../public/icons/eye-open.svg"
-                alt="eye-open"
-              />
-              <img
-                class="eye-closed eye"
-                src="../public/icons/eye-closed.svg"
-                alt="eye-closed"
-              />
+              <div class="eye-container">
+                <img
+                  class="eye-open eye"
+                  src="../public/icons/eye-open.svg"
+                  alt="eye-open"
+                />
+                <img
+                  class="eye-closed eye hidden"
+                  src="../public/icons/eye-closed.svg"
+                  alt="eye-closed"
+                />
+              </div>
             </div>
           </div>
           <button class="submit" type="submit">Login</button>
+
+          <div class="bottom-link">
+            Dont have an account? <a href="/signup">SIGN UP</a>
+          </div>
+        </section>
         </form>
       </section>
 
-      <!-- right section  -->
-      <section></section>
+      <section class="right-section">
+        <img src="../public/logo.svg" alt="logo" class="logo" />
+        <div class="ts-container">
+          <p class="title">Welcome <br> Back</p>
+          <p class="sub-title">
+            We're excited to have you back. <br> Dive into our courses and continue
+            your coding journey with us!
+          </p>
+        </div>
+        <div class="bottom-link">
+          Dont have an account? <a href="/signup">SIGN UP</a>
+        </div>
+      </section>
     </main>
   </body>
 </html>

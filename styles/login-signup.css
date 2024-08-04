@@ -1,0 +1,252 @@
+
+main {
+  width: 100%;
+  height: 100vh;
+  padding: 5% 10%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns:min-content 1fr;
+}
+
+
+/* left section  */
+
+.left-section {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: fit-content;
+}
+
+form {
+  background-color: hsla(0, 0%, 100%, 0.4);
+  width: fit-content;
+  height: 80vh;
+  border-radius: 30px;
+  display: grid;
+  place-content: center;
+  padding :0px 6rem;
+  gap: 3rem;
+  backdrop-filter: blur(10px);
+  border: .5px solid rgba(130, 130, 130, 0.2);
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.051);
+}
+
+.inputs-container{
+  display: grid;
+  gap: 1.5rem;
+}
+
+.auth-form .title {
+  font-size: 40px;
+  text-align: center;
+}
+
+.auth-form input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid black;
+  padding: 12px 0px;
+  font-size: var(--font-size);
+  font-family: inherit;
+}
+
+.auth-form input[name='password']{
+  padding-right: 2.5rem;
+}
+
+.auth-form input::placeholder {
+  color: rgba(0, 0, 0, 0.794);
+}
+
+.password-container {
+  position: relative;
+  width: fit-content;
+}
+
+.password-container .eye-container{
+  width: 40px;
+  aspect-ratio: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.password-container .eye {
+  width: 40px;
+  aspect-ratio: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 50%;
+  cursor: pointer;
+  transition: all .03 ease;
+}
+
+.password-container .eye:hover{
+  opacity: 100%;
+}
+
+
+button{
+  justify-self: center;
+}
+
+.left-section .bottom-link{
+
+  justify-content: center;
+  font-size: 90%;
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.left-section .logo{
+  filter: invert();
+  height: 25px;
+  position: absolute;
+  top: 7%;
+  left: 8%;
+  display: none;
+}
+
+
+/* right section  */
+
+.right-section{
+  display: grid;
+  justify-items: end;
+}
+
+.right-section .logo{
+  height: 45px;
+  width: auto;
+  filter: invert();
+}
+
+.ts-container{
+  text-align: end;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.ts-container .title{
+  font-size: 120px;
+  font-weight: 600;
+}
+
+.ts-container .sub-title{
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.bottom-link{
+  text-wrap: nowrap;
+  display: flex;
+  align-items: end;
+  font-weight: 500;
+  gap: 5px;
+}
+
+.bottom-link a{
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  font-size: 120%;
+}
+
+@media screen and (max-width: 1400px) {
+
+  main{
+    padding: 5% 5%;
+    gap: 2rem;
+  }
+
+  .right-section .title {
+    font-size: 100px;
+  }
+}
+
+
+@media screen and (max-width: 1208px) {
+
+  form{
+    padding: 0px 4rem;
+  }
+
+  .right-section .title{
+    font-size: 80px;
+  }
+
+  .right-section .sub-title{
+    font-size: 14px;
+  }
+  
+}
+
+@media screen and (max-width: 1024px) {
+
+  main{
+    padding: 8% 5%;
+  }
+
+  .right-section .title{
+    font-size: 70px;
+  }
+
+  .right-section .sub-title{
+    max-width: 70%;
+  }
+  
+}
+
+
+@media screen and (max-width: 860px) {
+
+  main{
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  .right-section {
+    display: none;
+  }
+
+  .left-section .bottom-link{
+    display: flex;
+  }
+
+  .left-section .logo{
+    display: block;
+  }
+
+  form{
+    padding: 0px 10vw;
+  }
+  
+}
+
+
+@media screen and (max-width: 425px) {
+  form {
+    height: 70vh;
+    padding: 0px 7vw;
+    width: 100%;
+    gap: 3rem;
+  }
+  
+}
+
+@media screen and (max-width: 375px) {
+
+  input{
+    max-width: 250px;
+  }
+  
+}
