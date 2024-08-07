@@ -11,8 +11,10 @@
   </head>
 
   <body>
+    <?php
+      include('../common/header.php')
+    ?>
     <main>
-      <section class="left-section">
         <form class="auth-form login" method="post">
           <img src="../public/logo.svg" alt="logo" class="logo" />
           <p class="title">Login</p>
@@ -46,27 +48,7 @@
             </div>
           </div>
           <button class="submit" type="submit">Login</button>
-
-          <div class="bottom-link">
-            Dont have an account? <a href="/signup">SIGN UP</a>
-          </div>
-        </section>
         </form>
-      </section>
-
-      <section class="right-section">
-        <img src="../public/logo.svg" alt="logo" class="logo" />
-        <div class="ts-container">
-          <p class="title">Welcome <br> Back</p>
-          <p class="sub-title">
-            We're excited to have you back. <br> Dive into our courses and continue
-            your coding journey with us!
-          </p>
-        </div>
-        <div class="bottom-link">
-          Dont have an account? <a href="/AI-Edufy/signup">SIGN UP</a>
-        </div>
-      </section>
     </main>
   </body>
 </html>

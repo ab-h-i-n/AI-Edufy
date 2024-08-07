@@ -1,4 +1,4 @@
-const passInput = document.querySelector('.auth-form input[type="password"]');
+const passInput = document.querySelector('.auth-form input[name="password"]');
 const eyeContainer = document.querySelector(".eye-container");
 
 eyeContainer.onclick = () => {

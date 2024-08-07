@@ -1,25 +1,14 @@
-
 main {
   width: 100%;
   height: 100vh;
   padding: 5% 10%;
   display: grid;
-  grid-auto-flow: column;
-  grid-template-columns:min-content 1fr;
-}
-
-
-/* left section  */
-
-.left-section {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: fit-content;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.100);
 }
 
 form {
-  background-color: hsla(0, 0%, 100%, 0.4);
+  background-color: white;
   width: fit-content;
   height: 80vh;
   border-radius: 30px;
@@ -117,18 +106,7 @@ button:hover{
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.37);
 }
 
-.left-section .bottom-link{
-
-  justify-content: center;
-  font-size: 90%;
-  position: absolute;
-  bottom: 7%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: none;
-}
-
-.left-section .logo{
+main .logo{
   filter: invert();
   height: 25px;
   position: absolute;
@@ -136,143 +114,4 @@ button:hover{
   left: 8%;
   display: none;
 }
-
-
-/* right section  */
-
-.right-section{
-  display: grid;
-  justify-items: end;
-}
-
-.right-section .logo{
-  height: 45px;
-  width: auto;
-  filter: invert();
-}
-
-.ts-container{
-  text-align: end;
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-}
-
-.ts-container .title{
-  font-size: 120px;
-  font-weight: 600;
-}
-
-.ts-container .sub-title{
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-top: 10px;
-}
-
-.bottom-link{
-  text-wrap: nowrap;
-  display: flex;
-  align-items: end;
-  font-weight: 500;
-  gap: 5px;
-}
-
-.bottom-link a{
-  text-decoration: none;
-  color: black;
-  font-weight: 600;
-  font-size: 120%;
-}
-
-@media screen and (max-width: 1400px) {
-
-  main{
-    padding: 5% 5%;
-    gap: 2rem;
-  }
-
-  .right-section .title {
-    font-size: 100px;
-  }
-}
-
-
-@media screen and (max-width: 1208px) {
-
-  form{
-    padding: 0px 4rem;
-  }
-
-  .right-section .title{
-    font-size: 80px;
-  }
-
-  .right-section .sub-title{
-    font-size: 14px;
-  }
-  
-}
-
-@media screen and (max-width: 1024px) {
-
-  main{
-    padding: 8% 5%;
-  }
-
-  .right-section .title{
-    font-size: 70px;
-  }
-
-  .right-section .sub-title{
-    max-width: 70%;
-  }
-  
-}
-
-
-@media screen and (max-width: 860px) {
-
-  main{
-    grid-template-columns: 1fr;
-    place-items: center;
-  }
-
-  .right-section {
-    display: none;
-  }
-
-  .left-section .bottom-link{
-    display: flex;
-  }
-
-  .left-section .logo{
-    display: block;
-  }
-
-  form{
-    padding: 0px 10vw;
-  }
-  
-}
-
-
-@media screen and (max-width: 425px) {
-  form {
-    height: 70vh;
-    padding: 0px 7vw;
-    width: 100%;
-    gap: 3rem;
-  }
-  
-}
-
-@media screen and (max-width: 375px) {
-
-  input{
-    max-width: 250px;
-  }
-  
-}
-
 
