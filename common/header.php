@@ -29,9 +29,7 @@ $navItems = [
             <!-- center items  -->
             <div class="center-items">
                 <?php foreach ($navItems as $navItem): ?>
-
                     <a class="item" href=<?php echo $navItem["link"]; ?>><?php echo $navItem["text"]; ?></a>
-
                 <?php endforeach; ?>
             </div>
 
