@@ -1,6 +1,6 @@
 const user = localStorage.getItem('user');
 
 if(!user){
-    location.replace('login');
+    location.replace('home');
 }
 
