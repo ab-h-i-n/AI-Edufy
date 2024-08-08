@@ -1,3 +1,7 @@
+<?php
+    include_once("../utils/connect.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
