@@ -2,27 +2,8 @@
 
 class Admin
 {
-    private $tableName = "ADMINS";
-    private $dbcon;
-
-    function __construct($dbcon)
-    {
-        $this->dbcon = $dbcon;
-
-        $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
-            email VARCHAR(255) PRIMARY KEY,
-            password VARCHAR(255) NOT NULL
-        )";
-
-        if (!$this->dbcon->query($createQuery)) {
-            die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
-        }
-    }
-}
-
-class Learners
-{
-    private $tableName = "LEARNERS";
+    public $tableName = "ADMINS";
+    public $userRole = "admin";
     private $dbcon;
 
     function __construct($dbcon)
@@ -31,7 +12,30 @@ class Learners
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            profile_image BLOB NULL,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL
+        )";
+
+        if (!$this->dbcon->query($createQuery)) {
+            die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
+        }
+    }
+    
+}
+
+class Learners
+{
+    public $tableName = "LEARNERS";
+    public $userRole = "learner";
+    private $dbcon;
+
+    function __construct($dbcon)
+    {
+        $this->dbcon = $dbcon;
+
+        $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            profile_image LONGBLOB NULL,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL
@@ -45,7 +49,8 @@ class Learners
 
 class Mentors
 {
-    private $tableName = "MENTORS";
+    public $tableName = "MENTORS";
+    public $userRole = "mentor";
     private $dbcon;
 
     function __construct($dbcon)
@@ -54,7 +59,7 @@ class Mentors
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            profile_image BLOB NULL,
+            profile_image LONGBLOB NULL,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL
@@ -68,7 +73,7 @@ class Mentors
 
 class Questions
 {
-    private $tableName = "QUESTIONS";
+    public $tableName = "QUESTIONS";
     private $dbcon;
     public $test_cases;
 
@@ -99,7 +104,7 @@ class Questions
 
 class TestCases
 {
-    private $tableName = "TEST_CASES";
+    public $tableName = "TEST_CASES";
     private $dbcon;
 
     function __construct($dbcon)
@@ -123,7 +128,7 @@ class TestCases
 
 class CompletedQuestions
 {
-    private $tableName = "COMPLETED_QUESTIONS";
+    public $tableName = "COMPLETED_QUESTIONS";
     private $dbcon;
 
     function __construct($dbcon)
@@ -147,7 +152,7 @@ class CompletedQuestions
 
 class LeaderBoard
 {
-    private $tableName = "LEADER_BOARD";
+    public $tableName = "LEADER_BOARD";
     private $dbcon;
     public $levels;
 
@@ -174,7 +179,7 @@ class LeaderBoard
 
 class Levels
 {
-    private $tableName = "LEVELS";
+    public $tableName = "LEVELS";
     private $dbcon;
 
     function __construct($dbcon)
