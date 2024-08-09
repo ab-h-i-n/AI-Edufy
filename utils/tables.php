@@ -1,10 +1,39 @@
 <?php
 
-class Admin
+
+class BaseClass
+{
+
+    protected $dbcon;
+    protected $tableName;
+
+
+    function select($columns = "*", $where = "")
+    {
+        $query = "SELECT $columns FROM $this->tableName";
+
+        if (!empty($where)) {
+            $query .= " WHERE $where";
+        }
+
+        $result = $this->dbcon->query($query);
+
+        if (!$result) {
+            die("Error in select query: " . $this->dbcon->error);
+        }
+
+        return $result;
+    }
+
+
+
+}
+
+
+class Admin extends BaseClass
 {
     public $tableName = "ADMINS";
     public $userRole = "admin";
-    private $dbcon;
 
     function __construct($dbcon)
     {
@@ -20,14 +49,13 @@ class Admin
             die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
         }
     }
-    
+
 }
 
-class Learners
+class Learners extends BaseClass
 {
     public $tableName = "LEARNERS";
     public $userRole = "learner";
-    private $dbcon;
 
     function __construct($dbcon)
     {
@@ -47,7 +75,7 @@ class Learners
     }
 }
 
-class Mentors
+class Mentors extends BaseClass
 {
     public $tableName = "MENTORS";
     public $userRole = "mentor";
@@ -71,7 +99,7 @@ class Mentors
     }
 }
 
-class Questions
+class Questions extends BaseClass
 {
     public $tableName = "QUESTIONS";
     private $dbcon;
@@ -102,7 +130,7 @@ class Questions
 
 
 
-class TestCases
+class TestCases extends BaseClass
 {
     public $tableName = "TEST_CASES";
     private $dbcon;
@@ -126,7 +154,7 @@ class TestCases
 }
 
 
-class CompletedQuestions
+class CompletedQuestions extends BaseClass
 {
     public $tableName = "COMPLETED_QUESTIONS";
     private $dbcon;
@@ -150,7 +178,7 @@ class CompletedQuestions
 
 
 
-class LeaderBoard
+class LeaderBoard extends BaseClass
 {
     public $tableName = "LEADER_BOARD";
     private $dbcon;
@@ -177,7 +205,7 @@ class LeaderBoard
 }
 
 
-class Levels
+class Levels extends BaseClass
 {
     public $tableName = "LEVELS";
     private $dbcon;

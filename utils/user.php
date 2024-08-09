@@ -30,8 +30,7 @@ class User
     public function getRole($userId)
     {
         foreach ($this->userTables as $table) {
-            $query = "SELECT * FROM " . $table->tableName . " WHERE `id`=$userId";
-            $result = $this->dbcon->query($query);
+            $result = $table->select();
             if ($result->num_rows > 0) {
                 return $table->userRole;
             }
@@ -44,8 +43,7 @@ class User
     {
 
         foreach ($this->userTables as $table) {
-            $query = "SELECT * FROM " . $table->tableName . " WHERE `email`='$email' AND `password`='$password'";
-            $result = $this->dbcon->query($query);
+            $result = $table->select();
             if ($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
                 return $user['id'];
