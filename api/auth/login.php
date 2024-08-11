@@ -1,6 +1,7 @@
 <?php
 
 include_once ("../../utils/connect.php");
+include_once ("../../utils/user.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -11,13 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     try {
-        $user_id = $user->Login($email, $password);
-        $user_role = $user->getRole($user_id);
+        $user = new User($dbcon);
 
-        echo json_encode([
-            "id" => $user_id,
-            "role" => $user_role
-        ]);
+        $user_data = $user->Login($email, $password);
+
+        if ($user_data) {
+            setcookie('user_id', $user_data['id'], time() + (86400 * 30), "/");
+            setcookie('role', $user_data['role'], time() + (86400 * 30), "/");
+            echo json_encode([
+                "status" => 200,
+                "msg" => "User found",
+                "data" => $user_data
+            ]);
+        } else {
+            echo json_encode([
+                "status" => 404,
+                "msg" => "User not found"
+            ]);
+        }
 
     } catch (Throwable $th) {
 

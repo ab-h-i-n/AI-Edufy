@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/global.css" />
     <link rel="stylesheet" href="../styles/login-signup.css" />
-    <link rel="stylesheet" href="./login.css" />
-    <script src="../scripts/login-signup.js" defer></script>
+    <script src="../scripts/login-signup.js" type="module" defer></script>
     <title>Login</title>
   </head>
 
   <body>
     <?php
-      include('../common/header.php')
+      include('../common/header.php');
+      include('../common/Toast.php');
     ?>
     <main>
         <form class="auth-form login" method="post">
