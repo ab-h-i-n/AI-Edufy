@@ -8,6 +8,17 @@ eyeContainer.onclick = () => {
   passInput.type = isPassword ? "text" : "password";
 };
 
+const imageInput = document.querySelector(".image-input img");
+
+imageInput?.addEventListener("change", (e) => {
+  if (e.target.files && e.target.files.length > 0) {
+    const file = e.target.files[0];
+    console.log(file);
+  } else {
+    console.log("No file selected");
+  }
+});
+
 // auth
 const baseUrl = "http://localhost/AI-Edufy/api";
 

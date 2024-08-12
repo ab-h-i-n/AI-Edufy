@@ -20,7 +20,14 @@
       <img src="../public/logo.svg" alt="logo" class="logo" />
       <p class="title">SIGN UP</p>
       <div class="inputs-container">
-        <input type="file" name="image" id="image" />
+        <input type="file" name="image" id="image" class="hidden" />
+
+        <div class="image-input-container">
+          <label for="image" class="image-input">
+            <img src="../public/images/no_proile.png" alt="image" />
+          </label>
+        </div>
+
         <input class="form-input" type="text" name="name" placeholder="Name" />
         <input class="form-input" type="email" name="email" placeholder="Email" />
         <div class="password-container">
