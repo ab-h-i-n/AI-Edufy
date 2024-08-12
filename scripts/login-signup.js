@@ -88,23 +88,24 @@ signUpFrom?.addEventListener("submit", async (e) => {
       body: JSON.stringify({
         email: email,
         password: pass,
-        name : name,
-        role : role,
-        image : image,
+        name: name,
+        role: role,
+        image: image,
       }),
     });
 
-    const result = await response.text();
+    const result = await response.json();
 
-    console.log(result);
-    
-
-    // if (result?.status != 200) {
-    //   toast.error(result?.msg);
-    // } else {
-    //   toast.success("Signed up successfully!");
-    //   window.location.href = "/AI-Edufy/home";
-    // }
+    if (result?.status === 200) {
+      toast.success(result?.msg);
+      setTimeout(() => {
+        window.location.href = "/AI-Edufy/home";
+      }, 1500);
+    } else if (result?.status === 214) {
+      toast.warning(result?.msg);
+    } else {
+      toast.error("Failed to sign up!");
+    }
   } catch (error) {
     console.error(error);
   }
