@@ -5,7 +5,8 @@ class BaseClass
     protected $dbcon;
     protected $tableName;
 
-    function __construct($dbcon, $tableName){
+    function __construct($dbcon, $tableName)
+    {
         $this->dbcon = $dbcon;
         $this->tableName = $tableName;
     }
@@ -25,6 +26,24 @@ class BaseClass
     }
 
 
+    function insert($data)
+    {
+
+        $columns = implode(", ", array_keys($data));
+        $values = implode("', '", array_values($data));
+        $query = "INSERT INTO $this->tableName ($columns) VALUES ('$values')";
+        $result = $this->dbcon->query($query);
+
+        if (!$result) {
+            die("Error in insert query: " . $this->dbcon->error);
+        }
+
+        $userData = $this->select("*", "email = '" . $data['email'] . "'")->fetch_assoc();
+
+        return $userData;
+    }
+
+
 }
 
 class Admin extends BaseClass
@@ -33,7 +52,7 @@ class Admin extends BaseClass
 
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"ADMIN");
+        parent::__construct($dbcon, "ADMIN");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -44,6 +63,12 @@ class Admin extends BaseClass
         if (!$this->dbcon->query($createQuery)) {
             die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
         }
+
+        // $insertQuery = "INSERT INTO " . $this->tableName . " (email, password) VALUES ('admin@edufy.com','admin')";
+
+        // if (!$this->dbcon->query($insertQuery)) {
+        //     die("Failed to insert admin into table " . $this->tableName . ": " . $this->dbcon->error);
+        // }
     }
 
 }
@@ -53,11 +78,11 @@ class Users extends BaseClass
 
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"USERS");
+        parent::__construct($dbcon, "USERS");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            profile_image LONGBLOB NULL,
+            profile_image TEXT NULL,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
@@ -76,7 +101,7 @@ class Questions extends BaseClass
 
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"QUESTIONS");
+        parent::__construct($dbcon, "QUESTIONS");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -102,7 +127,7 @@ class TestCases extends BaseClass
 
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"TEST_CASES");
+        parent::__construct($dbcon, "TEST_CASES");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -122,7 +147,7 @@ class CompletedQuestions extends BaseClass
 {
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"COMPLETED_QUESTIONS");
+        parent::__construct($dbcon, "COMPLETED_QUESTIONS");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             learner_id INT PRIMARY KEY,
@@ -143,7 +168,7 @@ class LeaderBoard extends BaseClass
 
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"LEADER_BOARD");
+        parent::__construct($dbcon, "LEADER_BOARD");
 
         $this->levels = new Levels($dbcon);
 
@@ -165,7 +190,7 @@ class Levels extends BaseClass
 {
     function __construct($dbcon)
     {
-        parent::__construct($dbcon,"LEVELS");
+        parent::__construct($dbcon, "LEVELS");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,

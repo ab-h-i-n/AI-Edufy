@@ -40,5 +40,34 @@ class User
 
     }
 
+    public function SignUp($name, $email, $password, $role, $image)
+    {
+        $checkUser = $this->users->select("*", "email = '$email'")->fetch_assoc();
+
+        if ($checkUser) {
+            echo json_encode([
+                "status" => 214,
+                "msg" => "User already exists"
+            ]);
+
+            die();
+        }
+
+        $result = $this->users->insert([
+            "name" => $name,
+            "email" => $email,
+            "password" => $password,
+            "role" => $role,
+            "profile_image" => $image
+        ]);
+
+        if (!$result) {
+            return false;
+        }
+
+        return $result;
+
+    }
+
 }
 
