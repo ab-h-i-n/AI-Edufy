@@ -8,12 +8,14 @@ eyeContainer.onclick = () => {
   passInput.type = isPassword ? "text" : "password";
 };
 
-const imageInput = document.querySelector(".image-input img");
+const imageInput = document.querySelector("#image-input");
 
-imageInput?.addEventListener("change", (e) => {
+imageInput?.addEventListener("change", async(e) => {
   if (e.target.files && e.target.files.length > 0) {
     const file = e.target.files[0];
-    console.log(file);
+    const baseUrl = await toBase64(file);
+    const imageContainer = document.querySelector('#image-show');
+    imageContainer.src = baseUrl;
   } else {
     console.log("No file selected");
   }
