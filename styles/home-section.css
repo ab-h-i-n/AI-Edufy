@@ -1,0 +1,29 @@
+.home-section{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    padding: 0px 7.5%;
+}
+
+.home-section .hero-image-container{
+    width: 700px;
+    height: auto;
+}
+
+.home-section .hero-image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.home-section .title{
+    font-size: 6rem;
+    font-weight: bolder;
+}
+
+
+.home-section .hero-image-container img,
+.home-section .title{
+    padding-top: 3rem;
+}

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/home-section.css">
     <script src="../scripts/login-signup.js" defer></script>
     <title>Document</title>
 </head>
@@ -16,7 +17,7 @@
             UNLOCK YOUR CODING POTENTIAL
         </div>
 
-        <div class="hero-image">
+        <div class="hero-image-container">
             <img src="../public/images/hero-image.svg" alt="hero-image">
         </div>
     </section>

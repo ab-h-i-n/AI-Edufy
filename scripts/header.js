@@ -8,3 +8,5 @@ switch (currentPath) {
     document.querySelector("header .signup-btn").classList.add("hidden");
     break;
 }
+
+console.log(window.innerWidth);
