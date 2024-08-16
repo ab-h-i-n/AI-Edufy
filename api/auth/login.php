@@ -1,7 +1,6 @@
 <?php
 
 include_once ("../../utils/connect.php");
-include_once ("../../utils/user.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -12,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     try {
-        $user = new User($dbcon);
 
         $user_data = $user->Login($email, $password);
 

@@ -1,3 +1,4 @@
+<?php include("../api/admin/getusers.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    Admin
+    <table>
+        
+    </table>
 </body>
 </html>

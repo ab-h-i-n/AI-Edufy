@@ -2,12 +2,12 @@
 
 class User
 {
-    private $admin;
-    private $question;
-    private $completed_questions;
+    public $admin;
+    public $question;
+    public $completed_questions;
     private $dbcon;
     private $userTables;
-    private $users;
+    public $users;
 
     public function __construct($dbcon)
     {
