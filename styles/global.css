@@ -13,21 +13,21 @@
 }
 
 @font-face {
-  font-family: "Montserraat";
+  font-family: "Montserraat-Bold";
   src: url("../public/fonts/Montserrat-Bold.ttf");
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Montserraat";
+  font-family: "Montserraat-ExtraBold";
   src: url("../public/fonts/Montserrat-ExtraBold.ttf");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Montserraat";
+  font-family: "Montserraat-Black";
   src: url("../public/fonts/Montserrat-Black.ttf");
   font-weight: bolder;
   font-style: normal;
