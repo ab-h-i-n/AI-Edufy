@@ -9,15 +9,6 @@ if (mysqli_num_rows($admin_result) > 0) {
     $adminData = mysqli_fetch_assoc($admin_result);
 }
 
-// fetch user details 
-$result = $user->users->select('*');
-$userData = [];
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $userData[] = $row;
-    }
-}
-
 
 // sidemenu items 
 
@@ -25,7 +16,12 @@ $sideMenuItems = [
     [
         "icon" => "../public/icons/users.svg",
         "title" => "users",
-        "path" => "/"
+        "path" => "/AI-Edufy/home/"
+    ],
+    [
+        "icon" => "../public/icons/question.svg",
+        "title" => "questions",
+        "path" => "/AI-Edufy/home/?content=questions"
     ]
 ];
 
@@ -38,11 +34,12 @@ $sideMenuItems = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/admin-page.css">
     <link rel="stylesheet" href="../styles/global.css">
+    <script src="../scripts/admin.js" type="module" defer></script>
     <title>Document</title>
 </head>
 
 <body id="admin">
-
+    <?php include('../common/Toast.php') ?>
     <header>
         <div class="logo">
             <img src="../public/logo.svg" alt="logo" />
@@ -57,43 +54,21 @@ $sideMenuItems = [
         <div class="sidemenu">
 
             <?php foreach ($sideMenuItems as $items): ?>
-                <div>
+                <a href="<?php echo $items['path']; ?>" class="menu-item">
                     <img src="<?php echo htmlspecialchars($items['icon']) ?>" />
-                </div>
+                </a>
             <?php endforeach; ?>
 
         </div>
 
-        <div class="contents">
-            <div class="title"> User Management </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
+        <?php
+            $content = $_GET['content'] ?? 'none';
 
-                <?php foreach ($userData as $user): ?>
-                    <tr>
-                        <td>
-                            <div class="image-name">
-                                <div class="user-image"><img src="<?php echo htmlspecialchars($user['profile_image']); ?>">
-                                </div>
-                                <div class="user-name"><?php echo $user['name']; ?></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="user-email"><?php echo $user['email']; ?></div>
-                        </td>
-                        <td>
-                            <div class="user-role"><?php echo $user['role']; ?></div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        </div>
+            switch ($content) {
+                case 'questions': include('questionManagement.php'); break;
+                default : include('userManagement.php');
+            }
+        ?>
 
     </main>
 </body>

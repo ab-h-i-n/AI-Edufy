@@ -16,7 +16,7 @@ class Toast {
   }
 
   loading(message) {
-    this.showToast(message, "⏳", false);
+    this.showToast(message || 'loading..', "⏳", false);
   }
 
   dismiss() {
