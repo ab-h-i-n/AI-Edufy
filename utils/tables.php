@@ -44,7 +44,17 @@ class BaseClass
     }
 
 
+    function delete($id)
+    {
+        $query = "DELETE FROM " . $this->tableName . " WHERE id=" . $id;
+        $result = $this->dbcon->query($query);
+        if (!$result) {
+            die("". $this->dbcon->error);
+        }
+        return $result;
+    }
 }
+
 
 class Admin extends BaseClass
 {

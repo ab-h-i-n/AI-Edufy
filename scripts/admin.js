@@ -11,5 +11,11 @@ deleteBtns.forEach((deleteBtn) => {
     loader.add(deleteBtn);
     
 
+    const response = await fetch(`http://localhost/AI-Edufy/api/user/delete.php?userid=${userId}`);
+
+    const result = await response.json();
+
+    console.log(result);
+    
   });
 });

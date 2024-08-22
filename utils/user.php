@@ -35,9 +35,7 @@ class User
                 ];
             }
         }
-
         return null;
-
     }
 
     public function SignUp($name, $email, $password, $role, $image)
@@ -69,5 +67,13 @@ class User
 
     }
 
+    public function Delete($id){
+        $result = $this->users->delete($id);
+        if($result->num_rows > 0) {
+            return $result;
+        }else{
+            return false;
+        }
+    }
 }
 
