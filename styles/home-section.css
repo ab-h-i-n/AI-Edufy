@@ -9,6 +9,13 @@
     font-size: 5.2rem;
     font-weight: bolder;
     padding-top: 3rem;
+
+    & span {
+      --title-color: rgb(232, 255, 232);
+      position: relative;
+      color: var(--title-color);
+      text-shadow: 2px 5px 20px rgb(118, 255, 118);
+    }
   }
 
   & .hero-image-container {

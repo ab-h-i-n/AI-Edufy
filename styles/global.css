@@ -49,6 +49,7 @@
   --text-color: rgb(255, 255, 255);
   --place-holder-color: var(--text-color) / 10%;
 }
+
 body {
   background-size: cover;
   background-position: center center;

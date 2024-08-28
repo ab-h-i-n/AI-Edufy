@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css" />
     <link rel="stylesheet" href="../styles/home-section.css">
-    <script src="../scripts/login-signup.js" defer></script>
+    <script src="../scripts/welcome.js" defer></script>
     <title>Document</title>
 </head>
 
@@ -14,7 +14,7 @@
     <?php include ('../common/header.php') ?>
     <section class="home-section">
         <div class="title">
-            UNLOCK YOUR CODING POTENTIAL
+            UNLOCK YOUR CODING <br> &lt;<span></span>/&gt;
         </div>
 
         <div class="hero-image-container">
