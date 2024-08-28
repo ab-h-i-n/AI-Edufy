@@ -1,29 +1,43 @@
-#admin header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 4rem;
-  border-bottom: var(--default-border);
-  position: sticky;
-  top: 0;
-  background-color: var(--form-bg);
-}
+#admin {
+  & main {
+    background-color: var(--body-bg);
+    min-width: 100vw;
+    min-height: 100vh;
+    position: relative;
+  }
 
-#admin header .admin-info {
-  font-size: 1rem;
-}
+  & header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 4rem;
+    border-bottom: var(--default-border);
+    position: sticky;
+    top: 0;
+    background-color: var(--form-bg);
 
-#admin header .logo,
-#admin header .logo img {
-  width: 130px;
-  height: auto;
-}
+    & .logo,
+    .logo img {
+      width: 130px;
+      height: auto;
+    }
 
-main {
-  background-color: var(--body-bg);
-  min-width: 100vw;
-  min-height: 100vh;
-  position: relative;
+    & .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      & form button {
+        font-size: 0.9rem;
+        padding: .5rem 1.3rem;
+        background-color: rgb(98, 167, 194);
+
+        &:hover{
+            background-color: rgb(154, 207, 228);
+        }
+      }
+    }
+  }
 }
 
 .sidemenu {
@@ -121,7 +135,7 @@ table {
         text-align: center;
       }
 
-      & .user-role{
+      & .user-role {
         text-transform: capitalize;
       }
 
@@ -129,7 +143,6 @@ table {
         display: grid;
         place-items: end;
       }
-      
     }
   }
 }
@@ -155,7 +168,7 @@ table {
     }
   }
 
-  & .user-name{
+  & .user-name {
     text-transform: capitalize;
   }
 }

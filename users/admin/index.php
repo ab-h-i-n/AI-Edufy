@@ -1,5 +1,6 @@
 <?php
 include_once("../utils/connect.php");
+include_once("../api/auth/logout.php");
 
 // fetch admin details 
 $admin_id = $_COOKIE['user_id'];
@@ -47,6 +48,9 @@ $sideMenuItems = [
 
         <div class="admin-info">
             <div class="email"><?php echo $adminData['email'] ?></div>
+            <form action="../api/auth/logout.php" method="post">
+                <button name="logout" >Logout</button>
+            </form>
         </div>
     </header>
 
