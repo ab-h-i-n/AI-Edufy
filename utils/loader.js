@@ -7,8 +7,9 @@ class Loader {
     parent.append(this.div);
   }
 
-  remove(parent) {
+  remove(parent , defaultInnerHtml) {
     parent.remove(this.div);
+    parent.innerHTML = defaultChild;
   }
 }
 

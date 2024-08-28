@@ -41,7 +41,7 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="user-role"><?php echo $user['role']; ?></div>
                     </td>
                     <td class="actions-td">
-                        <button id="<?php echo $user['id']; ?>" class="del del-user">Delete</button>
+                        <button id="<?php echo $user['id']; ?>" class="del del-user pill">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

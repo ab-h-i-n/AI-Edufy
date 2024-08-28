@@ -49,7 +49,7 @@ $sideMenuItems = [
         <div class="admin-info">
             <div class="email"><?php echo $adminData['email'] ?></div>
             <form action="../api/auth/logout.php" method="post">
-                <button name="logout" >Logout</button>
+                <button name="logout" class="pill" >Logout</button>
             </form>
         </div>
     </header>

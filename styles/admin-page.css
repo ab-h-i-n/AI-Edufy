@@ -28,12 +28,10 @@
       gap: 1rem;
 
       & form button {
-        font-size: 0.9rem;
-        padding: .5rem 1.3rem;
         background-color: rgb(98, 167, 194);
 
-        &:hover{
-            background-color: rgb(154, 207, 228);
+        &:hover {
+          background-color: rgb(154, 207, 228);
         }
       }
     }
@@ -142,6 +140,10 @@ table {
       & .actions-td {
         display: grid;
         place-items: end;
+
+        & button {
+          cursor: progress;
+        }
       }
     }
   }
@@ -157,9 +159,14 @@ table {
   & .user-image {
     border-radius: 50%;
     overflow: hidden;
-    width: 80px;
+    width: 50px;
     aspect-ratio: 1;
     background-color: var(--body-bg);
+    transition: all 0.5s ease;
+
+    &:hover {
+      width: 100px;
+    }
 
     &img {
       width: 100%;
