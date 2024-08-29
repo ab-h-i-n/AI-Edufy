@@ -34,10 +34,13 @@ $navItems = [
             </div>
 
             <!-- right buttons  -->
+             <?php $user = $_COOKIE['user_id'] ?>
+             <?php if(!$user) : ?>
             <div>
                 <a class="login-btn" href="/AI-Edufy/login"><button>LogIn</button></a>
                 <a class="signup-btn" href="/AI-Edufy/signup"><button>Sign Up</button></a>
             </div>
+            <?php endif; ?>
         </div>
     </header>
 </body>

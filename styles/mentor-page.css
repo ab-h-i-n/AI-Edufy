@@ -1,0 +1,27 @@
+body#mentor{
+    background: var(--body-bg);
+}
+
+main{
+    display: grid;
+    grid-template-columns: 1fr 30%;
+    gap: 20px;
+    margin: 7% 3%;
+}
+
+.question-section{
+    background-color: var(--form-bg);
+    min-height: 100vh;
+    border: var(--default-border);
+    border-radius: 20px;
+}
+
+
+.side-section{
+    background-color: var(--form-bg);
+    max-height: 80vh;
+    border: var(--default-border);
+    border-radius: 20px;
+    position: sticky;
+    top: 100px;
+}
