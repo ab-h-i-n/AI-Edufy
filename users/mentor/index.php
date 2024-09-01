@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+    include_once('../utils/connect.php');
+    $userId = $_COOKIE['user_id'];
+    $userQuestions = $user->getUserQuestions($userId);
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +17,21 @@
     <main>
 
         <!-- questions section  -->
-         <section class="question-section"></section>
+         <section class="question-section">
+            <!-- title  -->
+             <p class="title">My Questions</p>
+             <!-- quesitons  -->
+              <div class="questions-container">
+                <?php foreach ($userQuestions as $question) : ?>
+                    <div>
+                        <!-- question title  -->
+                         <p class="ques_title"><?php echo $question['title']; ?></p>
+                         <!-- question description  -->
+                          <p><?php echo $question['description']; ?></p>
+                    </div>
+                <?php endforeach; ?>
+              </div>
+         </section>
 
         <!-- side section  -->
          <section class="side-section"></section>

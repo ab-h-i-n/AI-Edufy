@@ -75,5 +75,18 @@ class User
             return false;
         }
     }
-}
 
+    public function getUserQuestions($userId)
+    {
+        $result = $this->question->select('*', "mentor_id = '$userId'");
+        if ($result->num_rows > 0) {
+            $questions = [];
+            while ($row = $result->fetch_assoc()) {
+                $questions[] = $row;
+            }
+            return $questions;
+        } else {
+            return null;
+        }
+    }
+}
