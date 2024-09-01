@@ -22,14 +22,10 @@
              <p class="title">My Questions</p>
              <!-- quesitons  -->
               <div class="questions-container">
-                <?php foreach ($userQuestions as $question) : ?>
-                    <div>
-                        <!-- question title  -->
-                         <p class="ques_title"><?php echo $question['title']; ?></p>
-                         <!-- question description  -->
-                          <p><?php echo $question['description']; ?></p>
-                    </div>
-                <?php endforeach; ?>
+                <?php foreach ($userQuestions as $question){
+                    include('../common/questionBox.php');
+                }
+                ?>
               </div>
          </section>
 
