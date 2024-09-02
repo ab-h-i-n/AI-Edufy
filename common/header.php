@@ -34,7 +34,7 @@ $navItems = [
             </div>
 
             <!-- right buttons  -->
-             <?php $user = $_COOKIE['user_id'] ?>
+             <?php $user = isset($_COOKIE["user_id"]) ?>
              <?php if(!$user) : ?>
             <div>
                 <a class="login-btn" href="/AI-Edufy/login"><button>LogIn</button></a>

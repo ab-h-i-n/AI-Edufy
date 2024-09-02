@@ -149,7 +149,7 @@ table {
   }
 }
 
-.image-name {
+.image-name{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,12 +163,13 @@ table {
     aspect-ratio: 1;
     background-color: var(--body-bg);
     transition: all 0.5s ease;
+    position: relative;
 
     &:hover {
       width: 100px;
     }
 
-    &img {
+    & .profile-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
