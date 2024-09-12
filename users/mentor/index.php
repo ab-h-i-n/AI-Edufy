@@ -14,7 +14,7 @@ $userQuestions = $user->getUserQuestions($userId);
 </head>
 
 <body id="mentor">
-    <?php include('../common/header.php') ?>
+    <?php include('header.php') ?>
 
     <main>
 
