@@ -1,0 +1,99 @@
+body#learner {
+  background: var(--body-bg);
+
+  main {
+    padding: 8% 3% 3% 3%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 250px 1fr;
+    gap: 10px;
+    min-height: 100vh;
+
+    section {
+      background: var(--form-bg);
+      border: var(--default-border);
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.count-section {
+        grid-column: 1;
+        grid-row: 1;
+        display: flex;
+        gap: 2rem;
+
+        .count-section {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #2d2d2d;
+          padding: 20px;
+          border-radius: 10px;
+          color: white;
+        }
+
+        .progress-container {
+          position: relative;
+          width: 150px;
+          height: 150px;
+        }
+
+        canvas {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .count-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+        }
+
+        .count-text p {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .difficulty-stats {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          font-size: 16px;
+        }
+
+        .difficulty-stats p {
+          margin: 10px 0;
+          text-align: right;
+          font-weight: 600;
+        }
+      }
+
+      &.points-section {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      &.count-section,
+      &.points-section {
+        max-height: 290px;
+      }
+
+      &.solved-questions-section {
+        grid-column: span 2;
+      }
+
+      &.profile-section {
+        grid-row: span 2;
+        grid-column: 3 / 4;
+      }
+    }
+  }
+}
