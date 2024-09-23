@@ -11,7 +11,7 @@
     <title>Document</title>
 </head>
 
-<body id="learner">
+<body id="dashboard">
 
     <?php include_once('../users/learner/header.php') ?>
 

@@ -89,4 +89,18 @@ class User
             return null;
         }
     }
+
+    public function getAllQuestions()
+    {
+        $result = $this->question->select('*','');
+        if ($result->num_rows > 0) {
+            $questions = [];
+            while ($row = $result->fetch_assoc()) {
+                $questions[] = $row;
+            }
+            return $questions;
+        } else {
+            return null;
+        }
+    }
 }
