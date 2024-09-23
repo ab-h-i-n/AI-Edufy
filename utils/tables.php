@@ -49,7 +49,7 @@ class BaseClass
         $query = "DELETE FROM " . $this->tableName . " WHERE id=" . $id;
         $result = $this->dbcon->query($query);
         if (!$result) {
-            die("". $this->dbcon->error);
+            die("" . $this->dbcon->error);
         }
         return $result;
     }
@@ -160,7 +160,7 @@ class CompletedQuestions extends BaseClass
         parent::__construct($dbcon, "COMPLETED_QUESTIONS");
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
-            learner_id INT PRIMARY KEY,
+            learner_id INT NOT NULL,
             question_id INT NOT NULL,
             FOREIGN KEY (learner_id) REFERENCES USERS(id),
             FOREIGN KEY (question_id) REFERENCES QUESTIONS(id)
@@ -169,6 +169,22 @@ class CompletedQuestions extends BaseClass
         if (!$this->dbcon->query($createQuery)) {
             die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
         }
+    }
+
+    function select($columns = "*", $where = "")
+    {
+        $query = "SELECT ".$columns." FROM " . $this->tableName . " cq JOIN QUESTIONS q ON cq.question_id = q.id";
+
+        if (!empty($where)) {
+            $query .= " WHERE " . $where;
+        }
+
+        $result = $this->dbcon->query($query);
+        if (!$result) {
+            die("Error in select query: " . $this->dbcon->error);
+        }
+
+        return $result;
     }
 }
 

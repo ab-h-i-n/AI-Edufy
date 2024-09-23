@@ -67,11 +67,12 @@ class User
 
     }
 
-    public function Delete($id){
+    public function Delete($id)
+    {
         $result = $this->users->delete($id);
-        if($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             return $result;
-        }else{
+        } else {
             return false;
         }
     }
@@ -92,7 +93,7 @@ class User
 
     public function getAllQuestions()
     {
-        $result = $this->question->select('*','');
+        $result = $this->question->select('*', '');
         if ($result->num_rows > 0) {
             $questions = [];
             while ($row = $result->fetch_assoc()) {
@@ -102,5 +103,12 @@ class User
         } else {
             return null;
         }
+    }
+
+    public function getNumberOfQuestions($type, $user)
+    {
+        $result = $this->question->select('*', "type = '$type'");
+        $result2 = $this->completed_questions->select('*', "learner_id = '$user' AND q.type = '$type'");
+        return [$result2->num_rows, $result->num_rows];
     }
 }
