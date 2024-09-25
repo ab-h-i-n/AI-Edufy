@@ -21,21 +21,29 @@ $userQuestions = $user->getUserQuestions($userId);
         <!-- questions section  -->
         <section class="question-section">
             <!-- title  -->
-            <p class="title">My Questions</p>
+            <div class="title-container">
+                <p class="title">My Questions</p>
+                <div class="add-btn-container">
+                    <span class="add-label">ADD NEW</span>
+                    <span class="add-btn">
+                        <img src="../public/icons/plus.svg" alt="plus">
+                    </span>
+                </div>
+            </div>
             <!-- quesitons  -->
             <div class="questions-container">
                 <?php
-                    if (isset($userQuestions)) {
+                if (isset($userQuestions)) {
 
-                        foreach ($userQuestions as $question) {
-                            include('../common/questionBox.php');
-                        }
-                    } else {
-                ?>
-                
-                <div>No Questions</div>
-                
-                <?php
+                    foreach ($userQuestions as $question) {
+                        include('../common/questionBox.php');
+                    }
+                } else {
+                    ?>
+
+                    <div>No Questions</div>
+
+                    <?php
                 }
                 ?>
             </div>
