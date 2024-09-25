@@ -19,7 +19,21 @@ $userQuestions = $user->getUserQuestions($userId);
     <main>
 
         <!-- modal  -->
-        <?php include('../common/modal.php') ?>
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-close">
+                    <img src="../public/icons/cross.svg" alt="close">
+                </div>
+
+                <!-- contents  -->
+                 <form>
+                    <div class="question-title"></div>
+                    <div class="question-desc"></div>
+                    div.
+                 </form>
+
+            </div>
+        </div>
 
         <!-- questions section  -->
         <section class="question-section">

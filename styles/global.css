@@ -223,15 +223,30 @@ div.toast.fade-out {
   align-items: center;
   z-index: 100;
   backdrop-filter: blur(5px);
+
+  & .modal-content{
+    position: relative;
+    z-index: 101;
+    background-color: var(--form-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    border: var(--default-border);
+    box-shadow: var(--default-box-shadow);
+    min-width: 500px;
+    min-height: 80vh;
+  }
+
+  & .modal-close{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    & img{
+      width: 3rem;
+      height: 3rem;
+      filter: invert();
+    }
+  }
 }
 
-.modal-content{
-  z-index: 101;
-  background-color: var(--form-bg);
-  padding: 2rem;
-  border-radius: 10px;
-  border: var(--default-border);
-  box-shadow: var(--default-box-shadow);
-  min-width: 500px;
-  min-height: 80vh;
-}
+
