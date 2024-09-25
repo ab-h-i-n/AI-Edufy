@@ -209,3 +209,29 @@ div.toast.fade-out {
     background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
   }
 }
+
+
+.modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content{
+  z-index: 101;
+  background-color: var(--form-bg);
+  padding: 2rem;
+  border-radius: 10px;
+  border: var(--default-border);
+  box-shadow: var(--default-box-shadow);
+  min-width: 500px;
+  min-height: 80vh;
+}

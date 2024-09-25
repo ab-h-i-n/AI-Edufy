@@ -18,6 +18,9 @@ $userQuestions = $user->getUserQuestions($userId);
 
     <main>
 
+        <!-- modal  -->
+        <?php include('../common/modal.php') ?>
+
         <!-- questions section  -->
         <section class="question-section">
             <!-- title  -->
