@@ -211,6 +211,8 @@ div.toast.fade-out {
 }
 
 
+
+
 .modal{
   position: fixed;
   top: 0;
@@ -223,6 +225,17 @@ div.toast.fade-out {
   align-items: center;
   z-index: 100;
   backdrop-filter: blur(5px);
+  transition: all 0.5s;
+
+
+  &.closed{
+    opacity: 0;
+    pointer-events: none;
+
+    & .modal-content{
+      transform: translateY(100px);
+    }
+  }
 
   & .modal-content{
     position: relative;
@@ -235,6 +248,7 @@ div.toast.fade-out {
     box-shadow: var(--default-box-shadow);
     min-width: 500px;
     max-height: 80vh;
+    transition: all 0.3s;
 
     & .modal-title{
       font-size: 1.6rem;

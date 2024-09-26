@@ -10,6 +10,7 @@ $userQuestions = $user->getUserQuestions($userId);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/mentor-page.css">
+    <script src="../scripts/global.js" type="module" defer></script>
     <script src="../scripts/mentor.js" type="module" defer></script>
     <title>Document</title>
 </head>
@@ -20,12 +21,11 @@ $userQuestions = $user->getUserQuestions($userId);
     <main>
 
         <!-- modal  -->
-        <div class="modal">
+        <div class="modal closed">
             <div class="modal-content">
-                <input type="checkbox" id="modal-close" class="hidden" value="">
-                <label for="modal-close" class="modal-close">
+                <div class="modal-close">
                     <img src="../public/icons/cross.svg" alt="close">
-                </label>
+                </div>
 
                 <div class="modal-title">Create New Question</div>
 
@@ -73,7 +73,7 @@ $userQuestions = $user->getUserQuestions($userId);
                                 </div>
                             </div>
                             <!-- add test case btn  -->
-                            <div onclick="addTestCase()" class="add-btn-container">
+                            <div id="add-test-case" class="add-btn-container">
                                 <span class="add-btn">
                                 <span class="add-label">Add Test Cases</span>
                                     <img src="../public/icons/plus.svg" alt="plus">
@@ -99,7 +99,7 @@ $userQuestions = $user->getUserQuestions($userId);
             <!-- title  -->
             <div class="title-container">
                 <p class="title">My Questions</p>
-                <div class="add-btn-container">
+                <div class="add-btn-container modal-open">
                     <span class="add-label">ADD NEW</span>
                     <span class="add-btn">
                         <img src="../public/icons/plus.svg" alt="plus">
