@@ -85,6 +85,14 @@ main {
     grid-template-columns: repeat(2,1fr);
     gap: 1rem 2rem;
 
+    & .btn-container{
+      grid-column: span 2;
+      display: flex;
+      justify-content: center;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+    }
+
     & .left, .right{
       display: grid;
       gap: 1rem;

@@ -10,12 +10,12 @@ $userQuestions = $user->getUserQuestions($userId);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/mentor-page.css">
-    <script src="../scripts/mentor.js" defer></script>
+    <script src="../scripts/mentor.js" type="module" defer></script>
     <title>Document</title>
 </head>
 
 <body id="mentor">
-    <?php include('header.php') ?>
+    <?php include('header.php'); include('../common/Toast.php'); ?>
 
     <main>
 
@@ -30,19 +30,19 @@ $userQuestions = $user->getUserQuestions($userId);
                 <div class="modal-title">Create New Question</div>
 
                 <!-- contents  -->
-                <form>
+                <form id="create-question" method="post">
                     <div class="left">
                         <div class="question-title">
                             <label for="ques-title">Title</label>
-                            <input type="text" id="ques-title" name="ques-title" required>
+                            <input type="text" id="ques-title" name="ques-title" >
                         </div>
                         <div class="question-desc">
                             <label for="ques-desc">Description</label>
-                            <textarea id="ques-desc" name="ques-desc" required></textarea>
+                            <textarea id="ques-desc" name="ques-desc" ></textarea>
                         </div>
                         <div class="type">
                             <label for="ques-type">Type</label>
-                            <select name="ques-type" id="ques-type" required>
+                            <select name="ques-type" id="ques-type" >
                                 <option value="easy">Easy</option>
                                 <option value="medium">Medium</option>
                                 <option value="hard">Hard</option>
@@ -50,14 +50,14 @@ $userQuestions = $user->getUserQuestions($userId);
                         </div>
                         <div class="language">
                             <label for="ques-lang">Language</label>
-                            <select name="ques-lang" id="ques-lang" required>
+                            <select name="ques-lang" id="ques-lang" >
                                 <option value="C">C</option>
                                 <option value="C++">C++</option>
                             </select>
                         </div>
                         <div class="points">
                             <label for="ques-points">Points</label>
-                            <input type="number" id="ques-points" name="ques-points" required>
+                            <input type="number" id="ques-points" name="ques-points" >
                         </div>
                     </div>
 
@@ -67,9 +67,9 @@ $userQuestions = $user->getUserQuestions($userId);
                             <div class="test-cases-container">
                                 <div class="test-case">
                                     <label>Input</label>
-                                    <input type="text" name="input[]" placeholder="Input" required>
+                                    <input type="text" name="input[]" placeholder="Input" >
                                     <label>Output</label>
-                                    <input type="text" name="output[]" placeholder="Output" required>
+                                    <input type="text" name="output[]" placeholder="Output" >
                                 </div>
                             </div>
                             <!-- add test case btn  -->
@@ -84,6 +84,11 @@ $userQuestions = $user->getUserQuestions($userId);
                             </div>
                         </div>
                     </div>
+
+                    <!-- submit btn  -->
+                     <div class="btn-container">
+                        <button type="submit" >Create</button>
+                     </div>
                 </form>
 
             </div>
