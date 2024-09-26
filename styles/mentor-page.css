@@ -9,6 +9,40 @@ main {
   margin: 7% 3%;
 }
 
+.add-btn-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & .add-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  & .add-btn {
+    border: var(--default-border);
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    & img {
+      width: 1.5rem;
+      height: 1.5rem;
+      filter: invert();
+      user-select: none;
+    }
+  }
+}
+
 .question-section {
   background-color: var(--form-bg);
   min-height: 100vh;
@@ -17,7 +51,6 @@ main {
   padding: 2rem;
 
   & .title-container {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,41 +58,6 @@ main {
     & .title {
       font-weight: 600;
       font-size: 1.7rem;
-    }
-
-    & .add-btn-container{
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        & .add-label{
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        & .add-btn{
-
-            border : var(--default-border);
-            padding: .5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .3s;
-            
-            &:hover{
-                background-color: rgba(255, 255, 255, 0.300);
-            }
-
-            &:active{
-                transform: scale(.95);
-            }
-
-            & img{
-                width: 1.5rem;
-                height: 1.5rem;
-                filter: invert();
-                user-select: none;
-            }
-        }
     }
   }
 
@@ -79,3 +77,68 @@ main {
   top: 100px;
 }
 
+.modal-content {
+  position: relative;
+
+  & form {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem 2rem;
+
+    & .left, .right{
+      display: grid;
+      gap: 1rem;
+      height: fit-content;
+
+      & div{
+        display: grid;
+        gap: 0.5rem;
+        height: fit-content;
+
+        & label{
+          font-weight: 600;
+        }
+
+        & input, textarea, select{
+          padding: 0.5rem;
+          border: var(--default-border);
+          border-radius: 5px;
+          outline: none;
+          transition: all 0.3s;
+          width: 100%;
+          background-color: rgb(26, 27, 30);
+          color: #ffffff;
+
+          &:focus{
+            border-color: var(--primary-color);
+          }
+        }
+
+      }
+
+      & .add-btn{
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .5rem;
+        
+        & span{
+          font-size: .8rem;
+        }
+      }
+
+    }
+
+    & .right{
+
+      & .test-case{
+        background-color: rgb(38, 38, 42);
+        padding: 1rem .5rem;
+        border-radius: 5px;
+        border: var(--default-border);
+      }
+    }
+
+  }
+}

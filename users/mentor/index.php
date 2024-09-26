@@ -10,6 +10,7 @@ $userQuestions = $user->getUserQuestions($userId);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/mentor-page.css">
+    <script src="../scripts/mentor.js" defer></script>
     <title>Document</title>
 </head>
 
@@ -21,16 +22,69 @@ $userQuestions = $user->getUserQuestions($userId);
         <!-- modal  -->
         <div class="modal">
             <div class="modal-content">
-                <div class="modal-close">
+                <input type="checkbox" id="modal-close" class="hidden" value="">
+                <label for="modal-close" class="modal-close">
                     <img src="../public/icons/cross.svg" alt="close">
-                </div>
+                </label>
+
+                <div class="modal-title">Create New Question</div>
 
                 <!-- contents  -->
-                 <form>
-                    <div class="question-title"></div>
-                    <div class="question-desc"></div>
-                    div.
-                 </form>
+                <form>
+                    <div class="left">
+                        <div class="question-title">
+                            <label for="ques-title">Title</label>
+                            <input type="text" id="ques-title" name="ques-title" required>
+                        </div>
+                        <div class="question-desc">
+                            <label for="ques-desc">Description</label>
+                            <textarea id="ques-desc" name="ques-desc" required></textarea>
+                        </div>
+                        <div class="type">
+                            <label for="ques-type">Type</label>
+                            <select name="ques-type" id="ques-type" required>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                        <div class="language">
+                            <label for="ques-lang">Language</label>
+                            <select name="ques-lang" id="ques-lang" required>
+                                <option value="C">C</option>
+                                <option value="C++">C++</option>
+                            </select>
+                        </div>
+                        <div class="points">
+                            <label for="ques-points">Points</label>
+                            <input type="number" id="ques-points" name="ques-points" required>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <div class="test-cases">
+                            <label>Test Cases</label>
+                            <div class="test-cases-container">
+                                <div class="test-case">
+                                    <label>Input</label>
+                                    <input type="text" name="input[]" placeholder="Input" required>
+                                    <label>Output</label>
+                                    <input type="text" name="output[]" placeholder="Output" required>
+                                </div>
+                            </div>
+                            <!-- add test case btn  -->
+                            <div onclick="addTestCase()" class="add-btn-container">
+                                <span class="add-btn">
+                                <span class="add-label">Add Test Cases</span>
+                                    <img src="../public/icons/plus.svg" alt="plus">
+                                </span>
+                            </div>
+                            <div>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
             </div>
         </div>
@@ -47,19 +101,16 @@ $userQuestions = $user->getUserQuestions($userId);
                     </span>
                 </div>
             </div>
-            <!-- quesitons  -->
+            <!-- questions  -->
             <div class="questions-container">
                 <?php
                 if (isset($userQuestions)) {
-
                     foreach ($userQuestions as $question) {
                         include('../common/questionBox.php');
                     }
                 } else {
                     ?>
-
                     <div>No Questions</div>
-
                     <?php
                 }
                 ?>
