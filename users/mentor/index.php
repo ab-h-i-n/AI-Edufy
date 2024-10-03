@@ -31,6 +31,7 @@ $userQuestions = $user->getUserQuestions($userId);
 
                 <!-- contents  -->
                 <form id="create-question" method="post">
+                    <input type="hidden" id="user-id" name="user-id" value="<?php echo $userId; ?>" />
                     <div class="left">
                         <div class="question-title">
                             <label for="ques-title">Title</label>

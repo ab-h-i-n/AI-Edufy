@@ -1,13 +1,20 @@
 import toast from "../utils/toaster.js";
 import loader from "../utils/loader.js";
 
+//modal close
+
+const modal = document.querySelector(".modal");
+const modalClose = () => {
+  modal.classList.add("closed");
+  document.querySelector("body").style.overflowY = "auto";
+};
+
 // Add new test case
 
 const addBtn = document.querySelector(".add-btn");
 var removeBtns = document.querySelectorAll(".remove-btn");
 
 addBtn.addEventListener("click", addTestCase);
-
 
 function addTestCase() {
   const testCaseContainer = document.querySelector(".test-cases-container");
@@ -45,25 +52,65 @@ function removeTestCase(button) {
 
 //creating new quetions form submission
 
+const inputFields = document.querySelectorAll('input[name="input[]"]');
+const outputFields = document.querySelectorAll('input[name="output[]"]');
+const titleField = document.getElementById("ques-title");
+const descriptionField = document.getElementById("ques-desc");
+const typeField = document.getElementById("ques-type");
+const languageField = document.getElementById("ques-lang");
+const pointsField = document.getElementById("ques-points");
+const userId = document.getElementById("user-id");
+
 const form = document.querySelector("#create-question");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log("form submitted");
   if (validateForm()) {
-    toast.success("New Question Created Successfully");
+    try {
+      toast.loading("Creating New Question...");
+
+      const response = await fetch(
+        "http://localhost/AI-Edufy/api/question/createQuestion.php",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            userId: userId.value,
+            title: titleField.value,
+            description: descriptionField.value,
+            type: typeField.value,
+            language: languageField.value,
+            points: pointsField.value,
+            testCases: Array.from(inputFields).map((inputField, index) => {
+              return {
+                input: inputField.value,
+                output: outputFields[index].value,
+              };
+            }),
+          }),
+        }
+      );
+
+      console.log(response);
+
+      const data = await response.json();
+
+      console.log(data);
+
+      if (data.status === 200) {
+        toast.success(data.msg);
+        form.reset();
+        modalClose();
+      } else {
+        toast.error(data.msg);
+      }
+    } catch (error) {
+      toast.error("Failed to create question. Please try again.");
+      console.error(error);
+    }
   }
 });
 
 function validateForm() {
-  const inputFields = document.querySelectorAll('input[name="input[]"]');
-  const outputFields = document.querySelectorAll('input[name="output[]"]');
-  const titleField = document.getElementById("ques-title");
-  const descriptionField = document.getElementById("ques-desc");
-  const typeField = document.getElementById("ques-type");
-  const languageField = document.getElementById("ques-lang");
-  const pointsField = document.getElementById("ques-points");
-
   let hasTestCase = false;
 
   // Validate title

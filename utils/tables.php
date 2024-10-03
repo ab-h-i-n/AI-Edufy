@@ -38,9 +38,7 @@ class BaseClass
             die("Error in insert query: " . $this->dbcon->error);
         }
 
-        $userData = $this->select("*", "email = '" . $data['email'] . "'")->fetch_assoc();
-
-        return $userData;
+        return $this->dbcon->insert_id;
     }
 
 
