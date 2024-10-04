@@ -39,9 +39,6 @@ $questionDetails = $result->fetch_assoc();
                 <div class="question-points">
                     <?php echo $questionDetails['points']; ?>
                 </div>
-                <div class="question-language">
-                    <?php echo $questionDetails['language']; ?>
-                </div>
                 <div class="question-type">
                     <?php echo $questionDetails['type']; ?>
                 </div>

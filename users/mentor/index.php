@@ -49,13 +49,6 @@ $userQuestions = $user->getUserQuestions($userId);
                                 <option value="hard">Hard</option>
                             </select>
                         </div>
-                        <div class="language">
-                            <label for="ques-lang">Language</label>
-                            <select name="ques-lang" id="ques-lang" >
-                                <option value="C">C</option>
-                                <option value="C++">C++</option>
-                            </select>
-                        </div>
                         <div class="points">
                             <label for="ques-points">Points</label>
                             <input type="number" id="ques-points" name="ques-points" >

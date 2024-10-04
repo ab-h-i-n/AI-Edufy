@@ -20,8 +20,7 @@ form {
   box-shadow: var(--default-box-shadow);
 }
 
-form input,
-form select {
+form input {
   color: var(--text-color);
 }
 
@@ -55,18 +54,15 @@ form select {
 
 .auth-form select {
   padding: 12px 0px;
-  background-color: transparent;
+  background-color: var(--form-bg);
   outline: none;
   border: none;
   border-bottom: 2px solid var(--text-color);
   font-size: var(--font-size);
   font-family: inherit;
+  color: var(--text-color);
 }
 
-select:-moz-appearance,
-select:-webkit-appearance {
-  appearance: none;
-}
 
 .password-container {
   position: relative;

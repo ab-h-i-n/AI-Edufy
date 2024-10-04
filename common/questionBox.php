@@ -98,8 +98,6 @@
         <div class="tags">
             <!-- type  -->
             <p class="type pill <?php echo $question['type']; ?>" ><?php echo $question['type']; ?></p>
-            <!-- language   -->
-            <p class="lang pill <?php $lang = ($question['language'] == "c++") ? "cpp" : $question['language']; echo $lang; ?>"><?php echo $question['language']; ?></p>
         </div>
 
     </div>

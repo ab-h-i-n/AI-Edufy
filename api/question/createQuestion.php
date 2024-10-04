@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $quesTitle = $decoded['title'];
     $quesDesc = $decoded['description'];
     $quesType = $decoded['type'];
-    $quesLang = $decoded['language'];
     $quesPoints = $decoded['points'];
     $quesTestCases = $decoded['testCases'];
     $userId = $decoded['userId'];
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "title" => $quesTitle,
         "description" => $quesDesc,
         "type" => $quesType,
-        "language" => $quesLang,
         "points" => $quesPoints,
         "mentor_id" => $userId
     ]);

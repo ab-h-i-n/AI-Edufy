@@ -57,7 +57,6 @@ const outputFields = document.querySelectorAll('input[name="output[]"]');
 const titleField = document.getElementById("ques-title");
 const descriptionField = document.getElementById("ques-desc");
 const typeField = document.getElementById("ques-type");
-const languageField = document.getElementById("ques-lang");
 const pointsField = document.getElementById("ques-points");
 const userId = document.getElementById("user-id");
 
@@ -78,7 +77,6 @@ form.addEventListener("submit", async (e) => {
             title: titleField.value,
             description: descriptionField.value,
             type: typeField.value,
-            language: languageField.value,
             points: pointsField.value,
             testCases: Array.from(inputFields).map((inputField, index) => {
               return {
@@ -128,12 +126,6 @@ function validateForm() {
   // Validate type
   if (!typeField.value) {
     toast.error("Please select a question type.");
-    return false;
-  }
-
-  // Validate language
-  if (!languageField.value) {
-    toast.error("Please select a programming language.");
     return false;
   }
 

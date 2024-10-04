@@ -116,7 +116,6 @@ class Questions extends BaseClass
             title VARCHAR(255) NOT NULL,
             description TEXT NOT NULL,
             type ENUM('easy', 'medium', 'hard') NOT NULL,
-            language ENUM('C++', 'C') NOT NULL,
             mentor_id INT NOT NULL,
             points INT NOT NULL,
             FOREIGN KEY (mentor_id) REFERENCES USERS(id)
