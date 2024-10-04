@@ -91,7 +91,7 @@
                 <span class="points"> <?php echo $question['points']; ?>Pts </span>
             </p>
             <!-- by  -->
-            <p class="sub-title">by mentor name</p>
+            <p class="sub-title">by <?php echo $question['mentor_name'] ?></p>
         </div>
 
         <!-- tags  -->

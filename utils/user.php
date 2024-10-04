@@ -81,7 +81,9 @@ class User
 
     public function getUserQuestions($userId)
     {
-        $result = $this->question->select('*', "mentor_id = '$userId'");
+        $query = "SELECT q.* , u.name as mentor_name FROM QUESTIONS q LEFT JOIN USERS u ON q.mentor_id = u.id WHERE mentor_id = '$userId'";
+
+        $result = $this->dbcon->query($query);
         if ($result->num_rows > 0) {
             $questions = [];
             while ($row = $result->fetch_assoc()) {
@@ -95,7 +97,9 @@ class User
 
     public function getAllQuestions()
     {
-        $result = $this->question->select('*', '');
+        $query = "SELECT q.* , u.name as mentor_name FROM QUESTIONS q LEFT JOIN USERS u ON q.mentor_id = u.id ";
+
+        $result = $this->dbcon->query($query);
         if ($result->num_rows > 0) {
             $questions = [];
             while ($row = $result->fetch_assoc()) {
