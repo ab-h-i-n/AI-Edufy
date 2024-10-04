@@ -293,4 +293,15 @@ div.toast.fade-out {
   }
 }
 
-
+a{
+  text-decoration: none;  
+  color: inherit;         
+  background: none;       
+  padding: 0;             
+  margin: 0;             
+  border: none;           
+  font-size: inherit;     
+  font-weight: inherit;  
+  line-height: inherit;   
+  display: inline;        
+}

@@ -3,16 +3,15 @@ class Loader {
 
   add(parent) {
     this.div.classList.add("loader");
-    parent.innerHTML = "";
-    parent.append(this.div);
+    parent.innerHTML = "";  
+    parent.append(this.div); 
   }
 
-  remove(parent , defaultInnerHtml) {
-    parent.remove(this.div);
-    parent.innerHTML = defaultChild;
+  remove(parent, defaultInnerHtml) {
+    this.div.remove(); 
+    parent.innerHTML = defaultInnerHtml; 
   }
 }
 
-const loader = new Loader();
 
-export default loader;
+export default new Loader();

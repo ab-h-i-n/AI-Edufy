@@ -16,6 +16,13 @@ deleteBtns.forEach((deleteBtn) => {
     const result = await response.json();
 
     console.log(result);
+    loader.remove(deleteBtn , 'Delete');
+    
+    if(result.status === 200){
+      toast.success(result.message);
+    }else{
+      toast.error(result.message);
+    }
     
   });
 });

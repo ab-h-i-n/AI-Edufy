@@ -27,7 +27,7 @@ $allQuestions = $user->getAllQuestions();
                 foreach ($allQuestions as $question):
                     ?>
 
-                    <a class="queslink" href="<?php echo "http://localhost/AI-Edufy/question?id=" . $question['id']; ?>">
+                    <a href="<?php echo "http://localhost/AI-Edufy/question?id=" . $question['id']; ?>">
 
                         <?php
                         include('../common/questionBox.php');
