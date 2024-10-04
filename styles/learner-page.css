@@ -112,6 +112,20 @@ body#home {
       padding: 3rem 1rem;
       display: grid;
       gap: 1rem;
+
+
+      & .queslink{
+          text-decoration: none;  
+          color: inherit;         
+          background: none;       
+          padding: 0;             
+          margin: 0;             
+          border: none;           
+          font-size: inherit;     
+          font-weight: inherit;  
+          line-height: inherit;   
+          display: inline;        
+      }
     }
   }
 }

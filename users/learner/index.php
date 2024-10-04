@@ -10,6 +10,7 @@ $allQuestions = $user->getAllQuestions();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/learner-page.css">
+    <script type="module" src="../scripts/learner.js" defer></script>
     <title>Document</title>
 </head>
 
@@ -21,20 +22,31 @@ $allQuestions = $user->getAllQuestions();
 
         <div class="questions-container">
             <?php
-            if (isset($allQuestions)) {
+            if (isset($allQuestions)):
 
-                foreach ($allQuestions as $question) {
-                    include('../common/questionBox.php');
-                }
-            } else {
+                foreach ($allQuestions as $question):
+                    ?>
+
+                    <a class="queslink" href="<?php echo "http://localhost/AI-Edufy/question?id=" . $question['id']; ?>">
+
+                        <?php
+                        include('../common/questionBox.php');
+                        ?>
+
+                    </a>
+
+                <?php endforeach; ?>
+                <?php
+            else:
                 ?>
 
                 <div>No Questions</div>
 
-                <?php
-            }
-            ?>
+            <?php endif ?>
+
+
         </div>
+
 
     </main>
 
