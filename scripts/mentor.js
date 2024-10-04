@@ -98,6 +98,9 @@ form.addEventListener("submit", async (e) => {
         toast.success(data.msg);
         form.reset();
         modalClose();
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000);
       } else {
         toast.error(data.msg);
       }
