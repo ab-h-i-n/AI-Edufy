@@ -49,6 +49,9 @@ loginForm?.addEventListener("submit", async (e) => {
 
     const result = await response.json();
 
+    console.log(result);
+    
+
     if (result?.status != 200) {
       toast.error(result?.msg);
     } else {
@@ -108,6 +111,9 @@ signUpFrom?.addEventListener("submit", async (e) => {
     });
 
     const result = await response.json();
+
+    console.log(result);
+    
 
     if (result?.status === 200) {
       toast.success(result?.msg);

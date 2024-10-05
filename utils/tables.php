@@ -42,15 +42,24 @@ class BaseClass
     }
 
 
-    function delete($id)
+    function delete($id, $isDifferentColumn)
     {
-        $query = "DELETE FROM " . $this->tableName . " WHERE id=" . $id;
+        $query = "DELETE FROM " . $this->tableName . " WHERE ";
+
+        if ($isDifferentColumn) {
+            $query .= $id;
+        } else {
+            $query .= "id = " . intval($id);
+        }
         $result = $this->dbcon->query($query);
+
         if (!$result) {
             die("" . $this->dbcon->error);
         }
+
         return $result;
     }
+
 }
 
 
@@ -170,7 +179,7 @@ class CompletedQuestions extends BaseClass
 
     function select($columns = "*", $where = "")
     {
-        $query = "SELECT ".$columns." FROM " . $this->tableName . " cq JOIN QUESTIONS q ON cq.question_id = q.id";
+        $query = "SELECT " . $columns . " FROM " . $this->tableName . " cq JOIN QUESTIONS q ON cq.question_id = q.id";
 
         if (!empty($where)) {
             $query .= " WHERE " . $where;

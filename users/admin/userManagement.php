@@ -15,7 +15,7 @@ if (mysqli_num_rows($result) > 0) {
 <body>
     <div class="contents">
         <div class="title"> User Management </div>
-        <table>
+        <table class="users-table">
             <thead>
                 <tr>
                     <th>Name</th>

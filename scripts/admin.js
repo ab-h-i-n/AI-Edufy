@@ -1,28 +1,55 @@
-import toast from '../utils/toaster.js';
-import loader from '../utils/loader.js';
+import toast from "../utils/toaster.js";
+import loader from "../utils/loader.js";
 
-const deleteBtns = document.querySelectorAll(".del-user");
+const deleUser = document.querySelectorAll(".del-user");
 
-deleteBtns.forEach((deleteBtn) => {
-  deleteBtn.addEventListener("click", async() => {
-
+deleUser.forEach((deleteBtn) => {
+  deleteBtn.addEventListener("click", async () => {
     toast.loading("Deleting.....");
     const userId = deleteBtn.id;
     loader.add(deleteBtn);
-    
 
-    const response = await fetch(`http://localhost/AI-Edufy/api/user/delete.php?userid=${userId}`);
+    const response = await fetch(
+      `http://localhost/AI-Edufy/api/user/delete.php?userid=${userId}`
+    );
 
     const result = await response.json();
 
     console.log(result);
-    loader.remove(deleteBtn , 'Delete');
-    
-    if(result.status === 200){
+    loader.remove(deleteBtn, "Delete");
+
+    if (result.status === 200) {
       toast.success(result.message);
-    }else{
+    } else {
       toast.error(result.message);
     }
-    
+  });
+});
+
+const delQues = document.querySelectorAll(".del-ques");
+
+delQues.forEach((deleteBtn) => {
+  deleteBtn.addEventListener("click", async () => {
+    toast.loading("Deleting.....");
+    const quesId = deleteBtn.id;
+    loader.add(deleteBtn);
+
+    const response = await fetch(
+      `http://localhost/AI-Edufy/api/question/delete.php?id=${quesId}`
+    );
+
+    const result = await response.json();
+
+    console.log(result);
+    loader.remove(deleteBtn, "Delete");
+
+    if (result?.status === 200) {
+      toast.success(result.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else {
+      toast.error(result.message);
+    }
   });
 });

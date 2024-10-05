@@ -130,7 +130,6 @@ table {
 
       & div {
         width: fit-content;
-        text-align: center;
       }
 
       & .user-role {
