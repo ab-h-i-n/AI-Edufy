@@ -7,10 +7,6 @@ $navItems = [
     [
         "text" => 'Leaderboard',
         "link" => '/AI-Edufy/leaderboard'
-    ],
-    [
-        "text" => 'About Us',
-        "link" => '/AI-Edufy/about-us'
     ]
 ];
 
