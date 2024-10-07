@@ -17,6 +17,8 @@ $questionDetails = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/question-page.css">
+    <script type="module" src="../scripts/question.js" defer></script>
+    <script type="module" src="../utils/gemini.js" defer></script>
     <title>Document</title>
 </head>
 
@@ -46,7 +48,10 @@ $questionDetails = $result->fetch_assoc();
         </div>
 
         <div class="activity-container">
-            
+
+            <iframe scrolling="no" id="oc-editor" frameBorder="0"
+                src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&disableCopyPaste=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20"></iframe>
+
         </div>
 
     </main>

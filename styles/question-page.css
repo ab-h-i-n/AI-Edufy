@@ -8,13 +8,14 @@ body#question-page {
     & .question-container{
 
       & .question-title{
+        text-transform: capitalize;
         font-weight: 900;
-        font-size: 2.5rem;
+        font-size: 1.7rem;
       }
 
       & .question-desc{
         font-weight: 500;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         color: rgb(255, 255, 255,.5);
         margin-top: .5rem;
       }
@@ -22,33 +23,40 @@ body#question-page {
       & .question-tags{
         display: flex;
         font-weight: 900;
-        font-size: 1.7rem;
+        font-size: 1rem;
         gap: 1rem;
-        margin-top: 1rem;
+        margin-top: .5rem;
 
         & .question-language,
         & .question-points,
         & .question-type{
-          background-color: white;
           padding: .5rem 1rem;
           border-radius: 25px;
         }
 
         & .question-points{
-          color: yellow;
+          background-color: rgb(180, 180, 12);
           
         }
 
         & .question-language{
-          color: green;
+          background-color: green;
         }
 
         & .question-type{
-          color: blue;
+          background-color: blue;
           text-transform: capitalize;
         }
       }
 
     }
   }
+}
+
+
+#oc-editor{
+  margin-top: 1.2rem;
+  width: 100%;
+  min-height: 60vh;
+  
 }
