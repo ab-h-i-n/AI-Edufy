@@ -6,7 +6,14 @@ include_once('../utils/connect.php');
 
 $result = $user->question->select('*', "id = $questionId");
 
+$testcasesResult = $user->question->test_cases->select('*', "question_id = $questionId");
+
 $questionDetails = $result->fetch_assoc();
+$testcases =  [];
+
+while ($row = $testcasesResult->fetch_assoc()) {
+    array_push($testcases, $row);
+}
 
 ?>
 <!DOCTYPE html>
@@ -26,6 +33,7 @@ $questionDetails = $result->fetch_assoc();
 
     <?php
     include('../users/learner/header.php');
+    include('../common/Toast.php')
     ?>
 
     <main>
@@ -45,12 +53,37 @@ $questionDetails = $result->fetch_assoc();
                     <?php echo $questionDetails['type']; ?>
                 </div>
             </div>
+            <div class="quesiton-testcases">
+                <div id="alltestcases" class="hidden"><?php echo json_encode($testcases); ?></div>
+                <div class="testcase-title">Testcases</div>
+                <div class="testcase-container">
+                    <?php
+                    foreach ($testcases as $testcase) {
+                    ?>
+                        <div class="testcase">
+                            <div class="testcase-input">
+                                <div class="testcase-label">Input</div>
+                                <div class="testcase-value"><?php echo $testcase['input']; ?></div>
+                            </div>
+                            <div class="testcase-output">
+                                <div class="testcase-label">Output</div>
+                                <div class="testcase-value"><?php echo $testcase['output']; ?></div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
 
         <div class="activity-container">
 
+            <div class="run">Run</div>
+            <div class="hint">Hint</div>
+
             <iframe scrolling="no" id="oc-editor" frameBorder="0"
-                src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&disableCopyPaste=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20"></iframe>
+                src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&disableCopyPaste=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&hideRun=true&listenToEvents=true"></iframe>
 
         </div>
 
