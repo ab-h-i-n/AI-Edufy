@@ -1,10 +1,11 @@
 import toast from "../utils/toaster.js";
 import { askGemini } from "../utils/gemini.js";
-import { confetti } from "../utils/confetti.js";
+import { confettiFire } from "../utils/confetti.js";
 
 const iFrame = document.querySelector("iframe");
 var code;
 var lang;
+var isValidResult;
 
 // to listen to on change event of the code editor
 window.onmessage = function (e) {
@@ -12,6 +13,7 @@ window.onmessage = function (e) {
     console.log(e.data);
     code = e.data.files[0].content;
     lang = e.data.language;
+    isValidResult = e.data.result.success;
   }
 };
 
@@ -24,8 +26,8 @@ runBtn.addEventListener("click", async function () {
 
   console.log("Code:", code);
   console.log("Lang:", lang);
-  console.log("Question:", question.innerHTML);
-  console.log("Testcases:", testcases.innerHTML);
+  console.log("Question:", question.innerText);
+  console.log("Testcases:", testcases.innerText);
 
   iFrame.contentWindow.postMessage(
     {
@@ -35,14 +37,22 @@ runBtn.addEventListener("click", async function () {
   );
 
   const req =
-    await askGemini(`the question is "${question.innerHTML}" testcases are ${testcases} the code "${code}" in "${lang}" is corrent answer for the question provided . give result in JSON FORMAT using {
-    "isValid" : boolean
+    await askGemini(`the question is "${question.innerText}" testcases are ${testcases.innerText} the code "${code}" in "${lang}" is corrent answer for the question provided and also check the testcases are same . give result in JSON FORMAT using {
+    "isValid" : boolean,
+    "reason" : str
     }`);
   console.log("Parsed Response:", req);
 
+  if (req.isValid && isValidResult) {
+    confettiFire(0.5, {
+      spread: 120,
+      startVelocity: 50,
+      decay: 0.92,
+      scalar: 1.5,
+    });
 
-    confetti();
-
+    toast.success("Congratulations you completed the question 🎉")
+  }
 });
 
 // to get hint for the code
