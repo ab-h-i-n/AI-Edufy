@@ -1,12 +1,10 @@
-
-import toast  from "../utils/toaster.js";
-import {askGemini} from "../utils/gemini.js";
-
+import toast from "../utils/toaster.js";
+import { askGemini } from "../utils/gemini.js";
+import { confetti } from "../utils/confetti.js";
 
 const iFrame = document.querySelector("iframe");
 var code;
 var lang;
-
 
 // to listen to on change event of the code editor
 window.onmessage = function (e) {
@@ -28,7 +26,6 @@ runBtn.addEventListener("click", async function () {
   console.log("Lang:", lang);
   console.log("Question:", question.innerHTML);
   console.log("Testcases:", testcases.innerHTML);
-  
 
   iFrame.contentWindow.postMessage(
     {
@@ -37,10 +34,15 @@ runBtn.addEventListener("click", async function () {
     "*"
   );
 
-  const req = await askGemini(`the question is "${question.innerHTML}" testcases are ${testcases} the code "${code}" in "${lang}" is corrent answer for the question provided . give result in JSON FORMAT using {
+  const req =
+    await askGemini(`the question is "${question.innerHTML}" testcases are ${testcases} the code "${code}" in "${lang}" is corrent answer for the question provided . give result in JSON FORMAT using {
     "isValid" : boolean
     }`);
   console.log("Parsed Response:", req);
+
+
+    confetti();
+
 });
 
 // to get hint for the code
@@ -52,18 +54,19 @@ hintBtn.addEventListener("click", async function () {
 
   console.log("Code:", code);
   console.log("Lang:", lang);
-  console.log("Question:", question.innerHTML);
-  console.log("Testcases:", testcases.innerHTML);
-  
+  console.log("Question:", question.innerText);
+  console.log("Testcases:", testcases.innerText);
 
-  const req = await askGemini(`the question is "${question.innerHTML}" testcases are ${testcases} give a hint and next step about the code "${code}" in "${lang}" in 2 lines in JSON FORMAT using {
-    "hint" : str
+  const req =
+    await askGemini(`the question is "${question.innerText}" testcases are ${testcases.innerText} give a hint and next step about the code "${code}" in "${lang}" in 2 lines in JSON FORMAT using {
+    "hint" : str,
+    "nextstep" : str
     }`);
   console.log("Parsed Response:", req);
   toast.success(req.hint);
 });
 
-//to populate editor 
+//to populate editor
 // iFrame.contentWindow.postMessage({
 //   eventType: 'populateCode',
 //   language: 'python',

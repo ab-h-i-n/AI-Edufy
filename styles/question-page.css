@@ -100,6 +100,13 @@ body#question-page {
   
   display: flex;
   gap: 1rem;
+  margin-top: .5rem;
+  align-items: center;
+
+  & .testcase-title{
+    font-weight: 900;
+    font-size: 1.5rem;
+  }
 
   & .testcase-container {
 

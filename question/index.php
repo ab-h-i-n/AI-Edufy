@@ -26,6 +26,7 @@ while ($row = $testcasesResult->fetch_assoc()) {
     <link rel="stylesheet" href="../styles/question-page.css">
     <script type="module" src="../scripts/question.js" defer></script>
     <script type="module" src="../utils/gemini.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -37,7 +38,6 @@ while ($row = $testcasesResult->fetch_assoc()) {
     ?>
 
     <main>
-
         <div class="question-container">
             <div class="question-title">
                 <?php echo $questionDetails['title']; ?>
@@ -62,11 +62,11 @@ while ($row = $testcasesResult->fetch_assoc()) {
                     ?>
                         <div class="testcase">
                             <div class="testcase-input">
-                                <div class="testcase-label">Input</div>
+                                <div class="testcase-label">Input : </div>
                                 <div class="testcase-value"><?php echo $testcase['input']; ?></div>
                             </div>
                             <div class="testcase-output">
-                                <div class="testcase-label">Output</div>
+                                <div class="testcase-label">Output : </div>
                                 <div class="testcase-value"><?php echo $testcase['output']; ?></div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@ while ($row = $testcasesResult->fetch_assoc()) {
             <div class="hint">Hint</div>
 
             <iframe scrolling="no" id="oc-editor" frameBorder="0"
-                src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&disableCopyPaste=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&hideRun=true&listenToEvents=true"></iframe>
+                src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&hideRun=true&listenToEvents=true"></iframe>
 
         </div>
 
