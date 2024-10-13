@@ -6,6 +6,7 @@ const iFrame = document.querySelector("iframe");
 var code;
 var lang;
 var isValidResult;
+const completeTaskBtn = document.querySelector("button.complete");
 
 // to listen to on change event of the code editor
 window.onmessage = function (e) {
@@ -51,7 +52,8 @@ runBtn.addEventListener("click", async function () {
       scalar: 1.5,
     });
 
-    toast.success("Congratulations you completed the question 🎉")
+    toast.success("Congratulations you completed the question 🎉");
+    completeTaskBtn.disabled = false;
   }
 });
 
@@ -73,7 +75,7 @@ hintBtn.addEventListener("click", async function () {
     "nextstep" : str
     }`);
   console.log("Parsed Response:", req);
-  toast.success(req.hint);
+  toast.hint(req.hint);
 });
 
 //to populate editor
@@ -87,3 +89,38 @@ hintBtn.addEventListener("click", async function () {
 //    }
 // ]
 // }, "*");
+
+//handle completed task
+
+completeTaskBtn.addEventListener("click", async function () {
+  console.log("Task Completed");
+  const quesId = window.location.search.split("=")[1];
+
+  try {
+    const req = await fetch(
+      `http://localhost/AI-Edufy/api/question/complete.php?qId=${quesId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          answer: code,
+          language: lang,
+        }),
+      }
+    );
+
+    const res = await req.json();
+
+    if (res.status === 200) {
+      toast.success("Task Completed Successfully");
+    } else {
+      toast.error("Task Completion Failed");
+    }
+
+    console.log(res);
+  } catch (error) {
+    console.error(error);
+  }
+});

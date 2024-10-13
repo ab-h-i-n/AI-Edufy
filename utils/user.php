@@ -8,6 +8,7 @@ class User
     private $dbcon;
     private $userTables;
     public $users;
+    public $leaderboard;
 
     public function __construct($dbcon)
     {
@@ -16,6 +17,7 @@ class User
         $this->users = new Users($dbcon);
         $this->question = new Questions($dbcon);
         $this->completed_questions = new CompletedQuestions($dbcon);
+        $this->leaderboard = new LeaderBoard($dbcon);
 
         $this->userTables = [
             $this->admin,

@@ -9,7 +9,7 @@ $result = $user->question->select('*', "id = $questionId");
 $testcasesResult = $user->question->test_cases->select('*', "question_id = $questionId");
 
 $questionDetails = $result->fetch_assoc();
-$testcases =  [];
+$testcases = [];
 
 while ($row = $testcasesResult->fetch_assoc()) {
     array_push($testcases, $row);
@@ -35,45 +35,50 @@ while ($row = $testcasesResult->fetch_assoc()) {
     <?php
     include('../users/learner/header.php');
     include('../common/Toast.php')
-    ?>
+        ?>
 
     <main>
-        <div class="question-container">
-            <div class="question-title">
-                <?php echo $questionDetails['title']; ?>
-            </div>
-            <div class="question-desc">
-                <?php echo $questionDetails['description']; ?>
-            </div>
-            <div class="question-tags">
-                <div class="question-points">
-                    <?php echo $questionDetails['points']; ?>
+        <div class="top">
+            <div class="question-container">
+                <div class="question-title">
+                    <?php echo $questionDetails['title']; ?>
                 </div>
-                <div class="question-type">
-                    <?php echo $questionDetails['type']; ?>
+                <div class="question-desc">
+                    <?php echo $questionDetails['description']; ?>
                 </div>
-            </div>
-            <div class="quesiton-testcases">
-                <div id="alltestcases" class="hidden"><?php echo json_encode($testcases); ?></div>
-                <div class="testcase-title">Testcases</div>
-                <div class="testcase-container">
-                    <?php
-                    foreach ($testcases as $testcase) {
-                    ?>
-                        <div class="testcase">
-                            <div class="testcase-input">
-                                <div class="testcase-label">Input : </div>
-                                <div class="testcase-value"><?php echo $testcase['input']; ?></div>
+                <div class="question-tags">
+                    <div class="question-points">
+                        <?php echo $questionDetails['points']; ?>
+                    </div>
+                    <div class="question-type">
+                        <?php echo $questionDetails['type']; ?>
+                    </div>
+                </div>
+                <div class="quesiton-testcases">
+                    <div id="alltestcases" class="hidden"><?php echo json_encode($testcases); ?></div>
+                    <div class="testcase-title">Testcases</div>
+                    <div class="testcase-container">
+                        <?php
+                        foreach ($testcases as $testcase) {
+                            ?>
+                            <div class="testcase">
+                                <div class="testcase-input">
+                                    <div class="testcase-label">Input : </div>
+                                    <div class="testcase-value"><?php echo $testcase['input']; ?></div>
+                                </div>
+                                <div class="testcase-output">
+                                    <div class="testcase-label">Output : </div>
+                                    <div class="testcase-value"><?php echo $testcase['output']; ?></div>
+                                </div>
                             </div>
-                            <div class="testcase-output">
-                                <div class="testcase-label">Output : </div>
-                                <div class="testcase-value"><?php echo $testcase['output']; ?></div>
-                            </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
+                            <?php
+                        }
+                        ?>
+                    </div>
                 </div>
+            </div>
+            <div>
+                <button disabled class="complete">Completed</button>
             </div>
         </div>
 

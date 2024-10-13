@@ -168,6 +168,8 @@ class CompletedQuestions extends BaseClass
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             learner_id INT NOT NULL,
             question_id INT NOT NULL,
+            answer MEDIUMTEXT NOT NULL,
+            language TEXT NOT NULL,
             FOREIGN KEY (learner_id) REFERENCES USERS(id),
             FOREIGN KEY (question_id) REFERENCES QUESTIONS(id)
         )";
@@ -208,7 +210,7 @@ class LeaderBoard extends BaseClass
             learner_id INT PRIMARY KEY NOT NULL,
             points_earned INT NOT NULL,
             level_id INT NOT NULL,
-            FOREIGN KEY (learner_id) REFERENCES LEARNERS(id),
+            FOREIGN KEY (learner_id) REFERENCES USERS(id),
             FOREIGN KEY (level_id) REFERENCES LEVELS(id)
         )";
 
@@ -216,7 +218,54 @@ class LeaderBoard extends BaseClass
             die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
         }
     }
+
+    // Function to insert or update leaderboard
+    function insert($data)
+    {
+        // First, get the level_id from the levels table based on the learner's points
+        $level_id = $this->levels->select("id", "points_required <= " . $data['points_earned'] . " ORDER BY points_required DESC LIMIT 1")->fetch_assoc()['id'];
+        
+        if (!$level_id) {
+            die("Level not found for the given points.");
+        }
+
+        // Check if the learner already exists in the leaderboard
+        $learner_id = $data['learner_id'];
+        $points_earned = $data['points_earned'];
+
+        $checkQuery = "SELECT points_earned FROM $this->tableName WHERE learner_id = '$learner_id'";
+        $checkResult = $this->dbcon->query($checkQuery);
+
+        if ($checkResult->num_rows > 0) {
+            // Learner exists, update points by adding the current points to the previous points
+            $row = $checkResult->fetch_assoc();
+            $updated_points = $row['points_earned'] + $points_earned;
+
+            $updateQuery = "UPDATE $this->tableName 
+                            SET points_earned = '$updated_points', level_id = '$level_id' 
+                            WHERE learner_id = '$learner_id'";
+            
+            $result = $this->dbcon->query($updateQuery);
+            
+            if (!$result) {
+                die("Error in update query: " . $this->dbcon->error);
+            }
+        } else {
+            // Learner doesn't exist, insert a new record
+            $insertQuery = "INSERT INTO $this->tableName (learner_id, points_earned, level_id) 
+                            VALUES ('$learner_id', '$points_earned', '$level_id')";
+            
+            $result = $this->dbcon->query($insertQuery);
+
+            if (!$result) {
+                die("Error in insert query: " . $this->dbcon->error);
+            }
+
+            return $this->dbcon->insert_id;
+        }
+    }
 }
+
 
 class Levels extends BaseClass
 {

@@ -7,4 +7,6 @@ include_once("user.php");
 $dbcon = createDb("localhost", "root", "", "aiEdufy");
 
 $user = new User($dbcon);
+
+
 ?>
