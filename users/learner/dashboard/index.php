@@ -17,6 +17,26 @@ $hardSolved = $noOfHardQuestions[0];
 $easyTotal = $noOfEasyQuestions[1];
 $mediumTotal = $noOfMediumQuestions[1];
 $hardTotal = $noOfHardQuestions[1];
+
+
+//total points earned
+$usersLB = $user->leaderboard->select('*', "learner_id=$user_id")->fetch_assoc();
+$points = $usersLB['points_earned'];
+$level_title = $user->leaderboard->levels->select('level_title', "id=$usersLB[level_id]")->fetch_assoc()['level_title'];
+
+
+//completed questions
+
+$completedQuestions = $user->completed_questions->select('*', "learner_id=$user_id");
+
+$completedQuestionsArr = [];
+
+while ($row = $completedQuestions->fetch_assoc()) {
+    $question = $user->question->select('title', "id=$row[question_id]")->fetch_assoc();
+    $row['title'] = $question['title'];
+    array_push($completedQuestionsArr, $row);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,9 +84,31 @@ $hardTotal = $noOfHardQuestions[1];
 
         </section>
 
-        <section class="points-section">total points earned and rank</section>
+        <section class="points-section">
+            <div class="points">
+                <p id="points"><?php echo $points ?? 0; ?></p>
+            </div>
+            <div class="level">
+                <p id="level"><?php echo $level_title ?? 'Beginner 👶'; ?></p>
+            </div>
+        </section>
         <section class="profile-section">profile</section>
-        <section class="solved-questions-section">questions you solved</section>
+        <section class="solved-questions-section">
+            <h2>Solved Questions</h2>
+            <div class="solved-questions">
+                <?php
+                foreach ($completedQuestionsArr as $question) {
+                    echo "<a href='http://localhost/AI-Edufy/question/?id=$question[question_id]' class='solved-question'>
+                    <p>$question[title]</p>
+                    <div class='tags'>
+                        <p>$question[points] </p>
+                        <p>$question[type] </p>
+                    </div>
+                </a>";
+                }
+                ?>
+            </div>
+        </section>
 
     </main>
 
