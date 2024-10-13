@@ -8,6 +8,32 @@ var lang;
 var isValidResult;
 const completeTaskBtn = document.querySelector("button.complete");
 
+//to populate editor
+const completedAns = document.querySelector(".completed-ans");
+const completedLang = document.querySelector(".completed-lang");
+
+const populateEditor = async () => {
+  if ((completedAns, completedLang)) {
+    iFrame.contentWindow.postMessage(
+      {
+        eventType: "populateCode",
+        language: completedLang.innerText,
+        files: [
+          {
+            name: "main",
+            content: completedAns.innerText,
+          },
+        ],
+      },
+      "*"
+    );
+  }
+};
+
+setTimeout(() => {
+  populateEditor();
+}, 2000);
+
 // to listen to on change event of the code editor
 window.onmessage = function (e) {
   if (e.data && e.data.language) {
@@ -77,18 +103,6 @@ hintBtn.addEventListener("click", async function () {
   console.log("Parsed Response:", req);
   toast.hint(req.hint);
 });
-
-//to populate editor
-// iFrame.contentWindow.postMessage({
-//   eventType: 'populateCode',
-//   language: 'python',
-//   files: [
-//    {
-//      "name": "HelloWorld.py",
-//      "content": "your code...."
-//    }
-// ]
-// }, "*");
 
 //handle completed task
 

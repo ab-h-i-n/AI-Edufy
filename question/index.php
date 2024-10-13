@@ -1,8 +1,13 @@
 <?php
 
 $questionId = $_GET['id'];
+$userId = $_COOKIE['user_id'];
+$userId = intval($userId);
+$questionId = intval($questionId);
 
 include_once('../utils/connect.php');
+
+$hasCompleted = $user->completed_questions->select('*', "cq.learner_id=$userId AND cq.question_id=$questionId")->num_rows;
 
 $result = $user->question->select('*', "id = $questionId");
 
@@ -10,6 +15,12 @@ $testcasesResult = $user->question->test_cases->select('*', "question_id = $ques
 
 $questionDetails = $result->fetch_assoc();
 $testcases = [];
+
+$completedDetails;
+
+if ($hasCompleted) {
+    $completedDetails = $user->completed_questions->select('*', "cq.learner_id=$userId AND cq.question_id=$questionId")->fetch_assoc();
+}
 
 while ($row = $testcasesResult->fetch_assoc()) {
     array_push($testcases, $row);
@@ -38,6 +49,15 @@ while ($row = $testcasesResult->fetch_assoc()) {
         ?>
 
     <main>
+        <?php
+        if ($hasCompleted):
+            ?>
+
+            <pre class="completed-ans hidden"><?php echo $completedDetails['answer']; ?></pre>
+
+            <pre class="completed-lang hidden"><?php echo $completedDetails['language']; ?></pre>
+
+        <?php endif; ?>
         <div class="top">
             <div class="question-container">
                 <div class="question-title">
@@ -78,20 +98,22 @@ while ($row = $testcasesResult->fetch_assoc()) {
                 </div>
             </div>
             <div>
-                <button disabled class="complete">Completed</button>
+                <?php if (!$hasCompleted): ?>
+                    <button disabled class="complete">Completed</button>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="activity-container">
 
-            <div class="run">Run</div>
-            <div class="hint">Hint</div>
+            <?php if (!$hasCompleted): ?>
+                <div class="run">Run</div>
+                <div class="hint">Hint</div>
+            <?php endif; ?>
 
-            <iframe scrolling="no" id="oc-editor" frameBorder="0"
-                src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&hideRun=true&listenToEvents=true"></iframe>
-
+            <iframe scrolling="no" id="oc-editor" frameBorder="0" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&hideRun=true&listenToEvents=true<?php if ($hasCompleted)
+                echo '&hideLanguageSelection=true&hideResult=true'; ?>"></iframe>
         </div>
-
     </main>
 
 </body>
