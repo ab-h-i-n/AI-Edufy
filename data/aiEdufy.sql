@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 05, 2024 at 04:35 PM
+-- Generation Time: Oct 13, 2024 at 06:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -48,8 +48,61 @@ INSERT INTO `ADMIN` (`id`, `email`, `password`) VALUES
 
 CREATE TABLE `COMPLETED_QUESTIONS` (
   `learner_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL
+  `question_id` int(11) NOT NULL,
+  `answer` mediumtext NOT NULL,
+  `language` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `COMPLETED_QUESTIONS`
+--
+
+INSERT INTO `COMPLETED_QUESTIONS` (`learner_id`, `question_id`, `answer`, `language`) VALUES
+(1002, 1006, 'str = \"hello\"\nrev = str[::-1]\nprint(rev)', 'python'),
+(1002, 1007, 'const str = \"hello world\";\nconst numOfWords = str.split(\" \").length;\nconsole.log(numOfWords);', 'javascript');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `LEADER_BOARD`
+--
+
+CREATE TABLE `LEADER_BOARD` (
+  `learner_id` int(11) NOT NULL,
+  `points_earned` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `LEADER_BOARD`
+--
+
+INSERT INTO `LEADER_BOARD` (`learner_id`, `points_earned`, `level_id`) VALUES
+(1002, 220, 1001);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `LEVELS`
+--
+
+CREATE TABLE `LEVELS` (
+  `id` int(11) NOT NULL,
+  `level_no` int(11) NOT NULL,
+  `level_title` varchar(255) NOT NULL,
+  `points_required` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `LEVELS`
+--
+
+INSERT INTO `LEVELS` (`id`, `level_no`, `level_title`, `points_required`) VALUES
+(1000, 1, 'Beginner 👶', 0),
+(1001, 2, 'Novice 🥈', 100),
+(1002, 3, 'Intermediate 🥉', 250),
+(1003, 4, 'Advanced 🎖️', 500),
+(1004, 5, 'Expert 🏆', 1000);
 
 -- --------------------------------------------------------
 
@@ -140,6 +193,19 @@ ALTER TABLE `COMPLETED_QUESTIONS`
   ADD KEY `question_id` (`question_id`);
 
 --
+-- Indexes for table `LEADER_BOARD`
+--
+ALTER TABLE `LEADER_BOARD`
+  ADD PRIMARY KEY (`learner_id`),
+  ADD KEY `level_id` (`level_id`);
+
+--
+-- Indexes for table `LEVELS`
+--
+ALTER TABLE `LEVELS`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `QUESTIONS`
 --
 ALTER TABLE `QUESTIONS`
@@ -171,6 +237,12 @@ ALTER TABLE `ADMIN`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
 
 --
+-- AUTO_INCREMENT for table `LEVELS`
+--
+ALTER TABLE `LEVELS`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1005;
+
+--
 -- AUTO_INCREMENT for table `QUESTIONS`
 --
 ALTER TABLE `QUESTIONS`
@@ -198,6 +270,13 @@ ALTER TABLE `USERS`
 ALTER TABLE `COMPLETED_QUESTIONS`
   ADD CONSTRAINT `COMPLETED_QUESTIONS_ibfk_1` FOREIGN KEY (`learner_id`) REFERENCES `USERS` (`id`),
   ADD CONSTRAINT `COMPLETED_QUESTIONS_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `QUESTIONS` (`id`);
+
+--
+-- Constraints for table `LEADER_BOARD`
+--
+ALTER TABLE `LEADER_BOARD`
+  ADD CONSTRAINT `LEADER_BOARD_ibfk_1` FOREIGN KEY (`learner_id`) REFERENCES `USERS` (`id`),
+  ADD CONSTRAINT `LEADER_BOARD_ibfk_2` FOREIGN KEY (`level_id`) REFERENCES `LEVELS` (`id`);
 
 --
 -- Constraints for table `QUESTIONS`
