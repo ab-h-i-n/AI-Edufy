@@ -1,13 +1,7 @@
 import toast from "../utils/toast.js";
 import loader from "../utils/loader.js";
 
-//modal close
 
-const modal = document.querySelector(".modal");
-const modalClose = () => {
-  modal.classList.add("closed");
-  document.querySelector("body").style.overflowY = "auto";
-};
 
 // Add new test case
 
@@ -99,7 +93,7 @@ form.addEventListener("submit", async (e) => {
         form.reset();
         modalClose();
         setTimeout(() => {
-          window.location.reload()
+          window.location.reload();
         }, 1000);
       } else {
         toast.error(data.msg);
@@ -164,3 +158,4 @@ function validateForm() {
 
   return true;
 }
+

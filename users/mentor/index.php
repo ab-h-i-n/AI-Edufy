@@ -2,6 +2,33 @@
 include_once('../utils/connect.php');
 $userId = $_COOKIE['user_id'];
 $userQuestions = $user->getUserQuestions($userId);
+$userDetails = $user->users->select('*', " id=$userId ")->fetch_assoc();
+
+//updating question details
+$quesId = $_GET['update'];
+$updateQuestion;
+if ($quesId) {
+    $updateQuestion = $user->question->select('*', " id=$quesId ");
+    $updateQuestionTestcases = $user->question->test_cases->select('*', " question_id=$quesId ");
+    $updateQuestion = $updateQuestion->fetch_assoc();
+    $updateQuestion['test_cases'] = [];
+
+    if ($updateQuestion) {
+        while ($row = $updateQuestionTestcases->fetch_assoc()) {
+            array_push($updateQuestion['test_cases'], $row);
+        }
+    }
+
+    if (!$updateQuestion) {
+        echo "<script>alert('Question not found')</script>";
+    }
+
+    echo "<script> console.log(" . json_encode($updateQuestion) . ") </script>";
+}
+
+
+
+
 ?>
 <html lang="en">
 
@@ -16,77 +43,176 @@ $userQuestions = $user->getUserQuestions($userId);
 </head>
 
 <body id="mentor">
-    <?php include('header.php'); include('../common/Toast.php'); ?>
+    <?php include('header.php');
+    include('../common/Toast.php'); ?>
 
     <main>
 
-        <!-- modal  -->
-        <div class="modal closed">
-            <div class="modal-content">
-                <div class="modal-close">
-                    <img src="../public/icons/cross.svg" alt="close">
-                </div>
-
-                <div class="modal-title">Create New Question</div>
-
-                <!-- contents  -->
-                <form id="create-question" method="post">
-                    <input type="hidden" id="user-id" name="user-id" value="<?php echo $userId; ?>" />
-                    <div class="left">
-                        <div class="question-title">
-                            <label for="ques-title">Title</label>
-                            <input type="text" id="ques-title" name="ques-title" >
-                        </div>
-                        <div class="question-desc">
-                            <label for="ques-desc">Description</label>
-                            <textarea id="ques-desc" name="ques-desc" ></textarea>
-                        </div>
-                        <div class="type">
-                            <label for="ques-type">Type</label>
-                            <select name="ques-type" id="ques-type" >
-                                <option value="easy">Easy</option>
-                                <option value="medium">Medium</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                        </div>
-                        <div class="points">
-                            <label for="ques-points">Points</label>
-                            <input type="number" id="ques-points" name="ques-points" >
-                        </div>
+        <?php
+        $isUpdate = $_GET['update'];
+        if ($isUpdate):
+            ?>
+            <!-- update question modal  -->
+            <div class="modal">
+                <div class="modal-content">
+                    <div class="modal-close">
+                        <img src="../public/icons/cross.svg" alt="close">
                     </div>
 
-                    <div class="right">
-                        <div class="test-cases">
-                            <label>Test Cases</label>
-                            <div class="test-cases-container">
-                                <div class="test-case">
-                                    <label>Input</label>
-                                    <input type="text" name="input[]" placeholder="Input" >
-                                    <label>Output</label>
-                                    <input type="text" name="output[]" placeholder="Output" >
+                    <div class="modal-title">Update Question</div>
+
+                    <!-- contents  -->
+                    <form id="create-question" method="post">
+                        <input type="hidden" id="user-id" name="user-id" value="<?php echo $userId; ?>" />
+                        <div class="left">
+                            <div class="question-title">
+                                <label for="ques-title">Title</label>
+                                <input type="text" id="ques-title" name="ques-title"
+                                    value="<?php echo $updateQuestion['title']; ?>">
+                            </div>
+                            <div class="question-desc">
+                                <label for="ques-desc">Description</label>
+                                <textarea id="ques-desc"
+                                    name="ques-desc"><?php echo $updateQuestion['description']; ?></textarea>
+                            </div>
+                            <div class="type">
+                                <label for="ques-type">Type</label>
+                                <select name="ques-type" id="ques-type">
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                            <div class="points">
+                                <label for="ques-points">Points</label>
+                                <input type="number" id="ques-points" name="ques-points"
+                                    value="<?php echo $updateQuestion['points']; ?>">
+                            </div>
+                        </div>
+
+                        <div class="right">
+                            <div class="test-cases">
+                                <label>Test Cases</label>
+                                <div class="test-cases-container">
+                                    <div class="test-case">
+                                        <label>Input</label>
+                                        <input type="text" name="input[]" placeholder="Input"
+                                            value="<?php echo $updateQuestion['test_cases'][0]['input']; ?>">
+                                        <label>Output</label>
+                                        <input type="text" name="output[]" placeholder="Output"
+                                            value="<?php echo $updateQuestion['test_cases'][0]['output']; ?>">
+                                    </div>
+                                    <?php if (count($updateQuestion['test_cases']) > 0): ?>
+                                        <?php foreach (array_slice($updateQuestion['test_cases'], 1) as $testCase): ?>
+                                            <div class="test-case">
+                                                <label>Input</label>
+                                                <input type="text" name="input[]" placeholder="Input"
+                                                    value="<?php echo $testCase['input']; ?>">
+                                                <label>Output</label>
+                                                <input type="text" name="output[]" placeholder="Output"
+                                                    value="<?php echo $testCase['output']; ?>">
+                                                <div class="add-btn-container remove-btn">
+                                                    <span class="add-btn">
+                                                        <span class="add-label">Remove</span>
+                                                        <img src="../public/icons/minus.svg" alt="minus">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+
+                                </div>
+                                <!-- add test case btn  -->
+                                <div id="add-test-case" class="add-btn-container">
+                                    <span class="add-btn">
+                                        <span class="add-label">Add Test Cases</span>
+                                        <img src="../public/icons/plus.svg" alt="plus">
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
                                 </div>
                             </div>
-                            <!-- add test case btn  -->
-                            <div id="add-test-case" class="add-btn-container">
-                                <span class="add-btn">
-                                <span class="add-label">Add Test Cases</span>
-                                    <img src="../public/icons/plus.svg" alt="plus">
-                                </span>
-                            </div>
-                            <div>
-                                <span></span>
-                            </div>
                         </div>
+
+                        <!-- submit btn  -->
+                        <div class="btn-container">
+                            <button name="update" type="submit">Update</button>
+                            <button name="delete" type="submit">Delete</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        <?php else: ?>
+            <!-- create new question modal  -->
+            <div class="modal closed">
+                <div class="modal-content">
+                    <div class="modal-close">
+                        <img src="../public/icons/cross.svg" alt="close">
                     </div>
 
-                    <!-- submit btn  -->
-                     <div class="btn-container">
-                        <button type="submit" >Create</button>
-                     </div>
-                </form>
+                    <div class="modal-title">Create New Question</div>
 
+                    <!-- contents  -->
+                    <form id="create-question" method="post">
+                        <input type="hidden" id="user-id" name="user-id" value="<?php echo $userId; ?>" />
+                        <div class="left">
+                            <div class="question-title">
+                                <label for="ques-title">Title</label>
+                                <input type="text" id="ques-title" name="ques-title">
+                            </div>
+                            <div class="question-desc">
+                                <label for="ques-desc">Description</label>
+                                <textarea id="ques-desc" name="ques-desc"></textarea>
+                            </div>
+                            <div class="type">
+                                <label for="ques-type">Type</label>
+                                <select name="ques-type" id="ques-type">
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                            <div class="points">
+                                <label for="ques-points">Points</label>
+                                <input type="number" id="ques-points" name="ques-points">
+                            </div>
+                        </div>
+
+                        <div class="right">
+                            <div class="test-cases">
+                                <label>Test Cases</label>
+                                <div class="test-cases-container">
+                                    <div class="test-case">
+                                        <label>Input</label>
+                                        <input type="text" name="input[]" placeholder="Input">
+                                        <label>Output</label>
+                                        <input type="text" name="output[]" placeholder="Output">
+                                    </div>
+                                </div>
+                                <!-- add test case btn  -->
+                                <div id="add-test-case" class="add-btn-container">
+                                    <span class="add-btn">
+                                        <span class="add-label">Add Test Cases</span>
+                                        <img src="../public/icons/plus.svg" alt="plus">
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- submit btn  -->
+                        <div class="btn-container">
+                            <button type="submit">Create</button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
 
         <!-- questions section  -->
         <section class="question-section">
@@ -105,7 +231,9 @@ $userQuestions = $user->getUserQuestions($userId);
                 <?php
                 if (isset($userQuestions)) {
                     foreach ($userQuestions as $question) {
+                        echo "<a class='question-link' href='http://localhost/AI-Edufy/home?update=$question[id]'>";
                         include('../common/questionBox.php');
+                        echo "</a>";
                     }
                 } else {
                     ?>
@@ -117,7 +245,13 @@ $userQuestions = $user->getUserQuestions($userId);
         </section>
 
         <!-- side section  -->
-        <section class="side-section"></section>
+        <section class="side-section">
+            <div class="name-photo">
+                <img alt="profile" src="<?php echo $userDetails['profile_image']; ?>" />
+                <div class="username"><?php echo $userDetails['name']; ?></div>
+                <div class="email"><?php echo $userDetails['email']; ?></div>
+            </div>
+        </section>
 
     </main>
 
