@@ -21,21 +21,25 @@ $hardTotal = $noOfHardQuestions[1];
 
 //total points earned
 $usersLB = $user->leaderboard->select('*', "learner_id=$user_id")->fetch_assoc();
-$points = $usersLB['points_earned'];
-$level_title = $user->leaderboard->levels->select('level_title', "id=$usersLB[level_id]")->fetch_assoc()['level_title'];
-
+$points;
+$level_title;
+if ($usersLB) {
+    $points = $usersLB['points_earned'];
+    $level_title = $user->leaderboard->levels->select('level_title', "id=$usersLB[level_id]")->fetch_assoc()['level_title'];
+}
 
 //completed questions
-
 $completedQuestions = $user->completed_questions->select('*', "learner_id=$user_id");
-
 $completedQuestionsArr = [];
-
 while ($row = $completedQuestions->fetch_assoc()) {
     $question = $user->question->select('title', "id=$row[question_id]")->fetch_assoc();
     $row['title'] = $question['title'];
     array_push($completedQuestionsArr, $row);
 }
+
+//user details
+$userDetails = $user->users->select('*', " id=$user_id ")->fetch_assoc();
+
 
 ?>
 <!DOCTYPE html>
@@ -92,10 +96,21 @@ while ($row = $completedQuestions->fetch_assoc()) {
                 <p id="level"><?php echo $level_title ?? 'Beginner 👶'; ?></p>
             </div>
         </section>
-        <section class="profile-section">profile</section>
+        <section class="profile-section">
+
+            <div class="name-photo">
+                <img alt="profile" src="<?php echo $userDetails['profile_image']; ?>" />
+                <div class="username"><?php echo $userDetails['name']; ?></div>
+                <div class="email"><?php echo $userDetails['email']; ?></div>
+            </div>
+
+        </section>
         <section class="solved-questions-section">
             <h2>Solved Questions</h2>
             <div class="solved-questions">
+                <?php if (count($completedQuestionsArr) === 0): ?>
+                    <div>You have no solved questions</div>
+                <?php endif; ?>
                 <?php
                 foreach ($completedQuestionsArr as $question) {
                     echo "<a href='http://localhost/AI-Edufy/question/?id=$question[question_id]' class='solved-question'>

@@ -1,4 +1,4 @@
-import toast from "../utils/toaster.js";
+import toast from "../utils/toast.js";
 const passInput = document.querySelector('.auth-form input[name="password"]');
 const eyeContainer = document.querySelector(".eye-container");
 eyeContainer.onclick = () => {

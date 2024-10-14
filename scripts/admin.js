@@ -1,4 +1,4 @@
-import toast from "../utils/toaster.js";
+import toast from "../utils/toast.js";
 import loader from "../utils/loader.js";
 
 const deleUser = document.querySelectorAll(".del-user");

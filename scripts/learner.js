@@ -1,5 +1,5 @@
 
-        const ctx = document.getElementById('progress-chart').getContext('2d');
+        const ctx = document.getElementById('progress-chart')?.getContext('2d');
 
         // Pass PHP variables to JavaScript
         const easySolved = Number(document.getElementById('easy-solved').innerText);

@@ -54,3 +54,5 @@ class Toast {
 const toast = new Toast();
 
 export default toast;
+
+

@@ -1,6 +1,6 @@
-import toast from "../utils/toaster.js";
 import { askGemini } from "../utils/gemini.js";
 import { confettiFire } from "../utils/confetti.js";
+import toast from "../utils/toast.js";
 
 const iFrame = document.querySelector("iframe");
 var code;
@@ -129,6 +129,7 @@ completeTaskBtn.addEventListener("click", async function () {
 
     if (res.status === 200) {
       toast.success("Task Completed Successfully");
+      window.location.reload();
     } else {
       toast.error("Task Completion Failed");
     }
