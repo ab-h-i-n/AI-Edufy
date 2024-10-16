@@ -5,7 +5,7 @@ $userQuestions = $user->getUserQuestions($userId);
 $userDetails = $user->users->select('*', " id=$userId ")->fetch_assoc();
 
 //updating question details
-$quesId = $_GET['update'];
+$quesId = $_GET['update'] ?? null;
 $updateQuestion;
 if ($quesId) {
     $updateQuestion = $user->question->select('*', " id=$quesId ");
@@ -49,7 +49,7 @@ if ($quesId) {
     <main>
 
         <?php
-        $isUpdate = $_GET['update'];
+        $isUpdate = $_GET['update'] ?? null;
         if ($isUpdate):
             ?>
             <!-- update question modal  -->
@@ -64,6 +64,7 @@ if ($quesId) {
                     <!-- contents  -->
                     <form id="create-question" method="post">
                         <input type="hidden" id="user-id" name="user-id" value="<?php echo $userId; ?>" />
+                        <input type="hidden" id="ques-id" name="ques-id" value="<?php echo $updateQuestion['id']; ?>" />
                         <div class="left">
                             <div class="question-title">
                                 <label for="ques-title">Title</label>
@@ -105,6 +106,7 @@ if ($quesId) {
                                     <?php if (count($updateQuestion['test_cases']) > 0): ?>
                                         <?php foreach (array_slice($updateQuestion['test_cases'], 1) as $testCase): ?>
                                             <div class="test-case">
+                                                <input type="hidden" name="test-case-id[]" value="<?php echo $testCase['id']; ?>">
                                                 <label>Input</label>
                                                 <input type="text" name="input[]" placeholder="Input"
                                                     value="<?php echo $testCase['input']; ?>">

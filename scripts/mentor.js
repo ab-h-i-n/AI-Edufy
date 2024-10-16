@@ -1,8 +1,6 @@
 import toast from "../utils/toast.js";
 import loader from "../utils/loader.js";
 
-
-
 // Add new test case
 
 const addBtn = document.querySelector(".add-btn");
@@ -58,49 +56,98 @@ const form = document.querySelector("#create-question");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  const quesId = document.getElementById("ques-id")?.value;
+
   if (validateForm()) {
-    try {
-      toast.loading("Creating New Question...");
+    if (!quesId) {
+      try {
+        toast.loading("Creating New Question...");
 
-      const response = await fetch(
-        "http://localhost/AI-Edufy/api/question/createQuestion.php",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            userId: userId.value,
-            title: titleField.value,
-            description: descriptionField.value,
-            type: typeField.value,
-            points: pointsField.value,
-            testCases: Array.from(inputFields).map((inputField, index) => {
-              return {
-                input: inputField.value,
-                output: outputFields[index].value,
-              };
+        const response = await fetch(
+          "http://localhost/AI-Edufy/api/question/createQuestion.php",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              userId: userId.value,
+              title: titleField.value,
+              description: descriptionField.value,
+              type: typeField.value,
+              points: pointsField.value,
+              testCases: Array.from(inputFields).map((inputField, index) => {
+                return {
+                  input: inputField.value,
+                  output: outputFields[index].value,
+                };
+              }),
             }),
-          }),
+          }
+        );
+
+        console.log(response);
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.status === 200) {
+          toast.success(data.msg);
+          form.reset();
+          modalClose();
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } else {
+          toast.error(data.msg);
         }
-      );
-
-      console.log(response);
-
-      const data = await response.json();
-
-      console.log(data);
-
-      if (data.status === 200) {
-        toast.success(data.msg);
-        form.reset();
-        modalClose();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      } else {
-        toast.error(data.msg);
+      } catch (error) {
+        toast.error("Failed to create question. Please try again.");
+        console.error(error);
       }
-    } catch (error) {
-      toast.error("Failed to create question. Please try again.");
-      console.error(error);
+    } else {
+      try {
+        toast.loading("Updating Question...");
+
+        const response = await fetch(
+          "http://localhost/AI-Edufy/api/question/updateQuestion.php",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              quesId: quesId,
+              userId: userId.value,
+              title: titleField.value,
+              description: descriptionField.value,
+              type: typeField.value,
+              points: pointsField.value,
+              testCases: Array.from(inputFields).map((inputField, index) => {
+                return {
+                  input: inputField.value,
+                  output: outputFields[index].value,
+                };
+              }),
+            }),
+          }
+        );
+
+        console.log(response);
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.status === 200) {
+          toast.success(data.msg);
+          form.reset();
+          modalClose();
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } else {
+          toast.error(data.msg);
+        }
+      } catch (error) {
+        toast.error("Failed to update question. Please try again.");
+        console.error(error);
+      }
     }
   }
 });
@@ -158,4 +205,3 @@ function validateForm() {
 
   return true;
 }
-

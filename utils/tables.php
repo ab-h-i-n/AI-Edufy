@@ -60,6 +60,32 @@ class BaseClass
         return $result;
     }
 
+    function update($data, $where)
+    {
+
+        $setClauses = [];
+
+        foreach ($data as $column => $value) {
+            $setClauses[] = "$column = '" . $this->dbcon->real_escape_string($value) . "'";
+        }
+
+        $setString = implode(", ", $setClauses);
+
+        $query = "UPDATE $this->tableName SET $setString";
+
+        if (!empty($where)) {
+            $query .= " WHERE $where";
+        }
+
+        $result = $this->dbcon->query($query);
+
+        if (!$result) {
+            die("Error in update query: " . $this->dbcon->error);
+        }
+
+        return $this->dbcon->affected_rows;
+    }
+
 }
 
 
@@ -224,7 +250,7 @@ class LeaderBoard extends BaseClass
     {
         // First, get the level_id from the levels table based on the learner's points
         $level_id = $this->levels->select("id", "points_required <= " . $data['points_earned'] . " ORDER BY points_required DESC LIMIT 1")->fetch_assoc()['id'];
-        
+
         if (!$level_id) {
             die("Level not found for the given points.");
         }
@@ -244,9 +270,9 @@ class LeaderBoard extends BaseClass
             $updateQuery = "UPDATE $this->tableName 
                             SET points_earned = '$updated_points', level_id = '$level_id' 
                             WHERE learner_id = '$learner_id'";
-            
+
             $result = $this->dbcon->query($updateQuery);
-            
+
             if (!$result) {
                 die("Error in update query: " . $this->dbcon->error);
             }
@@ -254,7 +280,7 @@ class LeaderBoard extends BaseClass
             // Learner doesn't exist, insert a new record
             $insertQuery = "INSERT INTO $this->tableName (learner_id, points_earned, level_id) 
                             VALUES ('$learner_id', '$points_earned', '$level_id')";
-            
+
             $result = $this->dbcon->query($insertQuery);
 
             if (!$result) {
