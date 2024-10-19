@@ -11,12 +11,18 @@ class BaseClass
         $this->tableName = $tableName;
     }
 
-    function select($columns = "*", $where = "")
+    function select($columns = "*", $where = "", $orderBy = "")
     {
         $query = "SELECT $columns FROM $this->tableName";
         if (!empty($where)) {
             $query .= " WHERE $where";
         }
+
+        if (!empty($orderBy)) {
+            $query .= " ORDER BY $orderBy";
+        }
+
+
         $result = $this->dbcon->query($query);
         if (!$result) {
             die("Error in select query: " . $this->dbcon->error);
@@ -205,12 +211,16 @@ class CompletedQuestions extends BaseClass
         }
     }
 
-    function select($columns = "*", $where = "")
+    function select($columns = "*", $where = "", $orderBy = "")
     {
         $query = "SELECT " . $columns . " FROM " . $this->tableName . " cq JOIN QUESTIONS q ON cq.question_id = q.id";
 
         if (!empty($where)) {
             $query .= " WHERE " . $where;
+        }
+
+        if (!empty($orderBy)) {
+            $query .= " ORDER BY " . $orderBy;
         }
 
         $result = $this->dbcon->query($query);
@@ -301,10 +311,9 @@ class Levels extends BaseClass
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            level_no INT NOT NULL,
             level_title VARCHAR(255) NOT NULL,
             points_required INT NOT NULL
-        ) AUTO_INCREMENT=1000";
+        )AUTO_INCREMENT = 1";
 
         if (!$this->dbcon->query($createQuery)) {
             die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);

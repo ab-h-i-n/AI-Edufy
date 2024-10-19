@@ -23,6 +23,11 @@ $sideMenuItems = [
         "icon" => "../public/icons/question.svg",
         "title" => "questions",
         "path" => "/AI-Edufy/home/?content=questions"
+    ],
+    [
+        "icon" => "../public/icons/level.svg",
+        "title" => "levels",
+        "path" => "/AI-Edufy/home/?content=levels"
     ]
 ];
 
@@ -70,6 +75,7 @@ $sideMenuItems = [
 
             switch ($content) {
                 case 'questions': include('questionManagement.php'); break;
+                case 'levels' : include('levelManagement.php'); break;
                 default : include('userManagement.php');
             }
         ?>

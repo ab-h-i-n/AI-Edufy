@@ -53,3 +53,31 @@ delQues.forEach((deleteBtn) => {
     }
   });
 });
+
+const delLevel = document.querySelectorAll(".del-level");
+
+delLevel.forEach((deleteBtn) => {
+  deleteBtn.addEventListener("click", async () => {
+    toast.loading("Deleting.....");
+    const levelId = deleteBtn.id;
+    loader.add(deleteBtn);
+
+    const response = await fetch(
+      `http://localhost/AI-Edufy/api/level/delete.php?id=${levelId}`
+    );
+
+    const result = await response.json();
+
+    console.log(result);
+    loader.remove(deleteBtn, "Delete");
+
+    if (result?.status === 200) {
+      toast.success(result.msg);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else {
+      toast.error(result.msg);
+    }
+  });
+});
