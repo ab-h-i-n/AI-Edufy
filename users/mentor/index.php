@@ -79,9 +79,9 @@ if ($quesId) {
                             <div class="type">
                                 <label for="ques-type">Type</label>
                                 <select name="ques-type" id="ques-type">
-                                    <option value="easy">Easy</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="hard">Hard</option>
+                                    <option value="easy" <?php if($updateQuestion['type'] == 'easy') echo "selected"; ?> >Easy</option>
+                                    <option value="medium" <?php if($updateQuestion['type'] == 'medium') echo "selected"; ?>>Medium</option>
+                                    <option value="hard" <?php if($updateQuestion['type'] == 'hard') echo "selected"; ?>>Hard</option>
                                 </select>
                             </div>
                             <div class="points">
@@ -140,7 +140,7 @@ if ($quesId) {
                         <!-- submit btn  -->
                         <div class="btn-container">
                             <button name="update" type="submit">Update</button>
-                            <button name="delete" type="submit">Delete</button>
+                            <button name="delete" type="button">Delete</button>
                         </div>
                     </form>
 

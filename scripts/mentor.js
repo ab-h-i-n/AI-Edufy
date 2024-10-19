@@ -1,5 +1,6 @@
 import toast from "../utils/toast.js";
 import loader from "../utils/loader.js";
+import { closeModal } from "./global.js";
 
 // Add new test case
 
@@ -92,7 +93,7 @@ form.addEventListener("submit", async (e) => {
         if (data.status === 200) {
           toast.success(data.msg);
           form.reset();
-          modalClose();
+          closeModal();
           setTimeout(() => {
             window.location.reload();
           }, 1000);
@@ -136,10 +137,8 @@ form.addEventListener("submit", async (e) => {
 
         if (data.status === 200) {
           toast.success(data.msg);
-          form.reset();
-          modalClose();
           setTimeout(() => {
-            window.location.reload();
+            closeModal();
           }, 1000);
         } else {
           toast.error(data.msg);
@@ -205,3 +204,35 @@ function validateForm() {
 
   return true;
 }
+
+//delete question
+
+const deleteBtn = document.querySelector("button[name='delete']");
+
+deleteBtn.addEventListener("click", async () => {
+  try {
+    const quesId = document.getElementById("ques-id")?.value;
+
+    if (quesId) {
+      toast.loading("Deleting Question...");
+
+      const response = await fetch(
+        `http://localhost/AI-Edufy/api/question/delete.php?id=${quesId}`
+      );
+
+      const data = await response.json();
+
+      if (data.status === 200) {
+        toast.success(data.message);
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      } else {
+        toast.error(data.message);
+      }
+    }
+  } catch (error) {
+    toast.error("Failed to delete question. Please try again.");
+    console.error(error);
+  }
+});

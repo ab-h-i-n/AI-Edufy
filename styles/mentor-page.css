@@ -107,6 +107,24 @@ main {
 .modal-content {
   position: relative;
 
+  & button[name = 'update']{
+    margin-right: 2rem;
+    background-color: rgb(45, 45, 177);
+
+
+    &:hover {
+      background-color: rgb(69, 69, 194);
+    }
+  }
+
+  & button[name = 'delete']{
+    background-color: rgb(177, 45, 45);
+
+    &:hover {
+      background-color: rgb(192, 69, 69);
+    }
+  }
+
   & form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

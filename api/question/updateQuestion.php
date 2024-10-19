@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!$questionUpdated) {
         echo json_encode([
             "status" => 500,
-            "msg" => "Failed to create question"
+            "msg" => "Failed to update question"
         ]);
         return;
     }
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$testCaseInsert) {
             echo json_encode([
                 "status" => 500,
-                "msg" => "Failed to create test cases"
+                "msg" => "Failed to update test cases"
             ]);
             return;
         }

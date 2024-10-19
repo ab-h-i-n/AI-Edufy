@@ -83,7 +83,7 @@ class BaseClass
             die("Error in update query: " . $this->dbcon->error);
         }
 
-        return $this->dbcon->affected_rows;
+        return $result;
     }
 
 }
