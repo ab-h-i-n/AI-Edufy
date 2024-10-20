@@ -2,7 +2,6 @@ import toast from "../utils/toast.js";
 import loader from "../utils/loader.js";
 import { closeModal } from "./global.js";
 
-
 const deleUser = document.querySelectorAll(".del-user");
 
 deleUser.forEach((deleteBtn) => {
@@ -75,7 +74,6 @@ delLevel.forEach((deleteBtn) => {
 
     if (result?.status === 200) {
       toast.success(result.msg);
-      closeModal();
       setTimeout(() => {
         window.location.reload();
       }, 2000);
@@ -89,49 +87,86 @@ const levelForm = document.querySelector("#level-form");
 
 levelForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  
+
   const formData = new FormData(levelForm);
   const data = Object.fromEntries(formData.entries());
 
   console.log(data);
-  
-
 
   if (!data?.level_title || !data?.level_points) {
     return toast.error("Please fill all the fields");
   }
 
-  try {
-    toast.loading("Adding Level.....");
-    const response = await fetch(
-      "http://localhost/AI-Edufy/api/level/create.php",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          level_title: data?.level_title,
-          points_required: data?.level_points,
-        }),
+  if (!data?.level_id) {
+    // Add Level
+    try {
+      toast.loading("Adding Level.....");
+      const response = await fetch(
+        "http://localhost/AI-Edufy/api/level/create.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            level_title: data?.level_title,
+            points_required: data?.level_points,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      console.log(result);
+
+      if (result?.status === 200) {
+        toast.success(result.msg);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        toast.error(result.msg);
       }
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-
-    if (result?.status === 200) {
-      toast.success(result.msg);
-      
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
-    } else {
-      toast.error(result.msg);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
     }
-  } catch (error) {
-    console.log(error);
-    toast.error("Something went wrong");
+  }else {
+
+    // Update Level
+    try {
+      toast.loading("Updating Level.....");
+      const response = await fetch(
+        "http://localhost/AI-Edufy/api/level/update.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            level_id: data?.level_id,
+            level_title: data?.level_title,
+            points_required: data?.level_points,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      console.log(result);
+
+      if (result?.status === 200) {
+        toast.success(result.msg);
+        setTimeout(() => {
+          closeModal();
+        }, 2000);
+      } else {
+        toast.error(result.msg);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   }
 });

@@ -6,9 +6,11 @@ export function closeModal() {
   modal.classList.add("closed");
   document.querySelector("body").style.overflowY = "auto";
 
-  if (window.location.search.includes("update")) {
-    window.location.href = "http://localhost/AI-Edufy/home";
-  }
+  const url = new URL(window.location.href);
+  const searchParams = new URLSearchParams(url.search);
+  searchParams.delete("update");
+  url.search = searchParams.toString();
+  window.location.href = url.href;
 }
 
 modalCloseBtn.addEventListener("click", closeModal);
