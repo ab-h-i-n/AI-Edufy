@@ -23,7 +23,7 @@
                         hardSolved,
                         totalQuestions - totalSolved  
                     ],
-                    backgroundColor: ['#1da1f2', '#ffc107', '#dc3545', '#2d2d2d'], 
+                    backgroundColor: ['#008000', '#ff4500', '#ff0000', '#2d2d2d'], 
                     borderWidth: 0,
                     cutout: '70%',
                 }]
