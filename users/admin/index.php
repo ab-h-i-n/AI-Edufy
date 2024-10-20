@@ -40,6 +40,7 @@ $sideMenuItems = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/admin-page.css">
     <link rel="stylesheet" href="../styles/global.css">
+    <script type="module" src="../scripts/global.js"></script>
     <script src="../scripts/admin.js" type="module" defer></script>
     <title>Document</title>
 </head>
@@ -54,7 +55,7 @@ $sideMenuItems = [
         <div class="admin-info">
             <div class="email"><?php echo $adminData['email'] ?></div>
             <form action="../api/auth/logout.php" method="post">
-                <button name="logout" class="pill" >Logout</button>
+                <button name="logout" class="pill">Logout</button>
             </form>
         </div>
     </header>
@@ -71,13 +72,18 @@ $sideMenuItems = [
         </div>
 
         <?php
-            $content = $_GET['content'] ?? 'none';
+        $content = $_GET['content'] ?? 'none';
 
-            switch ($content) {
-                case 'questions': include('questionManagement.php'); break;
-                case 'levels' : include('levelManagement.php'); break;
-                default : include('userManagement.php');
-            }
+        switch ($content) {
+            case 'questions':
+                include('questionManagement.php');
+                break;
+            case 'levels':
+                include('levelManagement.php');
+                break;
+            default:
+                include('userManagement.php');
+        }
         ?>
 
     </main>

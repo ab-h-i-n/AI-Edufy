@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2024 at 06:44 PM
+-- Generation Time: Oct 20, 2024 at 09:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -53,14 +53,6 @@ CREATE TABLE `COMPLETED_QUESTIONS` (
   `language` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `COMPLETED_QUESTIONS`
---
-
-INSERT INTO `COMPLETED_QUESTIONS` (`learner_id`, `question_id`, `answer`, `language`) VALUES
-(1002, 1006, 'str = \"hello\"\nrev = str[::-1]\nprint(rev)', 'python'),
-(1002, 1007, 'const str = \"hello world\";\nconst numOfWords = str.split(\" \").length;\nconsole.log(numOfWords);', 'javascript');
-
 -- --------------------------------------------------------
 
 --
@@ -73,13 +65,6 @@ CREATE TABLE `LEADER_BOARD` (
   `level_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `LEADER_BOARD`
---
-
-INSERT INTO `LEADER_BOARD` (`learner_id`, `points_earned`, `level_id`) VALUES
-(1002, 220, 1001);
-
 -- --------------------------------------------------------
 
 --
@@ -88,7 +73,6 @@ INSERT INTO `LEADER_BOARD` (`learner_id`, `points_earned`, `level_id`) VALUES
 
 CREATE TABLE `LEVELS` (
   `id` int(11) NOT NULL,
-  `level_no` int(11) NOT NULL,
   `level_title` varchar(255) NOT NULL,
   `points_required` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -97,12 +81,12 @@ CREATE TABLE `LEVELS` (
 -- Dumping data for table `LEVELS`
 --
 
-INSERT INTO `LEVELS` (`id`, `level_no`, `level_title`, `points_required`) VALUES
-(1000, 1, 'Beginner 👶', 0),
-(1001, 2, 'Novice 🥈', 100),
-(1002, 3, 'Intermediate 🥉', 250),
-(1003, 4, 'Advanced 🎖️', 500),
-(1004, 5, 'Expert 🏆', 1000);
+INSERT INTO `LEVELS` (`id`, `level_title`, `points_required`) VALUES
+(1, 'Beginner 👶', 0),
+(2, 'Novice 🥈', 100),
+(3, 'Intermediate 🥉', 250),
+(4, 'Advanced 🎖️', 500),
+(5, 'Expert 🏆', 1000);
 
 -- --------------------------------------------------------
 
@@ -125,7 +109,7 @@ CREATE TABLE `QUESTIONS` (
 
 INSERT INTO `QUESTIONS` (`id`, `title`, `description`, `type`, `mentor_id`, `points`) VALUES
 (1006, 'Reverse a string', 'reverese the given string', 'easy', 1001, 20),
-(1007, 'number of words in a sentance', 'find the number of words in a given sentance', 'medium', 1001, 200);
+(1007, 'Number of words in a sentance', 'Find the number of words in a given sentance', 'medium', 1001, 200);
 
 -- --------------------------------------------------------
 
@@ -240,19 +224,19 @@ ALTER TABLE `ADMIN`
 -- AUTO_INCREMENT for table `LEVELS`
 --
 ALTER TABLE `LEVELS`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1005;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `QUESTIONS`
 --
 ALTER TABLE `QUESTIONS`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1008;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1010;
 
 --
 -- AUTO_INCREMENT for table `TEST_CASES`
 --
 ALTER TABLE `TEST_CASES`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1008;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1010;
 
 --
 -- AUTO_INCREMENT for table `USERS`

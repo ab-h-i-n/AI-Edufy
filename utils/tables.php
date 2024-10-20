@@ -22,7 +22,6 @@ class BaseClass
             $query .= " ORDER BY $orderBy";
         }
 
-
         $result = $this->dbcon->query($query);
         if (!$result) {
             die("Error in select query: " . $this->dbcon->error);
