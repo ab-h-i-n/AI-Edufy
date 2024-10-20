@@ -33,18 +33,40 @@ class BaseClass
 
     function insert($data)
     {
-
+        // Prepare the SQL statement
         $columns = implode(", ", array_keys($data));
-        $values = implode("', '", array_values($data));
-        $query = "INSERT INTO $this->tableName ($columns) VALUES ('$values')";
-        $result = $this->dbcon->query($query);
+        $placeholders = rtrim(str_repeat('?, ', count($data)), ', '); // Create placeholders
+        $query = "INSERT INTO $this->tableName ($columns) VALUES ($placeholders)";
 
-        if (!$result) {
-            die("Error in insert query: " . $this->dbcon->error);
+        // Prepare the statement
+        $stmt = $this->dbcon->prepare($query);
+
+        // Create a types string based on the data types of the values
+        $types = '';
+        foreach ($data as $value) {
+            if (is_int($value)) {
+                $types .= 'i'; // integer
+            } elseif (is_float($value)) {
+                $types .= 'd'; // double
+            } else {
+                $types .= 's'; // string
+            }
         }
 
-        return $this->dbcon->insert_id;
+        // Bind parameters dynamically
+        $stmt->bind_param($types, ...array_values($data));
+
+        // Execute the statement
+        $result = $stmt->execute();
+
+        if (!$result) {
+            die("Error in insert query: " . $stmt->error);
+        }
+
+        return $this->dbcon->insert_id; // Return the ID of the newly inserted record
     }
+
+
 
 
     function delete($id, $isDifferentColumn)

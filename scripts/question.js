@@ -96,7 +96,7 @@ hintBtn.addEventListener("click", async function () {
   console.log("Testcases:", testcases.innerText);
 
   const req =
-    await askGemini(`the question is "${question.innerText}" testcases are ${testcases.innerText} give a hint and next step about the code "${code}" in "${lang}" in 2 lines in JSON FORMAT using {
+    await askGemini(`help beginner to solve  the question is "${question.innerText}" testcases are ${testcases.innerText} give a hint for next step also the next step code , if any errors in code please mention it also "${code}" in "${lang}" in 2 lines in JSON FORMAT using {
     "hint" : str,
     "nextstep" : str
     }`);
@@ -126,6 +126,9 @@ completeTaskBtn.addEventListener("click", async function () {
     );
 
     const res = await req.json();
+
+    console.log(res);
+    
 
     if (res.status === 200) {
       toast.success("Task Completed Successfully");
