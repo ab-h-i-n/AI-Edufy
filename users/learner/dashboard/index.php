@@ -25,7 +25,7 @@ $points;
 $level_title;
 if ($usersLB) {
     $points = $usersLB['points_earned'];
-    $level_title = $user->leaderboard->levels->select('level_title', "id=$usersLB[level_id]")->fetch_assoc()['level_title'];
+    $level_title = $user->leaderboard->levels->select('level_title', "points_required <= $usersLB[points_earned]" , "points_required DESC LIMIT 1")->fetch_assoc()['level_title'];
 }
 
 //completed questions
