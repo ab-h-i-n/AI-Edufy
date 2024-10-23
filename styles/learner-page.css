@@ -135,6 +135,31 @@ body#dashboard {
       &.profile-section {
         grid-row: span 2;
         grid-column: 3 / 4;
+        position: relative;
+
+        & .edit-profile-btn{
+          position: absolute;
+          z-index: 5;
+          top: 1rem;
+          right: 1rem;
+          background-color: rgb(28, 143, 28);
+          width: 40px;
+          height: 40px;
+          border-radius: 5px;
+          display: grid;
+          place-items: center;
+          cursor: pointer;
+          
+          &:hover{
+            background-color: rgb(58, 154, 58);
+          }
+
+          & img{
+            width: 20px;
+            height: 20px;
+            filter: invert();
+          }
+        }
 
         & .name-photo {
 

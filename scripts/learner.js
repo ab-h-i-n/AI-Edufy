@@ -42,3 +42,10 @@
             }
         });
 
+
+// edit
+
+const editProfileBtn = document.querySelector('.edit-profile-btn');
+editProfileBtn.addEventListener("click" , ()=>{
+    window.lo
+})

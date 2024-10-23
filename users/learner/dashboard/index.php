@@ -40,7 +40,7 @@ while ($row = $completedQuestions->fetch_assoc()) {
 //user details
 $userDetails = $user->users->select('*', " id=$user_id ")->fetch_assoc();
 
-
+$fileModified = time();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,7 @@ $userDetails = $user->users->select('*', " id=$user_id ")->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/learner-page.css">
+    <link rel="stylesheet" href="../styles/learner-page.css?v=<?php echo $fileModified ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js" type="module" defer></script>
     <script type="module" src="../scripts/learner.js" defer></script>
     <title>Document</title>
@@ -97,6 +97,10 @@ $userDetails = $user->users->select('*', " id=$user_id ")->fetch_assoc();
             </div>
         </section>
         <section class="profile-section">
+
+            <div class="edit-profile-btn">
+                <img width="30px" height="30px" src="../public/icons/edit.svg" alt="edit proile" />
+            </div>
 
             <div class="name-photo">
                 <img alt="profile" src="<?php echo $userDetails['profile_image']; ?>" />
