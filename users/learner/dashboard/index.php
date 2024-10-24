@@ -25,7 +25,7 @@ $points;
 $level_title;
 if ($usersLB) {
     $points = $usersLB['points_earned'];
-    $level_title = $user->leaderboard->levels->select('level_title', "points_required <= $usersLB[points_earned]" , "points_required DESC LIMIT 1")->fetch_assoc()['level_title'];
+    $level_title = $user->leaderboard->levels->select('level_title', "points_required <= $usersLB[points_earned]", "points_required DESC LIMIT 1")->fetch_assoc()['level_title'];
 }
 
 //completed questions
@@ -52,12 +52,57 @@ $fileModified = time();
     <link rel="stylesheet" href="../styles/learner-page.css?v=<?php echo $fileModified ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js" type="module" defer></script>
     <script type="module" src="../scripts/learner.js" defer></script>
+    <script type="module" src="../scripts/global.js" defer></script>
     <title>Document</title>
 </head>
 
 <body id="dashboard">
 
     <?php include_once('../users/learner/header.php') ?>
+
+    <!-- profile-edit modal -->
+
+    <div class="modal closed">
+        <div class="modal-content">
+            <div class="modal-close">
+                <img src="../public/icons/cross.svg" alt="close">
+            </div>
+
+            <div class="modal-title">Update Profile</div>
+
+            <!-- contents  -->
+            <form id="update-profile" method="post">
+
+                <!-- profile image -->
+                <div class="profile-image">
+                    <label for="profile-image-input">
+                        <img id="profile-image-photo" src="<?php echo $userDetails['profile_image']; ?>"
+                            alt="profile image" />
+                        <img id="cam" src="../public/icons/camera.svg" alt="camera" />
+                    </label>
+                    <input class="hidden" type="file" name="profile-image" id="profile-image-input" accept="image/*" />
+                </div>
+
+                <!-- name -->
+                <div class="input-container">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" value="<?php echo $userDetails['name']; ?>" required />
+                </div>
+
+                <!-- email -->
+                <div class="input-container">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value="<?php echo $userDetails['email']; ?>" required />
+                </div>
+
+                <!-- submit btn  -->
+                <div class="btn-container">
+                    <button name="update" type="submit">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
     <main>
 
@@ -98,7 +143,7 @@ $fileModified = time();
         </section>
         <section class="profile-section">
 
-            <div class="edit-profile-btn">
+            <div class="edit-profile-btn modal-open">
                 <img width="30px" height="30px" src="../public/icons/edit.svg" alt="edit proile" />
             </div>
 

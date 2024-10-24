@@ -137,7 +137,7 @@ body#dashboard {
         grid-column: 3 / 4;
         position: relative;
 
-        & .edit-profile-btn{
+        & .edit-profile-btn {
           position: absolute;
           z-index: 5;
           top: 1rem;
@@ -149,12 +149,12 @@ body#dashboard {
           display: grid;
           place-items: center;
           cursor: pointer;
-          
-          &:hover{
+
+          &:hover {
             background-color: rgb(58, 154, 58);
           }
 
-          & img{
+          & img {
             width: 20px;
             height: 20px;
             filter: invert();
@@ -162,7 +162,6 @@ body#dashboard {
         }
 
         & .name-photo {
-
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -174,18 +173,86 @@ body#dashboard {
             object-fit: cover;
           }
 
-          & .username{
-            margin-top: .7rem;
+          & .username {
+            margin-top: 0.7rem;
             font-weight: 600;
             font-size: 1.8rem;
           }
 
-          & .email{
+          & .email {
             font-size: 1rem;
             color: rgba(255, 255, 255, 0.492);
           }
         }
       }
+    }
+  }
+
+  form#update-profile {
+    
+    .input-container {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input {
+      padding: 0.5rem;
+      border: var(--default-border);
+      border-radius: 5px;
+      outline: none;
+      transition: all 0.3s;
+      width: 100%;
+      background-color: rgb(26, 27, 30);
+      color: #ffffff;
+
+      &:focus {
+        border-color: var(--primary-color);
+      }
+    }
+
+    .profile-image{
+      position: relative;
+      display: flex;
+      justify-content: center;
+
+      img#profile-image-photo{
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: all .5s;
+
+        &:hover{
+          filter: brightness(.5);
+        }
+      }
+
+      img#cam{
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        filter: invert();
+        pointer-events: none;
+        transition: all .5s;
+        transform-origin: center;
+      }
+
+      img#profile-image-photo:hover + img#cam{
+        scale: 1.1;
+      }
+    }
+
+    .btn-container{
+      display: flex;
+      justify-content: center;
     }
   }
 }

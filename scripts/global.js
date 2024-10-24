@@ -8,9 +8,12 @@ export function closeModal() {
 
   const url = new URL(window.location.href);
   const searchParams = new URLSearchParams(url.search);
-  searchParams.delete("update");
-  url.search = searchParams.toString();
-  window.location.href = url.href;
+
+  if (searchParams.has("update")) {
+    searchParams.delete("update");
+    url.search = searchParams.toString();
+    window.location.href = url.href;
+  }
 }
 
 modalCloseBtn.addEventListener("click", closeModal);
