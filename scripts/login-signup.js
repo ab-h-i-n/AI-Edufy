@@ -1,7 +1,18 @@
 import toast from "../utils/toast.js";
+
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
+
 const passInput = document.querySelector('.auth-form input[name="password"]');
 const eyeContainer = document.querySelector(".eye-container");
-eyeContainer.onclick = () => {
+eyeContainer?.onclick = () => {
   document.querySelector(".eye-open").classList.toggle("hidden");
   document.querySelector(".eye-closed").classList.toggle("hidden");
   const isPassword = passInput.type === "password";
@@ -148,11 +159,3 @@ function SignUpVerification(name, email, password, role) {
   return true;
 }
 
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-}
