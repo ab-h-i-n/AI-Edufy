@@ -59,6 +59,7 @@ $fileModified = time();
 <body id="dashboard">
 
     <?php include_once('../users/learner/header.php') ?>
+    <?php include_once('../common/Toast.php') ?>
 
     <!-- profile-edit modal -->
 

@@ -9,23 +9,22 @@ function toBase64(file) {
   });
 }
 
-
 const passInput = document.querySelector('.auth-form input[name="password"]');
 const eyeContainer = document.querySelector(".eye-container");
-eyeContainer?.onclick = () => {
+eyeContainer?.addEventListener("click", () => {
   document.querySelector(".eye-open").classList.toggle("hidden");
   document.querySelector(".eye-closed").classList.toggle("hidden");
   const isPassword = passInput.type === "password";
   passInput.type = isPassword ? "text" : "password";
-};
+});
 
 const imageInput = document.querySelector("#image-input");
 
-imageInput?.addEventListener("change", async(e) => {
+imageInput?.addEventListener("change", async (e) => {
   if (e.target.files && e.target.files.length > 0) {
     const file = e.target.files[0];
     const baseUrl = await toBase64(file);
-    const imageContainer = document.querySelector('#image-show');
+    const imageContainer = document.querySelector("#image-show");
     imageContainer.src = baseUrl;
   } else {
     console.log("No file selected");
@@ -61,7 +60,6 @@ loginForm?.addEventListener("submit", async (e) => {
     const result = await response.json();
 
     console.log(result);
-    
 
     if (result?.status != 200) {
       toast.error(result?.msg);
@@ -124,7 +122,6 @@ signUpFrom?.addEventListener("submit", async (e) => {
     const result = await response.json();
 
     console.log(result);
-    
 
     if (result?.status === 200) {
       toast.success(result?.msg);
@@ -158,4 +155,3 @@ function SignUpVerification(name, email, password, role) {
 
   return true;
 }
-

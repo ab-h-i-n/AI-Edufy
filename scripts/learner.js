@@ -1,4 +1,5 @@
 import toast from "../utils/toast.js";
+import { closeModal } from "./global.js";
 
 const ctx = document.getElementById("progress-chart")?.getContext("2d");
 
@@ -80,10 +81,16 @@ updateProfileForm.addEventListener("submit", async (e) => {
 
     const result = await response.json();
 
+    console.log(result);
+    
     if (result?.status != 200) {
       toast.error(result?.msg);
     } else {
       toast.success("Profile updated successfully!");
+      closeModal();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   } catch (error) {
     toast.error("Something went wrong!");
