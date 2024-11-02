@@ -261,7 +261,6 @@ div.toast.fade-out {
 
   & .modal-content{
     position: relative;
-    overflow-y: auto;
     z-index: 101;
     background-color: var(--form-bg);
     padding: 2rem;
@@ -269,8 +268,9 @@ div.toast.fade-out {
     border: var(--default-border);
     box-shadow: var(--default-box-shadow);
     min-width: 500px;
-    max-height: 80vh;
+    max-height: 85vh;
     transition: all 0.3s;
+    overflow-y: auto;
 
     & .modal-title{
       font-size: 1.6rem;

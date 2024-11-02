@@ -9,8 +9,13 @@ export function closeModal() {
   const url = new URL(window.location.href);
   const searchParams = new URLSearchParams(url.search);
 
-  if (searchParams.has("update")) {
-    searchParams.delete("update");
+  if (searchParams.has("type")) {
+    searchParams.delete("type");
+
+    if (searchParams.has("update")) {
+      searchParams.delete("update");
+    }
+
     url.search = searchParams.toString();
     window.location.href = url.href;
   }

@@ -102,22 +102,115 @@ main {
       color: rgba(255, 255, 255, 0.492);
     }
   }
+
+  & .edit-profile-btn {
+    position: absolute;
+    z-index: 5;
+    top: 1rem;
+    right: 1rem;
+    background-color: rgb(28, 143, 28);
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(58, 154, 58);
+    }
+
+    & img {
+      width: 20px;
+      height: 20px;
+      filter: invert();
+    }
+  }
 }
 
 .modal-content {
   position: relative;
 
-  & button[name = 'update']{
+  & form#update-profile {
+
+    display: block;
+    
+    .input-container {
+      margin-bottom: 1rem;
+    }
+  
+    label {
+      font-weight: 600;
+    }
+  
+    input {
+      padding: 0.5rem;
+      border: var(--default-border);
+      border-radius: 5px;
+      outline: none;
+      transition: all 0.3s;
+      width: 100%;
+      background-color: rgb(26, 27, 30);
+      color: #ffffff;
+  
+      &:focus {
+        border-color: var(--primary-color);
+      }
+    }
+  
+    .profile-image {
+      position: relative;
+      display: flex;
+      justify-content: center;
+  
+      img#profile-image-photo {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: all 0.5s;
+  
+        &:hover {
+          filter: brightness(0.5);
+        }
+      }
+  
+      img#cam {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        filter: invert();
+        pointer-events: none;
+        transition: all 0.5s;
+        transform-origin: center;
+      }
+  
+      img#profile-image-photo:hover + img#cam {
+        scale: 1.1;
+      }
+    }
+  
+    .btn-container {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  & button[name="update"] {
     margin-right: 2rem;
     background-color: rgb(45, 45, 177);
-
 
     &:hover {
       background-color: rgb(69, 69, 194);
     }
   }
 
-  & button[name = 'delete']{
+  & button[name="delete"] {
     background-color: rgb(177, 45, 45);
 
     &:hover {
@@ -193,4 +286,6 @@ main {
       }
     }
   }
+
 }
+

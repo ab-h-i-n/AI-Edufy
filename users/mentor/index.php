@@ -27,6 +27,7 @@ if ($quesId) {
 }
 
 
+$time = time();
 
 
 ?>
@@ -35,7 +36,7 @@ if ($quesId) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/global.css?t=<?php echo $time; ?>">
     <link rel="stylesheet" href="../styles/mentor-page.css">
     <script src="../scripts/global.js" type="module" defer></script>
     <script src="../scripts/mentor.js" type="module" defer></script>
@@ -49,8 +50,9 @@ if ($quesId) {
     <main>
 
         <?php
-        $isUpdate = $_GET['update'] ?? null;
-        if ($isUpdate):
+        $type = $_GET['type'] ?? null;
+        $upId = $_GET['update'] ?? null;
+        if ($type == "update"):
             ?>
             <!-- update question modal  -->
             <div class="modal">
@@ -79,9 +81,15 @@ if ($quesId) {
                             <div class="type">
                                 <label for="ques-type">Type</label>
                                 <select name="ques-type" id="ques-type">
-                                    <option value="easy" <?php if($updateQuestion['type'] == 'easy') echo "selected"; ?> >Easy</option>
-                                    <option value="medium" <?php if($updateQuestion['type'] == 'medium') echo "selected"; ?>>Medium</option>
-                                    <option value="hard" <?php if($updateQuestion['type'] == 'hard') echo "selected"; ?>>Hard</option>
+                                    <option value="easy" <?php if ($updateQuestion['type'] == 'easy')
+                                        echo "selected"; ?>>Easy
+                                    </option>
+                                    <option value="medium" <?php if ($updateQuestion['type'] == 'medium')
+                                        echo "selected"; ?>>
+                                        Medium</option>
+                                    <option value="hard" <?php if ($updateQuestion['type'] == 'hard')
+                                        echo "selected"; ?>>Hard
+                                    </option>
                                 </select>
                             </div>
                             <div class="points">
@@ -141,6 +149,95 @@ if ($quesId) {
                         <div class="btn-container">
                             <button name="update" type="submit">Update</button>
                             <button name="delete" type="button">Delete</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        <?php elseif ($type == "edit"): ?>
+            <!-- profile-edit modal -->
+            <div class="modal ">
+                <div class="modal-content">
+                    <div class="modal-close">
+                        <img src="../public/icons/cross.svg" alt="close">
+                    </div>
+
+                    <div class="modal-title">Update Profile</div>
+
+                    <!-- contents  -->
+                    <form id="update-profile" method="post">
+
+                        <!-- profile image -->
+                        <div class="profile-image">
+                            <label for="profile-image-input">
+                                <img id="profile-image-photo" src="<?php echo $userDetails['profile_image']; ?>"
+                                    alt="profile image" />
+                                <img id="cam" src="../public/icons/camera.svg" alt="camera" />
+                            </label>
+                            <input class="hidden" type="file" name="profile-image" id="profile-image-input"
+                                accept="image/*" />
+                        </div>
+
+                        <!-- name -->
+                        <div class="input-container">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" value="<?php echo $userDetails['name']; ?>" required />
+                        </div>
+
+                        <!-- email -->
+                        <div class="input-container">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" value="<?php echo $userDetails['email']; ?>"
+                                required />
+                        </div>
+
+                        <!-- submit btn  -->
+                        <div class="btn-container">
+                            <button name="update" type="submit">Update</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- profile-edit modal -->
+
+            <div class="modal closed">
+                <div class="modal-content">
+                    <div class="modal-close">
+                        <img src="../public/icons/cross.svg" alt="close">
+                    </div>
+
+                    <div class="modal-title">Update Profile</div>
+
+                    <!-- contents  -->
+                    <form id="update-profile" method="post">
+
+                        <!-- profile image -->
+                        <div class="profile-image">
+                            <label for="profile-image-input">
+                                <img id="profile-image-photo" src="<?php echo $userDetails['profile_image']; ?>"
+                                    alt="profile image" />
+                                <img id="cam" src="../public/icons/camera.svg" alt="camera" />
+                            </label>
+                            <input class="hidden" type="file" name="profile-image" id="profile-image-input"
+                                accept="image/*" />
+                        </div>
+
+                        <!-- name -->
+                        <div class="input-container">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" value="<?php echo $userDetails['name']; ?>" required />
+                        </div>
+
+                        <!-- email -->
+                        <div class="input-container">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" value="<?php echo $userDetails['email']; ?>"
+                                required />
+                        </div>
+
+                        <!-- submit btn  -->
+                        <div class="btn-container">
+                            <button name="update" type="submit">Update</button>
                         </div>
                     </form>
 
@@ -233,7 +330,7 @@ if ($quesId) {
                 <?php
                 if (isset($userQuestions)) {
                     foreach ($userQuestions as $question) {
-                        echo "<a class='question-link' href='http://localhost/AI-Edufy/home?update=$question[id]'>";
+                        echo "<a class='question-link' href='http://localhost/AI-Edufy/home?type=update&update=$question[id]'>";
                         include('../common/questionBox.php');
                         echo "</a>";
                     }
@@ -248,6 +345,11 @@ if ($quesId) {
 
         <!-- side section  -->
         <section class="side-section">
+
+            <a  href="http://localhost/AI-Edufy/home?type=edit" class="edit-profile-btn">
+                <img width="30px" height="30px" src="../public/icons/edit.svg" alt="edit proile" />
+            </a>
+
             <div class="name-photo">
                 <img alt="profile" src="<?php echo $userDetails['profile_image']; ?>" />
                 <div class="username"><?php echo $userDetails['name']; ?></div>

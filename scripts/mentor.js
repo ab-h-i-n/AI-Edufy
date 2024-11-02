@@ -55,7 +55,7 @@ const userId = document.getElementById("user-id");
 
 const form = document.querySelector("#create-question");
 
-form.addEventListener("submit", async (e) => {
+form?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const quesId = document.getElementById("ques-id")?.value;
 
@@ -209,7 +209,7 @@ function validateForm() {
 
 const deleteBtn = document.querySelector("button[name='delete']");
 
-deleteBtn.addEventListener("click", async () => {
+deleteBtn?.addEventListener("click", async () => {
   try {
     const quesId = document.getElementById("ques-id")?.value;
 
@@ -236,3 +236,66 @@ deleteBtn.addEventListener("click", async () => {
     console.error(error);
   }
 });
+
+
+
+//update mentor profile
+
+//image select
+const imageInput = document.querySelector("#profile-image-input");
+const imagePreview = document.querySelector("#profile-image-photo");
+
+imageInput?.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  const imageUrl = await toBase64(file);
+  imagePreview.src = imageUrl;
+});
+
+const updateProfileForm = document.querySelector("#update-profile");
+updateProfileForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = updateProfileForm.name.value;
+  const email = updateProfileForm.email.value;
+  const image = imagePreview.src;
+
+  try {
+    const response = await fetch(
+      "http://localhost/AI-Edufy/api/user/update.php",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          email,
+          image,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    console.log(result);
+    
+    if (result?.status != 200) {
+      toast.error(result?.msg);
+    } else {
+      toast.success("Profile updated successfully!");
+      closeModal();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+  } catch (error) {
+    toast.error("Something went wrong!");
+    console.error(error);
+  }
+});
+
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
