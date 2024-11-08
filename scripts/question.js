@@ -64,7 +64,7 @@ runBtn.addEventListener("click", async function () {
   );
 
   const req =
-    await askGemini(`the question is "${question.innerText}" testcases are ${testcases.innerText} the code "${code}" in "${lang}" is corrent answer for the question provided and also check the testcases are same . give result in JSON FORMAT using {
+    await askGemini(`the question is "${question.innerText}" testcases are ${testcases.innerText} the code "${code}" in "${lang}" is corrent answer for the question provided and also check the testcases are same and the program should contain code to print the output . give result in JSON FORMAT using {
     "isValid" : boolean,
     "reason" : str
     }`);
@@ -95,13 +95,18 @@ hintBtn.addEventListener("click", async function () {
   console.log("Question:", question.innerText);
   console.log("Testcases:", testcases.innerText);
 
+  toast.loading("Getting Hint ...");
   const req =
     await askGemini(`help beginner to solve  the question is "${question.innerText}" testcases are ${testcases.innerText} give a hint for next step also the next step code , if any errors in code please mention it also "${code}" in "${lang}" in 2 lines in JSON FORMAT using {
     "hint" : str,
     "nextstep" : str
     }`);
   console.log("Parsed Response:", req);
-  toast.hint(req.hint);
+
+  toast.dismiss();
+  setTimeout(() => {
+    toast.hint(req.hint);
+  }, 500);
 });
 
 //handle completed task
@@ -128,7 +133,6 @@ completeTaskBtn.addEventListener("click", async function () {
     const res = await req.json();
 
     console.log(res);
-    
 
     if (res.status === 200) {
       toast.success("Task Completed Successfully");

@@ -133,12 +133,12 @@ $time = time();
 
                                 </div>
                                 <!-- add test case btn  -->
-                                <div id="add-test-case" class="add-btn-container">
+                                <!-- <div id="add-test-case" class="add-btn-container">
                                     <span class="add-btn">
                                         <span class="add-label">Add Test Cases</span>
                                         <img src="../public/icons/plus.svg" alt="plus">
                                     </span>
-                                </div>
+                                </div> -->
                                 <div>
                                     <span></span>
                                 </div>
@@ -291,12 +291,12 @@ $time = time();
                                     </div>
                                 </div>
                                 <!-- add test case btn  -->
-                                <div id="add-test-case" class="add-btn-container">
+                                <!-- <div id="add-test-case" class="add-btn-container">
                                     <span class="add-btn">
                                         <span class="add-label">Add Test Cases</span>
                                         <img src="../public/icons/plus.svg" alt="plus">
                                     </span>
-                                </div>
+                                </div> -->
                                 <div>
                                     <span></span>
                                 </div>
