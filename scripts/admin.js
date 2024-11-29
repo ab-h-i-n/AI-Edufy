@@ -84,6 +84,7 @@ delLevel.forEach((deleteBtn) => {
 });
 
 const levelForm = document.querySelector("#level-form");
+const submitBtn = document.querySelector("#level-form button");
 
 levelForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -121,7 +122,7 @@ levelForm.addEventListener("submit", async (e) => {
 
       if (result?.status === 200) {
         toast.success(result.msg);
-
+        loader.add(submitBtn);
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -158,9 +159,11 @@ levelForm.addEventListener("submit", async (e) => {
 
       if (result?.status === 200) {
         toast.success(result.msg);
+        loader.add(submitBtn);
         setTimeout(() => {
           closeModal();
-        }, 2000);
+        }, 1000);
+
       } else {
         toast.error(result.msg);
       }

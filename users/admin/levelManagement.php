@@ -100,10 +100,11 @@ if ($updateId) {
                         <th class="actions-th">Actions</th>
                     </tr>
                 </thead>
-                <?php foreach ($levelsData as $level): ?>
+                <?php foreach ($levelsData as $key => $level): ?>
                     <tr>
                         <td>
-                            <div class="level-id"><?php echo $level['id']; ?></div>
+                            <div class="level-id hidden"><?php echo $level['id']; ?></div>
+                            <div class="level-number"><?php echo $key + 1 ?></div>
                         </td>
                         <td>
                             <div class="level-title"><?php echo $level['level_title']; ?></div>

@@ -3,6 +3,8 @@ class Loader {
 
   add(parent) {
     this.div.classList.add("loader");
+    parent.disabled = true;
+    parent.style.pointerEvents = "none";
     parent.innerHTML = "";  
     parent.append(this.div); 
   }

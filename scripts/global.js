@@ -9,7 +9,7 @@ export function closeModal() {
   const url = new URL(window.location.href);
   const searchParams = new URLSearchParams(url.search);
 
-  if (searchParams.has("type")) {
+  if (searchParams.has("type") || searchParams.has("update")) {
     searchParams.delete("type");
 
     if (searchParams.has("update")) {
