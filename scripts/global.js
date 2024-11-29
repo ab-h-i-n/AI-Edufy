@@ -21,9 +21,9 @@ export function closeModal() {
   }
 }
 
-modalCloseBtn.addEventListener("click", closeModal);
+modalCloseBtn?.addEventListener("click", closeModal);
 
-modalOpenBtn.addEventListener("click", () => {
+modalOpenBtn?.addEventListener("click", () => {
   modal.classList.remove("closed");
   document.querySelector("body").style.overflowY = "hidden";
 });
