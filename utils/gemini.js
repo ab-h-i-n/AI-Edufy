@@ -1,4 +1,4 @@
-const apiKey = "AIzaSyC6qA-3yGWhmCUg12WUfkvCDxnm4Rmz2BM";
+const apiKey = "AIzaSyD5gwNeYP8AjdDynsQtf9bYI4QlkVMLS5E";
 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
 export async function askGemini(prompt) {
@@ -29,11 +29,12 @@ export async function askGemini(prompt) {
     const data = await response.json();
     console.log("Full Response:", data);
 
-    const responseText = data?.candidates[0]?.content?.parts[0]?.text;
-    const responseJSON = JSON.parse(responseText);
+    if (data.error) {
+      throw new Error(data.error.message);
+    }else{
+      return JSON.parse(data.candidates[0].content.parts[0].text || "{}");
+    }
 
-
-    return responseJSON;
   } catch (error) {
     console.error("Error:", error);
   }

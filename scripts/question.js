@@ -6,6 +6,7 @@ const iFrame = document.querySelector("iframe");
 var code;
 var lang;
 var isValidResult;
+var result;
 const completeTaskBtn = document.querySelector("button.complete");
 
 //to populate editor
@@ -41,6 +42,7 @@ window.onmessage = function (e) {
     code = e.data.files[0].content;
     lang = e.data.language;
     isValidResult = e.data.result.success;
+    result = e.data.result.output;
   }
 };
 
@@ -63,14 +65,17 @@ runBtn.addEventListener("click", async function () {
     "*"
   );
 
-  const req =
-    await askGemini(`the question is "${question.innerText}" testcases are ${testcases.innerText} the code "${code}" in "${lang}" is corrent answer for the question provided and also check the testcases are same and the program should contain code to print the output . give result in JSON FORMAT using {
+  const query = `I want gemini to check the given output is valid for the programming question and its test cases for given code , question : ${question.innerText} , testcases : ${testcases.innerText} , code in ${lang} : ${code} , output : ${result} .Give result in JSON FORMAT using {
     "isValid" : boolean,
     "reason" : str
-    }`);
+    }`;
+
+  console.log("Query:", query);
+
+  const req = await askGemini(query);
   console.log("Parsed Response:", req);
 
-  if (req.isValid && isValidResult) {
+  if (req.isValid && isValidResult && code) {
     confettiFire(0.5, {
       spread: 120,
       startVelocity: 50,
@@ -80,6 +85,10 @@ runBtn.addEventListener("click", async function () {
 
     toast.success("Congratulations you completed the question 🎉");
     completeTaskBtn.disabled = false;
+  } else {
+    if (req.reason) {
+      toast.hint(req.reason);
+    }
   }
 });
 
@@ -96,17 +105,32 @@ hintBtn.addEventListener("click", async function () {
   console.log("Testcases:", testcases.innerText);
 
   toast.loading("Getting Hint ...");
-  const req =
-    await askGemini(`help beginner to solve  the question is "${question.innerText}" testcases are ${testcases.innerText} give a hint for next step also the next step code , if any errors in code please mention it also "${code}" in "${lang}" in 2 lines in JSON FORMAT using {
+
+  try {
+    const query = `i want gemini to check the code and provide hint and nextstep if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
     "hint" : str,
     "nextstep" : str
-    }`);
-  console.log("Parsed Response:", req);
+    } if error is found in code syntax language ${lang} use format {
+     "error" : str
+      "howtofix" : str
+    }`;
 
-  toast.dismiss();
-  setTimeout(() => {
-    toast.hint(req.hint);
-  }, 500);
+    const req = await askGemini(query);
+    console.log("Parsed Response:", req);
+
+    if (!req) {
+      throw new Error("Failed to get hint");
+    }
+
+    toast.dismiss();
+    setTimeout(() => {
+      toast.hint(req.hint);
+    }, 500);
+  } catch (error) {
+    toast.dismiss();
+    toast.error(error);
+    console.error(error);
+  }
 });
 
 //handle completed task
