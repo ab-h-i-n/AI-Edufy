@@ -58,6 +58,7 @@ const form = document.querySelector("#create-question");
 form?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const quesId = document.getElementById("ques-id")?.value;
+  const submitBtn = document.querySelector("#create-question button[name='create']");
 
   if (validateForm()) {
     if (!quesId) {
@@ -89,6 +90,9 @@ form?.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         console.log(data);
+        loader.add(submitBtn);
+        console.log(submitBtn);
+        
 
         if (data.status === 200) {
           toast.success(data.msg);
@@ -106,6 +110,7 @@ form?.addEventListener("submit", async (e) => {
       }
     } else {
       try {
+        const updateBtn = document.querySelector("#create-question button[name='update']");
         toast.loading("Updating Question...");
 
         const response = await fetch(
@@ -134,6 +139,7 @@ form?.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         console.log(data);
+        loader.add(updateBtn);
 
         if (data.status === 200) {
           toast.success(data.msg);
@@ -221,6 +227,7 @@ deleteBtn?.addEventListener("click", async () => {
       );
 
       const data = await response.json();
+      loader.add(deleteBtn);
 
       if (data.status === 200) {
         toast.success(data.message);

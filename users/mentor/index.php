@@ -305,7 +305,7 @@ $time = time();
 
                         <!-- submit btn  -->
                         <div class="btn-container">
-                            <button type="submit">Create</button>
+                            <button name="create" type="submit">Create</button>
                         </div>
                     </form>
 
