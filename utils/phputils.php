@@ -1,7 +1,7 @@
 <?php
 function base64(string $blob): string
 {
-    return "data:image/jpeg;base64," . base64_encode($blob);
+    return "data:image;base64," . base64_encode($blob);
 }
 
 function clientlog(string $message)

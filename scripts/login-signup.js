@@ -1,4 +1,7 @@
 import toast from "../utils/toast.js";
+const defaultImageUrl = '../public/images/no_proile.png';
+let defaultImageFile = null;
+
 
 function toBase64(file) {
   return new Promise((resolve, reject) => {
@@ -8,6 +11,19 @@ function toBase64(file) {
     reader.onerror = (error) => reject(error);
   });
 }
+
+
+async function loadDefaultImage() {
+  try {
+    const response = await fetch(defaultImageUrl);
+    const blob = await response.blob();
+    defaultImageFile = new File([blob], 'no_profile.png', { type: 'image/png' });
+  } catch (error) {
+    console.error('Failed to load default image:', error);
+  }
+}
+
+loadDefaultImage();
 
 const passInput = document.querySelector('.auth-form input[name="password"]');
 const eyeContainer = document.querySelector(".eye-container");
@@ -92,16 +108,13 @@ const signUpFrom = document.querySelector(".auth-form.signup");
 signUpFrom?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+
   const name = signUpFrom.name.value;
   const email = signUpFrom.email.value;
   const pass = signUpFrom.password.value;
   const role = signUpFrom.role.value;
-  var image = signUpFrom.image.files[0] || new File([await fetch('../public/images/no_profile.png').then(res => res.blob())], 'no_profile.png');
-
-  console.log(name + " " + email + " " + pass + " " + role + " " + image);
+  var image = defaultImageFile;
   
-
-
   const isValid = SignUpVerification(name, email, pass, role);
 
   if (!isValid) {
@@ -116,7 +129,7 @@ signUpFrom?.addEventListener("submit", async (e) => {
     formData.append("password", pass);
     formData.append("name", name);
     formData.append("role", role);
-    formData.append("image", image);
+  formData.append("image", image);
 
 
     const response = await fetch(`${baseUrl}/auth/signup.php`, {
@@ -158,3 +171,4 @@ function SignUpVerification(name, email, password, role) {
 
   return true;
 }
+
