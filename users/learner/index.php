@@ -1,6 +1,20 @@
 <?php
+$user_id = $_COOKIE['user_id'];
 include_once('../utils/connect.php');
 $allQuestions = $user->getAllQuestions();
+
+$completedQuestions = $user->completed_questions->select('*', "learner_id=$user_id");
+$completedQuestionsArr = [];
+
+while ($row = $completedQuestions->fetch_assoc()) {
+    $completedQuestionsArr [] = $row['question_id'];
+}
+
+foreach ($allQuestions as &$question) { 
+    $question['isCompleted'] = in_array($question['id'], $completedQuestionsArr);
+}
+unset($question);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,7 +1,6 @@
 <head>
     <style>
-
-        .question-box{
+        .question-box {
             background-color: #272729;
             padding: 2.3rem;
             border-radius: 10px;
@@ -9,7 +8,7 @@
             cursor: pointer;
             transition: all .5s;
 
-            &:hover{
+            &:hover {
                 background-color: #444447;
             }
         }
@@ -21,8 +20,11 @@
             & .title {
                 font-size: 1.3rem;
                 font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 5px;
 
-                & .points{
+                & .points {
                     font-size: .8rem;
                     font-weight: 900;
                     background-color: lightgoldenrodyellow;
@@ -30,6 +32,22 @@
                     padding: .3rem .5rem;
                     border-radius: 10px;
                     margin-left: .5rem;
+                }
+
+                & .completed{
+                    font-size : .8rem;
+                    color: lightgreen;
+                    padding: .3rem .5rem;
+                    font-weight: 900;
+                    display: flex;
+                    align-items: center;
+                    gap: 3px;
+
+                    & img{
+                        width: 20px;
+                        aspect-ratio: 1;
+                        filter: invert();
+                    }
                 }
             }
 
@@ -43,7 +61,7 @@
                 display: flex;
                 gap: .5rem;
 
-                & .pill{
+                & .pill {
                     background-color: gray;
                     border: var(--default-border);
                     border-radius: 20px;
@@ -52,29 +70,20 @@
                     text-transform: capitalize;
                 }
 
-                & .easy{
+                & .easy {
                     background-color: green;
                 }
 
-                & .medium{
+                & .medium {
                     background-color: orangered;
                 }
 
-                & .hard{
+                & .hard {
                     background-color: red;
                 }
-
-                & .cpp{
-                    background-color: violet;
-                }
-
-                & .c{
-                    background-color: blue;
-                }
-            }
         }
 
-        .ques-desc{
+        .ques-desc {
             margin-top: 1rem;
             font-size: 1.2rem;
             opacity: .7;
@@ -89,6 +98,10 @@
             <p class="title">
                 <?php echo $question['title']; ?>
                 <span class="points"> <?php echo $question['points']; ?>Pts </span>
+                <!-- isCompleted  -->
+                <?php if ($question['isCompleted']): ?>
+                    <span class="completed"><img src="../public/icons/check.svg" /> Completed</span>
+                <?php endif; ?>
             </p>
             <!-- by  -->
             <p class="sub-title">by <?php echo $question['mentor_name'] ?></p>
@@ -97,7 +110,8 @@
         <!-- tags  -->
         <div class="tags">
             <!-- type  -->
-            <p class="type pill <?php echo $question['type']; ?>" ><?php echo $question['type']; ?></p>
+            <p class="type pill <?php echo $question['type']; ?>"><?php echo $question['type']; ?></p>
+
         </div>
 
     </div>
