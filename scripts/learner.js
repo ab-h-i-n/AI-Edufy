@@ -64,38 +64,46 @@ updateProfileForm.addEventListener("submit", async (e) => {
 
   const name = updateProfileForm.name.value;
   const email = updateProfileForm.email.value;
-  const image = imagePreview.src;
+  const image = imageInput.files[0];
 
-  try {
-    const response = await fetch(
-      "http://localhost/AI-Edufy/api/user/update.php",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          name,
-          email,
-          image,
-        }),
-      }
-    );
 
-    const result = await response.json();
-
-    console.log(result);
-    
-    if (result?.status != 200) {
-      toast.error(result?.msg);
-    } else {
-      toast.success("Profile updated successfully!");
-      closeModal();
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
-  } catch (error) {
-    toast.error("Something went wrong!");
-    console.error(error);
+  if (!name || !email) {
+    toast.error("Please fill all the fields!");
+    return;
   }
+
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("image", image);
+
+ try {
+  const response = await fetch(
+    "http://localhost/AI-Edufy/api/user/update.php",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  const result = await response.json();
+
+  console.log(result);
+  
+  if (result?.status != 200) {
+    toast.error(result?.msg);
+  } else {
+    toast.success("Profile updated successfully!");
+    closeModal();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+} catch (error) {
+  toast.error("Something went wrong!");
+  console.error(error);
+}
+
 });
 
 function toBase64(file) {

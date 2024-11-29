@@ -264,18 +264,24 @@ updateProfileForm?.addEventListener("submit", async (e) => {
 
   const name = updateProfileForm.name.value;
   const email = updateProfileForm.email.value;
-  const image = imagePreview.src;
+  const image = imageInput.files[0];
+
+  if (!name || !email) {
+    toast.error("Please fill all the fields!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("image", image);
 
   try {
     const response = await fetch(
       "http://localhost/AI-Edufy/api/user/update.php",
       {
         method: "POST",
-        body: JSON.stringify({
-          name,
-          email,
-          image,
-        }),
+        body: formData,
       }
     );
 

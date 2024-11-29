@@ -170,7 +170,7 @@ $time = time();
                         <!-- profile image -->
                         <div class="profile-image">
                             <label for="profile-image-input">
-                                <img id="profile-image-photo" src="<?php echo $userDetails['profile_image']; ?>"
+                                <img id="profile-image-photo" src="<?php echo base64($userDetails['profile_image']); ?>"
                                     alt="profile image" />
                                 <img id="cam" src="../public/icons/camera.svg" alt="camera" />
                             </label>
@@ -351,7 +351,7 @@ $time = time();
             </a>
 
             <div class="name-photo">
-                <img alt="profile" src="<?php echo $userDetails['profile_image']; ?>" />
+                <img alt="profile" src="<?php echo base64($userDetails['profile_image']); ?>" />
                 <div class="username"><?php echo $userDetails['name']; ?></div>
                 <div class="email"><?php echo $userDetails['email']; ?></div>
             </div>

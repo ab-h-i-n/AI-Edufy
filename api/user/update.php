@@ -1,16 +1,14 @@
 <?php
 
 include_once('../../utils/connect.php');
-$userId = $_COOKIE['user_id'];
-$decodedData = json_decode(file_get_contents("php://input") , true);
 
-$image = "image";
+$userId = $_COOKIE['user_id'];
 
 try {
     $updatedUser = $user->users->update([
-        "name" => $decodedData["name"],
-        "email" => $decodedData["email"],
-        "profile_image" => $decodedData["image"],
+        "name" => $_POST["name"],
+        "email" => $_POST["email"],
+        "profile_image" => file_get_contents($_FILES['image']['tmp_name']),
     ], "id=$userId");
 
 

@@ -48,6 +48,8 @@ class BaseClass
                 $types .= 'i'; // integer
             } elseif (is_float($value)) {
                 $types .= 'd'; // double
+            } elseif (is_resource($value) || is_object($value)) {
+                $types .= 'b'; // BLOB (binary data)
             } else {
                 $types .= 's'; // string
             }
@@ -134,11 +136,6 @@ class Admin extends BaseClass
             die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
         }
 
-        // $insertQuery = "INSERT INTO " . $this->tableName . " (email, password) VALUES ('admin@edufy.com','admin')";
-
-        // if (!$this->dbcon->query($insertQuery)) {
-        //     die("Failed to insert admin into table " . $this->tableName . ": " . $this->dbcon->error);
-        // }
     }
 
 }
@@ -152,7 +149,7 @@ class Users extends BaseClass
 
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            profile_image TEXT NULL,
+            profile_image MEDIUMBLOB NULL,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,

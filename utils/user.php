@@ -65,7 +65,7 @@ class User
             return false;
         }
 
-        $userData = $this->users->select("*", "email = '" . $email . "'")->fetch_assoc();
+        $userData = $this->users->select("id,email,name,role", "email = '" . $email . "'")->fetch_assoc();
 
         return $userData;
 

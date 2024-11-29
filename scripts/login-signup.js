@@ -96,9 +96,11 @@ signUpFrom?.addEventListener("submit", async (e) => {
   const email = signUpFrom.email.value;
   const pass = signUpFrom.password.value;
   const role = signUpFrom.role.value;
-  var image = signUpFrom.image.files[0];
+  var image = signUpFrom.image.files[0] || new File([await fetch('../public/images/no_profile.png').then(res => res.blob())], 'no_profile.png');
 
-  image = image ? await toBase64(image) : null;
+  console.log(name + " " + email + " " + pass + " " + role + " " + image);
+  
+
 
   const isValid = SignUpVerification(name, email, pass, role);
 
@@ -108,20 +110,21 @@ signUpFrom?.addEventListener("submit", async (e) => {
 
   try {
     toast.loading("Logging in....");
+
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", pass);
+    formData.append("name", name);
+    formData.append("role", role);
+    formData.append("image", image);
+
+
     const response = await fetch(`${baseUrl}/auth/signup.php`, {
       method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: pass,
-        name: name,
-        role: role,
-        image: image,
-      }),
+      body: formData,
     });
 
     const result = await response.json();
-
-    console.log(result);
 
     if (result?.status === 200) {
       toast.success(result?.msg);

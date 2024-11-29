@@ -30,7 +30,7 @@ if (mysqli_num_rows($result) > 0) {
                     <td>
                         <div class="image-name">
                             <div class="user-image">
-                                <img class="profile-image" src="<?php echo htmlspecialchars($user['profile_image']); ?>">
+                                <img class="profile-image" src="<?php echo base64($user['profile_image']); ?>">
                             </div>
                             <div class="user-name"><?php echo $user['name']; ?></div>
                         </div>
