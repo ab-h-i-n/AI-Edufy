@@ -53,32 +53,39 @@ foreach ($leaderboardData as $key => $data) {
 
     <main class="container">
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Profile</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Points</th>
-                    <th>Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($leaderboardData as $key => $data) : ?>
+        <?php if (count($leaderboardData) > 0): ?>
+            <table>
+                <thead>
                     <tr>
-                        <td class="rank">#<?php echo $key + 1 ?></td>
-                        <td class="user-image">
-                            <img src="<?php echo base64($data['profile_image']); ?>" alt="profile" />
-                        </td>
-                        <td class="user-name"><?php echo $data['name'] ?> <?php if($data['learner_id'] == $userId) echo "(You)"; ?></td>
-                        <td class="user-email"><?php echo $data['email'] ?></td>
-                        <td class="user-points"><?php echo $data['points_earned'] ?></td>
-                        <td class="level-title"><?php echo $data['level_title'] ?></td>
+                        <th>Rank</th>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Points</th>
+                        <th>Level</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($leaderboardData as $key => $data): ?>
+                        <tr>
+                            <td class="rank">#<?php echo $key + 1 ?></td>
+                            <td class="user-image">
+                                <img src="<?php echo base64($data['profile_image']); ?>" alt="profile" />
+                            </td>
+                            <td class="user-name"><?php echo $data['name'] ?>
+                                <?php if ($data['learner_id'] == $userId)
+                                    echo "(You)"; ?>
+                            </td>
+                            <td class="user-email"><?php echo $data['email'] ?></td>
+                            <td class="user-points"><?php echo $data['points_earned'] ?></td>
+                            <td class="level-title"><?php echo $data['level_title'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="no-data">No data available</div>
+        <?php endif; ?>
 
     </main>
 
