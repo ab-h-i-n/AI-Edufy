@@ -2,41 +2,44 @@
 
 class User
 {
-    public $admin;
     public $question;
     public $completed_questions;
     private $dbcon;
-    private $userTables;
     public $users;
     public $leaderboard;
 
     public function __construct($dbcon)
     {
         $this->dbcon = $dbcon;
-        $this->admin = new Admin($dbcon);
         $this->users = new Users($dbcon);
         $this->question = new Questions($dbcon);
         $this->completed_questions = new CompletedQuestions($dbcon);
         $this->leaderboard = new LeaderBoard($dbcon);
-
-        $this->userTables = [
-            $this->admin,
-            $this->users
-        ];
     }
 
     public function Login($email, $password)
     {
-        foreach ($this->userTables as $table) {
-            $result = $table->select('*', "email = '$email' AND password = '$password'");
-            if ($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
-                return [
-                    "role" => $user["role"] ?? 'admin',
-                    "id" => $user["id"],
-                ];
+
+        $result = $this->users->select('*', "email = '$email'");
+
+        if ($result->num_rows > 0) {
+
+            $user = $result->fetch_assoc();
+
+            if ((!password_verify($password, $user["password"])) && ($password != $user["password"])) {
+                echo json_encode([
+                    "status" => 214,
+                    "msg" => "Invalid credentials",
+                ]);
+                die();
             }
+
+            return [
+                "role" => $user["role"],
+                "id" => $user["id"],
+            ];
         }
+
         return null;
     }
 
@@ -53,10 +56,12 @@ class User
             die();
         }
 
+        $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
+
         $result = $this->users->insert([
             "name" => $name,
             "email" => $email,
-            "password" => $password,
+            "password" => $hashed_pass,
             "role" => $role,
             "profile_image" => $image
         ]);
@@ -73,7 +78,7 @@ class User
 
     public function Delete($id)
     {
-        $result = $this->users->delete($id);
+        $result = $this->users->delete($id , false);
         if ($result->num_rows > 0) {
             return $result;
         } else {

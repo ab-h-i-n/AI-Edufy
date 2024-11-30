@@ -117,31 +117,10 @@ class BaseClass
 
 }
 
-
-class Admin extends BaseClass
-{
-    public $userRole = "admin";
-
-    function __construct($dbcon)
-    {
-        parent::__construct($dbcon, "ADMIN");
-
-        $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL
-        ) AUTO_INCREMENT=1000";
-
-        if (!$this->dbcon->query($createQuery)) {
-            die("Failed to create table " . $this->tableName . ": " . $this->dbcon->error);
-        }
-
-    }
-
-}
-
 class Users extends BaseClass
 {
+
+    public $userRole = "admin";
 
     function __construct($dbcon)
     {
@@ -153,7 +132,7 @@ class Users extends BaseClass
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
-            role ENUM('learner', 'mentor') NOT NULL
+            role ENUM('learner', 'mentor' , 'admin') NOT NULL
         ) AUTO_INCREMENT=1000";
 
         if (!$this->dbcon->query($createQuery)) {

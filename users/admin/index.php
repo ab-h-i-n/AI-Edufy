@@ -4,12 +4,7 @@ include_once("../api/auth/logout.php");
 
 // fetch admin details 
 $admin_id = $_COOKIE['user_id'];
-$admin_result = $user->admin->select('*', 'id=1000');
-$adminData;
-if (mysqli_num_rows($admin_result) > 0) {
-    $adminData = mysqli_fetch_assoc($admin_result);
-}
-
+$adminData = $user->users->select('*', 'id = ' . $admin_id)->fetch_assoc();
 
 // sidemenu items 
 
