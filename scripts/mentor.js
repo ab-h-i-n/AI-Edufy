@@ -45,8 +45,6 @@ function removeTestCase(button) {
 
 //creating new quetions form submission
 
-const inputFields = document.querySelectorAll('input[name="input[]"]');
-const outputFields = document.querySelectorAll('input[name="output[]"]');
 const titleField = document.getElementById("ques-title");
 const descriptionField = document.getElementById("ques-desc");
 const typeField = document.getElementById("ques-type");
@@ -58,30 +56,39 @@ const form = document.querySelector("#create-question");
 form?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const quesId = document.getElementById("ques-id")?.value;
-  const submitBtn = document.querySelector("#create-question button[name='create']");
+  const submitBtn = document.querySelector(
+    "#create-question button[name='create']"
+  );
+
+  const inputFields = document.querySelectorAll('input[name="input[]"]');
+  const outputFields = document.querySelectorAll('input[name="output[]"]');
 
   if (validateForm()) {
     if (!quesId) {
       try {
         toast.loading("Creating New Question...");
 
+        const dataBody = {
+          userId: userId.value,
+          title: titleField.value,
+          description: descriptionField.value,
+          type: typeField.value,
+          points: pointsField.value,
+          testCases: Array.from(inputFields).map((inputField, index) => {
+            return {
+              input: inputField.value,
+              output: outputFields[index].value,
+            };
+          }),
+        };
+
+        console.log(dataBody);
+
         const response = await fetch(
           "http://localhost/AI-Edufy/api/question/createQuestion.php",
           {
             method: "POST",
-            body: JSON.stringify({
-              userId: userId.value,
-              title: titleField.value,
-              description: descriptionField.value,
-              type: typeField.value,
-              points: pointsField.value,
-              testCases: Array.from(inputFields).map((inputField, index) => {
-                return {
-                  input: inputField.value,
-                  output: outputFields[index].value,
-                };
-              }),
-            }),
+            body: JSON.stringify(dataBody),
           }
         );
 
@@ -92,7 +99,6 @@ form?.addEventListener("submit", async (e) => {
         console.log(data);
         loader.add(submitBtn);
         console.log(submitBtn);
-        
 
         if (data.status === 200) {
           toast.success(data.msg);
@@ -110,7 +116,9 @@ form?.addEventListener("submit", async (e) => {
       }
     } else {
       try {
-        const updateBtn = document.querySelector("#create-question button[name='update']");
+        const updateBtn = document.querySelector(
+          "#create-question button[name='update']"
+        );
         toast.loading("Updating Question...");
 
         const response = await fetch(
@@ -184,6 +192,9 @@ function validateForm() {
     return false;
   }
 
+  const inputFields = document.querySelectorAll('input[name="input[]"]');
+  const outputFields = document.querySelectorAll('input[name="output[]"]');
+
   // Validate test cases
   for (let i = 0; i < inputFields.length; i++) {
     if (!inputFields[i].value) {
@@ -244,8 +255,6 @@ deleteBtn?.addEventListener("click", async () => {
   }
 });
 
-
-
 //update mentor profile
 
 //image select
@@ -288,7 +297,7 @@ updateProfileForm?.addEventListener("submit", async (e) => {
     const result = await response.json();
 
     console.log(result);
-    
+
     if (result?.status != 200) {
       toast.error(result?.msg);
     } else {

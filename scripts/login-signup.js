@@ -113,7 +113,7 @@ signUpFrom?.addEventListener("submit", async (e) => {
   const email = signUpFrom.email.value;
   const pass = signUpFrom.password.value;
   const role = signUpFrom.role.value;
-  var image = defaultImageFile;
+  const image = imageInput.files[0] || defaultImageFile;
   
   const isValid = SignUpVerification(name, email, pass, role);
 
@@ -123,13 +123,14 @@ signUpFrom?.addEventListener("submit", async (e) => {
 
   try {
     toast.loading("Logging in....");
+    
 
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", pass);
     formData.append("name", name);
     formData.append("role", role);
-  formData.append("image", image);
+    formData.append("image", image);
 
 
     const response = await fetch(`${baseUrl}/auth/signup.php`, {
@@ -149,6 +150,7 @@ signUpFrom?.addEventListener("submit", async (e) => {
     } else {
       toast.error("Failed to sign up!");
     }
+
   } catch (error) {
     console.error(error);
   }
