@@ -4,10 +4,16 @@ import { closeModal } from "./global.js";
 
 // Add new test case
 
-const addBtn = document.querySelector(".add-btn");
+const addBtn = document.querySelector(".add-testcase");
 var removeBtns = document.querySelectorAll(".remove-btn");
+var removedTestCase = [];
 
-addBtn.addEventListener("click", addTestCase);
+addBtn?.addEventListener("click", addTestCase);
+removeBtns.forEach((button) => {
+  button.addEventListener("click", () => {
+    removeTestCase(button);
+  });
+});
 
 function addTestCase() {
   const testCaseContainer = document.querySelector(".test-cases-container");
@@ -40,10 +46,17 @@ function addTestCase() {
 
 function removeTestCase(button) {
   const testCase = button.parentElement;
-  testCase.remove();
+  console.log(button.id);
+
+  if (button.id) {
+    testCase.classList.add("hidden");
+    removedTestCase.push(button.id);
+  } else {
+    testCase.remove();
+  }
 }
 
-//creating new quetions form submission
+//creating new / updating quetions form submission
 
 const titleField = document.getElementById("ques-title");
 const descriptionField = document.getElementById("ques-desc");
@@ -96,10 +109,6 @@ form?.addEventListener("submit", async (e) => {
 
         const data = await response.json();
 
-        console.log(data);
-        loader.add(submitBtn);
-        console.log(submitBtn);
-
         if (data.status === 200) {
           toast.success(data.msg);
           form.reset();
@@ -121,24 +130,35 @@ form?.addEventListener("submit", async (e) => {
         );
         toast.loading("Updating Question...");
 
+        const inputFields = document.querySelectorAll('input[name="input[]"]');
+        const outputFields = document.querySelectorAll(
+          'input[name="output[]"]'
+        );
+
+        const bodyData = {
+          quesId: quesId,
+          userId: userId.value,
+          title: titleField.value,
+          description: descriptionField.value,
+          type: typeField.value,
+          points: pointsField.value,
+          testCases: Array.from(inputFields).map((inputField, index) => {
+            return {
+              input: inputField.value,
+              output: outputFields[index].value,
+              id: inputField.id || null,
+              deleted: removedTestCase.includes(inputField.id),
+            };
+          }),
+        };
+
+        console.log(bodyData);
+
         const response = await fetch(
           "http://localhost/AI-Edufy/api/question/updateQuestion.php",
           {
             method: "POST",
-            body: JSON.stringify({
-              quesId: quesId,
-              userId: userId.value,
-              title: titleField.value,
-              description: descriptionField.value,
-              type: typeField.value,
-              points: pointsField.value,
-              testCases: Array.from(inputFields).map((inputField, index) => {
-                return {
-                  input: inputField.value,
-                  output: outputFields[index].value,
-                };
-              }),
-            }),
+            body: JSON.stringify(bodyData),
           }
         );
 

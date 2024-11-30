@@ -31,17 +31,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     foreach ($quesTestCases as $testCase) {
-        $testCaseInsert = $user->question->test_cases->update([
-            "input" => $testCase['input'],
-            "output" => $testCase['output'],
-        ],"question_id = $quesId");
 
-        if (!$testCaseInsert) {
-            echo json_encode([
-                "status" => 500,
-                "msg" => "Failed to update test cases"
+        if (!empty($testCase['id']) && $testCase['deleted'] == false) {
+            $testCaseUpdate = $user->question->test_cases->update([
+                "input" => $testCase['input'],
+                "output" => $testCase['output'],
+            ], "id=" . $testCase['id']);
+
+            if (!$testCaseUpdate) {
+                echo json_encode([
+                    "status" => 500,
+                    "msg" => "Failed to update test cases"
+                ]);
+                return;
+            }
+        } else if (!empty($testCase['id']) && $testCase['deleted'] == true) {
+            $testCaseDelete = $user->question->test_cases->delete($testCase['id'], false);
+
+            if (!$testCaseDelete) {
+                echo json_encode([
+                    "status" => 500,
+                    "msg" => "Failed to delete test cases"
+                ]);
+                return;
+            }
+        } else {
+            $testCaseInsert = $user->question->test_cases->insert([
+                "input" => $testCase['input'],
+                "output" => $testCase['output'],
+                "question_id" => $quesId
             ]);
-            return;
+
+            if (!$testCaseInsert) {
+                echo json_encode([
+                    "status" => 500,
+                    "msg" => "Failed to insert test cases"
+                ]);
+                return;
+            }
         }
     }
 

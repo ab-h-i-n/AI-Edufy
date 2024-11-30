@@ -103,38 +103,32 @@ $time = time();
                             <div class="test-cases">
                                 <label>Test Cases</label>
                                 <div class="test-cases-container">
-                                    <div class="test-case">
-                                        <label>Input</label>
-                                        <input type="text" name="input[]" placeholder="Input"
-                                            value="<?php echo $updateQuestion['test_cases'][0]['input']; ?>">
-                                        <label>Output</label>
-                                        <input type="text" name="output[]" placeholder="Output"
-                                            value="<?php echo $updateQuestion['test_cases'][0]['output']; ?>">
-                                    </div>
+
                                     <?php if (count($updateQuestion['test_cases']) > 0): ?>
-                                        <?php foreach (array_slice($updateQuestion['test_cases'], 1) as $testCase): ?>
+                                        <?php foreach ($updateQuestion['test_cases'] as $key => $testCase): ?>
                                             <div class="test-case">
-                                                <input type="hidden" name="test-case-id[]" value="<?php echo $testCase['id']; ?>">
                                                 <label>Input</label>
-                                                <input type="text" name="input[]" placeholder="Input"
+                                                <input type="text" id="<?php echo $testCase['id'] ?>" name="input[]" placeholder="Input"
                                                     value="<?php echo $testCase['input']; ?>">
                                                 <label>Output</label>
-                                                <input type="text" name="output[]" placeholder="Output"
+                                                <input type="text" id="<?php echo $testCase['id'] ?>" name="output[]" placeholder="Output"
                                                     value="<?php echo $testCase['output']; ?>">
-                                                <div class="add-btn-container remove-btn">
-                                                    <span class="add-btn">
-                                                        <span class="add-label">Remove</span>
-                                                        <img src="../public/icons/minus.svg" alt="minus">
-                                                    </span>
-                                                </div>
+                                                <?php if ($key != 0): ?>
+                                                    <div id="<?php echo $testCase['id'] ?>" class="add-btn-container remove-btn">
+                                                        <span class="add-btn">
+                                                            <span class="add-label">Remove</span>
+                                                            <img src="../public/icons/minus.svg" alt="minus">
+                                                        </span>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
 
                                 </div>
                                 <!-- add test case btn  -->
-                                <div id="add-test-case" class="add-btn-container">
-                                    <span class="add-btn">
+                                <div id="add-test-case" class="add-btn-container add-testcase">
+                                    <span class="add-btn ">
                                         <span class="add-label">Add Test Cases</span>
                                         <img src="../public/icons/plus.svg" alt="plus">
                                     </span>
@@ -291,7 +285,7 @@ $time = time();
                                     </div>
                                 </div>
                                 <!-- add test case btn  -->
-                                <div id="add-test-case" class="add-btn-container">
+                                <div id="add-test-case" class="add-btn-container add-testcase">
                                     <span class="add-btn">
                                         <span class="add-label">Add Test Cases</span>
                                         <img src="../public/icons/plus.svg" alt="plus">
@@ -346,7 +340,7 @@ $time = time();
         <!-- side section  -->
         <section class="side-section">
 
-            <a  href="http://localhost/AI-Edufy/home?type=edit" class="edit-profile-btn">
+            <a href="http://localhost/AI-Edufy/home?type=edit" class="edit-profile-btn">
                 <img width="30px" height="30px" src="../public/icons/edit.svg" alt="edit proile" />
             </a>
 
