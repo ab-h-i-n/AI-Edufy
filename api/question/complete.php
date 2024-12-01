@@ -19,15 +19,20 @@ try {
         "language" => $language
     ]);
 
+    $levelId = $user->leaderboard->levels->select('*', "points_required <= " . $questionDetails['points'] , 'points_required DESC')->fetch_assoc();
+
     $user->leaderboard->insert([
         "learner_id" => $userId,
         "points_earned" => $questionDetails['points'],
+        "level_id" => intval($levelId['id'])
     ]);
 
     echo json_encode([
         "status" => 200,
-        "msg" => "Question completed successfully"
+        "msg" => "Question completed successfully",
+        "level" => intval($levelId['id'])
     ]);
+    
 } catch (Exception $e) {
     echo json_encode([
         "status" => 500,

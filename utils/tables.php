@@ -200,7 +200,8 @@ class CompletedQuestions extends BaseClass
             answer MEDIUMTEXT NOT NULL,
             language TEXT NOT NULL,
             FOREIGN KEY (learner_id) REFERENCES USERS(id),
-            FOREIGN KEY (question_id) REFERENCES QUESTIONS(id)
+            FOREIGN KEY (question_id) REFERENCES QUESTIONS(id),
+            UNIQUE KEY (learner_id, question_id)
         )";
 
         if (!$this->dbcon->query($createQuery)) {
@@ -242,6 +243,8 @@ class LeaderBoard extends BaseClass
         $createQuery = "CREATE TABLE IF NOT EXISTS " . $this->tableName . "(
             learner_id INT PRIMARY KEY NOT NULL,
             points_earned INT NOT NULL,
+            level_id INT NOT NULL,
+            FOREIGN KEY (level_id) REFERENCES LEVELS(id),
             FOREIGN KEY (learner_id) REFERENCES USERS(id)
         )";
 
@@ -256,6 +259,7 @@ class LeaderBoard extends BaseClass
         // Check if the learner already exists in the leaderboard
         $learner_id = $data['learner_id'];
         $points_earned = $data['points_earned'];
+        $level_id = $data['level_id'];
 
         $checkQuery = "SELECT points_earned FROM $this->tableName WHERE learner_id = '$learner_id'";
         $checkResult = $this->dbcon->query($checkQuery);
@@ -266,7 +270,8 @@ class LeaderBoard extends BaseClass
             $updated_points = $row['points_earned'] + $points_earned;
 
             $updateQuery = "UPDATE $this->tableName 
-                            SET points_earned = '$updated_points'
+                            SET points_earned = '$updated_points',
+                            level_id = '$level_id'
                             WHERE learner_id = '$learner_id'";
 
             $result = $this->dbcon->query($updateQuery);
@@ -276,8 +281,8 @@ class LeaderBoard extends BaseClass
             }
         } else {
             // Learner doesn't exist, insert a new record
-            $insertQuery = "INSERT INTO $this->tableName (learner_id, points_earned) 
-                            VALUES ('$learner_id', '$points_earned')";
+            $insertQuery = "INSERT INTO $this->tableName (learner_id, points_earned, level_id) 
+                            VALUES ('$learner_id', '$points_earned' , '$level_id')";
 
             $result = $this->dbcon->query($insertQuery);
 

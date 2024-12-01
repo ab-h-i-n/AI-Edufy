@@ -41,8 +41,8 @@ window.onmessage = function (e) {
     console.log(e.data);
     code = e.data.files[0].content;
     lang = e.data.language;
-    isValidResult = e.data.result.success;
-    result = e.data.result.output;
+    isValidResult = e.data.result?.success;
+    result = e.data.result?.output;
   }
 };
 
@@ -165,7 +165,6 @@ completeTaskBtn.addEventListener("click", async function () {
       toast.error("Task Completion Failed");
     }
 
-    console.log(res);
   } catch (error) {
     console.error(error);
   }
