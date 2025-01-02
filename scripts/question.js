@@ -7,6 +7,7 @@ var code;
 var lang;
 var isValidResult;
 var result;
+var action;
 const completeTaskBtn = document.querySelector("button.complete");
 
 //to populate editor
@@ -19,6 +20,7 @@ const languages = {
   javascript: "js",
   c: "c",
   cpp: "cpp",
+  php: "php",
 };
 
 const populateEditor = async () => {
@@ -44,13 +46,18 @@ setTimeout(() => {
 }, 2000);
 
 // to listen to on change event of the code editor
-window.onmessage = function (e) {
+window.onmessage = async function (e) {
   if (e.data && e.data.language) {
     console.log(e.data);
     code = e.data.files[0].content;
     lang = e.data.language;
     isValidResult = e.data.result?.success;
     result = e.data.result?.output;
+    action = e.data.action;
+
+    if (action == "runComplete") {
+      await checkCode();
+    }
   }
 };
 
@@ -58,13 +65,6 @@ window.onmessage = function (e) {
 const runBtn = document.querySelector(".run");
 
 runBtn.addEventListener("click", async function () {
-  const question = document.querySelector(".question-desc");
-  const testcases = document.querySelector("#alltestcases");
-
-  console.log("Code:", code);
-  console.log("Lang:", lang);
-  console.log("Question:", question.innerText);
-  console.log("Testcases:", testcases.innerText);
 
   iFrame.contentWindow.postMessage(
     {
@@ -72,19 +72,41 @@ runBtn.addEventListener("click", async function () {
     },
     "*"
   );
+});
 
-  const query = `I want gemini to check the given output is valid for the programming question and its test cases for given code , question : ${question.innerText} , testcases : ${testcases.innerText} , code in ${lang} : ${code} , output : ${result} .Give result in JSON FORMAT using. if error in output give error free code (only code) {
-    "isValid" : boolean,
-    "howToFix" : str
-    }`;
+async function checkCode() {
+
+  const question = document.querySelector(".question-desc");
+  const testcases = document.querySelector("#alltestcases");
+
+  const query = `I want Gemini to check if the given output matches the expected result for the programming question and its test cases. The validation should consider the provided code, question, and test cases. 
+
+  Input details:
+  - Question: ${question?.innerText}
+  - Test Cases: ${testcases?.innerText}
+  - Code in ${lang}: ${code}
+  - Obtained Output: ${result}
+
+  Gemini should return the result in the following JSON format:
+  {
+      "isValid": boolean,
+      "reason": string
+  }
+
+  Notes:
+  1. Ensure the input and ouput is same as testcase any one input and output.
+  2. Dont take user input for this question.
+  3. Input from the user is not necessary for this question.
+  4. Only need to satisfy anyone of the testcases provided.
+`;
 
   console.log("Query:", query);
   document.querySelector(".hint-content").innerText =
     "⏳ Checking the code ... ";
-  const req = await askGemini(query);
+  let req = await askGemini(query);
   console.log("Parsed Response:", req);
 
-  if (req.isValid && isValidResult && code) {
+  if (req?.isValid && isValidResult && code) {
     confettiFire(0.5, {
       spread: 120,
       startVelocity: 50,
@@ -97,15 +119,17 @@ runBtn.addEventListener("click", async function () {
       "Congratulations you completed the question 🎉";
     completeTaskBtn.disabled = false;
   } else {
-    if (req.howToFix) {
-      // toast.hint(req.howToFix);
+    if (req?.reason) {
+      // toast.hint(req.reason);
       document.querySelector(".hint-content").innerText =
-        "🔧 Fix: " + req?.howToFix;
+        "🔧 Fix: " + req?.reason;
     }
   }
-});
+}
 
 const generateHint = async (question, testcases) => {
+  
+
   try {
     const query = `i want gemini to check the code and provide hint and nextstep.It is not necessary to take input from the user .if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
     "hint" : str,
