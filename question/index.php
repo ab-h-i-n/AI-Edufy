@@ -120,7 +120,7 @@ while ($row = $testcasesResult->fetch_assoc()) {
                         <div class="next-step">Next Step</div>
                     </div>
                     <div class="hint-content">
-                        dfsdfsdfsdf
+                        Click the hint button for hints!
                     </div>
                 </div>
 
