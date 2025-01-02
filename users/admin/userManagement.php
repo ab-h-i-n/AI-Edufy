@@ -30,7 +30,7 @@ if (mysqli_num_rows($result) > 0) {
                     <td>
                         <div class="image-name">
                             <div class="user-image">
-                                <img class="profile-image" src="<?php echo base64($user['profile_image']); ?>">
+                                <img class="profile-image" src="<?php echo $user['profile_image'] ? base64($user['profile_image']) : "http://localhost/AI-Edufy/public/images/no_proile.png"; ?>">
                             </div>
                             <div class="user-name"><?php echo $user['name']; ?></div>
                         </div>

@@ -108,11 +108,11 @@ $time = time();
                                         <?php foreach ($updateQuestion['test_cases'] as $key => $testCase): ?>
                                             <div class="test-case">
                                                 <label>Input</label>
-                                                <input type="text" id="<?php echo $testCase['id'] ?>" name="input[]" placeholder="Input"
-                                                    value="<?php echo $testCase['input']; ?>">
+                                                <input type="text" id="<?php echo $testCase['id'] ?>" name="input[]"
+                                                    placeholder="Input" value="<?php echo $testCase['input']; ?>">
                                                 <label>Output</label>
-                                                <input type="text" id="<?php echo $testCase['id'] ?>" name="output[]" placeholder="Output"
-                                                    value="<?php echo $testCase['output']; ?>">
+                                                <input type="text" id="<?php echo $testCase['id'] ?>" name="output[]"
+                                                    placeholder="Output" value="<?php echo $testCase['output']; ?>">
                                                 <?php if ($key != 0): ?>
                                                     <div id="<?php echo $testCase['id'] ?>" class="add-btn-container remove-btn">
                                                         <span class="add-btn">
@@ -164,7 +164,8 @@ $time = time();
                         <!-- profile image -->
                         <div class="profile-image">
                             <label for="profile-image-input">
-                                <img id="profile-image-photo" src="<?php echo base64($userDetails['profile_image']); ?>"
+                                <img id="profile-image-photo"
+                                    src="<?php echo $userDetails['profile_image'] ? base64($userDetails['profile_image']) : "http://localhost/AI-Edufy/public/images/no_proile.png"; ?>"
                                     alt="profile image" />
                                 <img id="cam" src="../public/icons/camera.svg" alt="camera" />
                             </label>
@@ -345,7 +346,7 @@ $time = time();
             </a>
 
             <div class="name-photo">
-                <img alt="profile" src="<?php echo base64($userDetails['profile_image']); ?>" />
+                <img alt="profile" src="<?php echo $userDetails['profile_image'] ? base64($userDetails['profile_image']) : "http://localhost/AI-Edufy/public/images/no_proile.png"; ?>" />
                 <div class="username"><?php echo $userDetails['name']; ?></div>
                 <div class="email"><?php echo $userDetails['email']; ?></div>
             </div>

@@ -70,7 +70,7 @@ foreach ($leaderboardData as $key => $data) {
                         <tr>
                             <td class="rank">#<?php echo $key + 1 ?></td>
                             <td class="user-image">
-                                <img src="<?php echo base64($data['profile_image']); ?>" alt="profile" />
+                                <img src="<?php echo $data['profile_image'] ? base64($data['profile_image']) : "http://localhost/AI-Edufy/public/images/no_proile.png"; ?>" alt="profile" />
                             </td>
                             <td class="user-name"><?php echo $data['name'] ?>
                                 <?php if ($data['learner_id'] == $userId)

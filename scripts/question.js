@@ -13,6 +13,14 @@ const completeTaskBtn = document.querySelector("button.complete");
 const completedAns = document.querySelector(".completed-ans");
 const completedLang = document.querySelector(".completed-lang");
 
+const languages = {
+  python: "py",
+  java: "java",
+  javascript: "js",
+  c: "c",
+  cpp: "cpp",
+};
+
 const populateEditor = async () => {
   if ((completedAns, completedLang)) {
     iFrame.contentWindow.postMessage(
@@ -21,7 +29,7 @@ const populateEditor = async () => {
         language: completedLang.innerText,
         files: [
           {
-            name: "main",
+            name: "main." + languages[completedLang.innerText],
             content: completedAns.innerText,
           },
         ],
@@ -65,13 +73,14 @@ runBtn.addEventListener("click", async function () {
     "*"
   );
 
-  const query = `I want gemini to check the given output is valid for the programming question and its test cases for given code , question : ${question.innerText} , testcases : ${testcases.innerText} , code in ${lang} : ${code} , output : ${result} .Give result in JSON FORMAT using {
+  const query = `I want gemini to check the given output is valid for the programming question and its test cases for given code , question : ${question.innerText} , testcases : ${testcases.innerText} , code in ${lang} : ${code} , output : ${result} .Give result in JSON FORMAT using. if error in output give error free code (only code) {
     "isValid" : boolean,
-    "reason" : str
+    "howToFix" : str
     }`;
 
   console.log("Query:", query);
-
+  document.querySelector(".hint-content").innerText =
+    "⏳ Checking the code ... ";
   const req = await askGemini(query);
   console.log("Parsed Response:", req);
 
@@ -84,14 +93,48 @@ runBtn.addEventListener("click", async function () {
     });
 
     toast.success("Congratulations you completed the question 🎉");
+    document.querySelector(".hint-content").innerText =
+      "Congratulations you completed the question 🎉";
     completeTaskBtn.disabled = false;
   } else {
-    if (req.reason) {
-      toast.hint(req.reason);
+    if (req.howToFix) {
+      // toast.hint(req.howToFix);
+      document.querySelector(".hint-content").innerText =
+        "🔧 Fix: " + req?.howToFix;
     }
   }
 });
 
+const generateHint = async (question, testcases) => {
+  try {
+    const query = `i want gemini to check the code and provide hint and nextstep.It is not necessary to take input from the user .if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
+    "hint" : str,
+    "nextstep" : str
+    } if error is found in code syntax language ${lang} use format {
+     "error" : str
+      "howtofix" : str
+    }`;
+
+    const req = await askGemini(query);
+    console.log("Parsed Response:", req);
+
+    if (!code) {
+      toast.hint("Please initialize the input as a variable to start !");
+      return;
+    }
+
+    if (!req) {
+      throw new Error("Failed to get hint");
+    }
+
+    toast.dismiss();
+    return req;
+  } catch (error) {
+    toast.dismiss();
+    toast.error(error);
+    console.error(error);
+  }
+};
 // to get hint for the code
 const hintBtn = document.querySelector(".hint");
 
@@ -105,32 +148,34 @@ hintBtn.addEventListener("click", async function () {
   console.log("Testcases:", testcases.innerText);
 
   toast.loading("Getting Hint ...");
+  document.querySelector(".hint-content").innerText = "Getting Hint ...";
+  const res = await generateHint(question, testcases);
 
-  try {
-    const query = `i want gemini to check the code and provide hint and nextstep if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
-    "hint" : str,
-    "nextstep" : str
-    } if error is found in code syntax language ${lang} use format {
-     "error" : str
-      "howtofix" : str
-    }`;
+  setTimeout(() => {
+    // toast.hint(res.hint);
+    document.querySelector(".hint-content").innerText = "💡 Hint: " + res?.hint;
+  }, 500);
+});
 
-    const req = await askGemini(query);
-    console.log("Parsed Response:", req);
+const nextStepBtn = document.querySelector(".next-step");
 
-    if (!req) {
-      throw new Error("Failed to get hint");
-    }
+nextStepBtn.addEventListener("click", async function () {
+  const question = document.querySelector(".question-desc");
+  const testcases = document.querySelector("#alltestcases");
 
-    toast.dismiss();
-    setTimeout(() => {
-      toast.hint(req.hint);
-    }, 500);
-  } catch (error) {
-    toast.dismiss();
-    toast.error(error);
-    console.error(error);
-  }
+  console.log("Code:", code);
+  console.log("Lang:", lang);
+  console.log("Question:", question.innerText);
+  console.log("Testcases:", testcases.innerText);
+
+  toast.loading("Getting next step ...");
+  document.querySelector(".hint-content").innerText = "Getting Next Step ...";
+  const res = await generateHint(question, testcases);
+  setTimeout(() => {
+    // toast.hint(res.nextstep);
+    document.querySelector(".hint-content").innerText =
+      "🚀 Next Step: " + res?.nextstep;
+  }, 500);
 });
 
 //handle completed task
@@ -164,7 +209,6 @@ completeTaskBtn.addEventListener("click", async function () {
     } else {
       toast.error("Task Completion Failed");
     }
-
   } catch (error) {
     console.error(error);
   }

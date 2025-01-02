@@ -5,13 +5,13 @@ include_once("../../utils/user.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (isset($_FILES['image']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['role'])) {
+    if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['role'])) {
 
         $email = $_POST['email'];
         $password = $_POST['password'];
         $name = $_POST['name'];
         $role = $_POST['role'];
-        $image = null;
+        $image = "";
         
         if (isset($_FILES['image'])) {
             $image = file_get_contents($_FILES['image']['tmp_name']); 

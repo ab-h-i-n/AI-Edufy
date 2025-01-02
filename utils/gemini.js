@@ -1,4 +1,4 @@
-const apiKey = "AIzaSyD5gwNeYP8AjdDynsQtf9bYI4QlkVMLS5E";
+const apiKey = "AIzaSyDCceHNIC_a5wCV394ddxFYNvLItGjj0BI";
 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
 export async function askGemini(prompt) {

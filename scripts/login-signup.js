@@ -113,7 +113,7 @@ signUpFrom?.addEventListener("submit", async (e) => {
   const email = signUpFrom.email.value;
   const pass = signUpFrom.password.value;
   const role = signUpFrom.role.value;
-  const image = imageInput.files[0] || defaultImageFile;
+  const image = imageInput.files[0] || "";
   
   const isValid = SignUpVerification(name, email, pass, role);
 

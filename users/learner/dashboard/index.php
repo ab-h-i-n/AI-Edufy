@@ -77,7 +77,7 @@ $fileModified = time();
                 <!-- profile image -->
                 <div class="profile-image">
                     <label for="profile-image-input">
-                        <img id="profile-image-photo" src="<?php echo base64($userDetails['profile_image']); ?>"
+                        <img id="profile-image-photo" src="<?php echo $userDetails['profile_image'] ? base64($userDetails['profile_image']) : "http://localhost/AI-Edufy/public/images/no_proile.png"; ?>"
                             alt="profile image" />
                         <img id="cam" src="../public/icons/camera.svg" alt="camera" />
                     </label>
@@ -149,7 +149,12 @@ $fileModified = time();
             </div>
 
             <div class="name-photo">
-                <img alt="profile" src="<?php echo base64($userDetails['profile_image']);  ?>" />
+                <img alt="profile" src="<?php if ($userDetails['profile_image']) {
+                    echo base64($userDetails['profile_image']);
+                } else {
+                    echo "http://localhost/AI-Edufy/public/images/no_proile.png";
+                }
+                ?>" />
                 <div class="username"><?php echo $userDetails['name']; ?></div>
                 <div class="email"><?php echo $userDetails['email']; ?></div>
             </div>

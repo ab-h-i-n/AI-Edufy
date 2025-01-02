@@ -106,13 +106,25 @@ while ($row = $testcasesResult->fetch_assoc()) {
 
         <div class="activity-container">
 
-            <?php if (!$hasCompleted): ?>
-                <div class="run">Run</div>
-                <div class="hint">Hint</div>
-            <?php endif; ?>
+            <iframe scrolling="no" id="oc-editor" frameBorder="0" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&listenToEvents=true<?php if ($hasCompleted)
+                echo '&hideLanguageSelection=true&hideRun=false';
+            else
+                echo "&hideRun=true" ?>"></iframe>
 
-            <iframe scrolling="no" id="oc-editor" frameBorder="0" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideNewFileOption=true&hideNew=true&codeChangeEvent=true&hideStdin=true&fontSize=20&hideRun=true&listenToEvents=true<?php if ($hasCompleted)
-                echo '&hideLanguageSelection=true&hideResult=true'; ?>"></iframe>
+            <?php if (!$hasCompleted): ?>
+
+                <div class="hint-container">
+                    <div class="hint-header">
+                        <div class="run">Run</div>
+                        <div class="hint">Hint</div>
+                        <div class="next-step">Next Step</div>
+                    </div>
+                    <div class="hint-content">
+                        dfsdfsdfsdf
+                    </div>
+                </div>
+
+            <?php endif; ?>
         </div>
     </main>
 
