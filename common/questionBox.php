@@ -99,7 +99,7 @@
                 <?php echo $question['title']; ?>
                 <span class="points"> <?php echo $question['points']; ?>Pts </span>
                 <!-- isCompleted  -->
-                <?php if ($question['isCompleted']): ?>
+                <?php if ($question['isCompleted'] ?? false): ?>
                     <span class="completed"><img src="../public/icons/check.svg" /> Completed</span>
                 <?php endif; ?>
             </p>
