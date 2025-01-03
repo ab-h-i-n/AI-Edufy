@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 02, 2025 at 06:19 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jan 03, 2025 at 05:46 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `COMPLETED_QUESTIONS` (
   `question_id` int(11) NOT NULL,
   `answer` mediumtext NOT NULL,
   `language` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `COMPLETED_QUESTIONS`
@@ -40,6 +40,7 @@ CREATE TABLE `COMPLETED_QUESTIONS` (
 
 INSERT INTO `COMPLETED_QUESTIONS` (`learner_id`, `question_id`, `answer`, `language`) VALUES
 (1009, 1002, 'input = \"hello\"\n\nrev = input[::-1]\n\nif(rev == input):\n  print(\"True\")\nelse:\n  print(\"False\")', 'python'),
+(1009, 1005, 'input = [10,20,4,45,99]\nunique_numbers = list(set(input))\n\nif len(unique_numbers) < 2:\n  second_largest = unique_numbers[0] if len(unique_numbers) ==1 else None\nelse:\n  unique_numbers.sort()\n  second_largest = unique_numbers[-2]\n\nprint(second_largest)', 'python'),
 (1009, 1008, 'input = -12\n\nif(input < 0):\n  print(\"Negative\")\nelse:\n  print(\"Positive\")', 'python'),
 (1011, 1001, 'input = 4\n\nif(input%2 == 0):\n  print(\"Even\")\nelse:\n  print(\"Odd\")', 'python');
 
@@ -53,14 +54,14 @@ CREATE TABLE `LEADER_BOARD` (
   `learner_id` int(11) NOT NULL,
   `points_earned` int(11) NOT NULL,
   `level_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `LEADER_BOARD`
 --
 
 INSERT INTO `LEADER_BOARD` (`learner_id`, `points_earned`, `level_id`) VALUES
-(1009, 30, 4),
+(1009, 50, 4),
 (1011, 10, 4);
 
 -- --------------------------------------------------------
@@ -73,7 +74,7 @@ CREATE TABLE `LEVELS` (
   `id` int(11) NOT NULL,
   `level_title` varchar(255) NOT NULL,
   `points_required` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `LEVELS`
@@ -100,7 +101,7 @@ CREATE TABLE `QUESTIONS` (
   `type` enum('easy','medium','hard') NOT NULL,
   `mentor_id` int(11) NOT NULL,
   `points` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `QUESTIONS`
@@ -127,7 +128,7 @@ CREATE TABLE `TEST_CASES` (
   `input` varchar(255) NOT NULL,
   `output` varchar(255) NOT NULL,
   `question_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `TEST_CASES`
@@ -135,16 +136,11 @@ CREATE TABLE `TEST_CASES` (
 
 INSERT INTO `TEST_CASES` (`id`, `input`, `output`, `question_id`) VALUES
 (1001, '4', 'Even', 1001),
-(1003, '5', 'Odd', 1001),
 (1004, 'madam', 'True', 1002),
-(1005, 'hello', 'False', 1002),
 (1006, 'abcabcbb', '3 (abc)', 1003),
-(1007, 'bbbbb', '1(b)', 1003),
 (1008, '[1, 2, 3, 4]', '10', 1004),
-(1009, '[5, 10, 15]', '30', 1004),
 (1010, '[10, 20, 4, 45, 99]', '45', 1005),
 (1011, '[-1, 0, 1, 2, -1, -4]', '[[-1, -1, 2], [-1, 0, 1]]', 1006),
-(1012, '[1, 2, 3]', '[]', 1006),
 (1013, 'hello', 'olleh', 1007),
 (1014, '12', 'Positive', 1008);
 
@@ -161,7 +157,7 @@ CREATE TABLE `USERS` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('learner','mentor','admin') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `USERS`
