@@ -65,7 +65,6 @@ window.onmessage = async function (e) {
 const runBtn = document.querySelector(".run");
 
 runBtn.addEventListener("click", async function () {
-
   iFrame.contentWindow.postMessage(
     {
       eventType: "triggerRun",
@@ -75,7 +74,6 @@ runBtn.addEventListener("click", async function () {
 });
 
 async function checkCode() {
-
   const question = document.querySelector(".question-desc");
   const testcases = document.querySelector("#alltestcases");
 
@@ -127,18 +125,8 @@ async function checkCode() {
   }
 }
 
-const generateHint = async (question, testcases) => {
-  
-
+const generateHint = async (question, testcases, query) => {
   try {
-    const query = `i want gemini to check the code and provide hint and nextstep.It is not necessary to take input from the user .if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
-    "hint" : str,
-    "nextstep" : str
-    } if error is found in code syntax language ${lang} use format {
-     "error" : str
-      "howtofix" : str
-    }`;
-
     const req = await askGemini(query);
     console.log("Parsed Response:", req);
 
@@ -173,7 +161,14 @@ hintBtn.addEventListener("click", async function () {
 
   toast.loading("Getting Hint ...");
   document.querySelector(".hint-content").innerText = "Getting Hint ...";
-  const res = await generateHint(question, testcases);
+
+  const query = `i want gemini to check the code and provide hint to solve and complete the problem (dont provide code only step by step hints).It is not necessary to take input from the user .if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
+    "hint" : str,
+    } if error is found in code syntax language ${lang} use format {
+     "error" : str
+    }`;
+
+  const res = await generateHint(question, testcases , query);
 
   setTimeout(() => {
     // toast.hint(res.hint);
@@ -194,7 +189,12 @@ nextStepBtn.addEventListener("click", async function () {
 
   toast.loading("Getting next step ...");
   document.querySelector(".hint-content").innerText = "Getting Next Step ...";
-  const res = await generateHint(question, testcases);
+  const query = `i want gemini to check the code and provide nextstep as a code not as description of hints.It is not necessary to take input from the user .if no error , question : ${question.innerText} , testcases : ${testcases.innerText} , code : ${code} , runlog : ${result}  .Return the reuslt in json format {
+    "nextstep" : str,
+    } if error is found in code syntax language ${lang} use format {
+     "error" : str
+    }`;
+  const res = await generateHint(question, testcases, query);
   setTimeout(() => {
     // toast.hint(res.nextstep);
     document.querySelector(".hint-content").innerText =
